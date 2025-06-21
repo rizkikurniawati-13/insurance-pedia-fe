@@ -1,0 +1,45 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+  <main class="flex-grow-1 p-4 overflow-auto">
+<div class="container my-4">
+<h2>Tambah Glossarium</h2>
+
+<form [formGroup]="glossariumForm" (ngSubmit)="onSubmit()">
+  <label>Istilah</label>
+  <input class="form-control" type="text" formControlName="term" required />
+  <br />
+
+  <label>Definisi</label>
+  <textarea class="form-control" formControlName="definition" required></textarea>
+  <br />
+
+  <label>Kategori</label>
+  <input class="form-control" type="text" formControlName="category" />
+  <br />
+
+  <label>Referensi</label>
+  <input class="form-control" type="text" formControlName="reference" />
+  <br />
+
+  <label>Status</label>
+  <select class="form-control" formControlName="status">
+    <option value="Aktif">Aktif</option>
+    <option value="Nonaktif">Nonaktif</option>
+  </select>
+  <br /><br />
+
+  <button class="btn btn-success" type="submit" [disabled]="glossariumForm.invalid">Simpan</button>
+</form>
+
+<p *ngIf="successMessage" style="color:green">{{ successMessage }}</p>
+<p *ngIf="errorMessage" style="color:red">{{ errorMessage }}</p>
+
+</div>
+</main>
+</div>
+
+
+
+
+<!-- yuhuuuu -->
+

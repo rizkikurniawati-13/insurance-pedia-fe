@@ -1,0 +1,31 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+  <main class="flex-grow-1 p-4 overflow-auto bg-light">
+    <div class="container my-4">
+    <h1>Glossarium</h1>
+    <button (click)="addGlossary()" class="btn btn-primary" >
+      <i class="fa-solid fa-plus"></i> Add Glossary</button>
+    <br>
+    <br>
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="Search term..."
+      [(ngModel)]="searchTerm"
+    />
+
+    <div *ngIf="filteredGlossary.length === 0">
+      <p>No terms found.</p>
+    </div>
+
+    <ul class="list-group">
+      <li
+        *ngFor="let item of filteredGlossary"
+        class="list-group-item"
+      >
+        <strong>{{ item.term }}</strong>: {{ item.definition }}
+      </li>
+    </ul>
+    </div>
+  </main>
+</div>

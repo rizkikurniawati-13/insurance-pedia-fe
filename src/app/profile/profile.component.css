@@ -1,0 +1,13 @@
+.card {
+  background: #ffffff;
+  transition: all 0.3s ease-in-out;
+}
+
+.card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+img {
+  object-fit: cover;
+}

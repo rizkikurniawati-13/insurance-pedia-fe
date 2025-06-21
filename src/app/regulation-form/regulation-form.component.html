@@ -1,0 +1,52 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+  <main class="flex-grow-1 p-4 overflow-auto">
+<div class="container my-4">
+<div class="main-content p-6">
+
+<form [formGroup]="regulationForm" (ngSubmit)="onSubmit()">
+  <label>Judul Regulasi</label>
+  <input class="form-control" id="exampleFormControlInput1" formControlName="title" />
+
+  <label>Nomor Regulasi</label>
+  <input class="form-control" id="exampleFormControlInput1" formControlName="number" />
+
+
+  <label>Tipe Regulasi</label>
+  <select class="form-select" aria-label="Default select example" formControlName="type">
+  <option value="">Tipe Regulasi</option>
+  <option *ngFor="let type of regulationsTypes" [value]="type">{{type}}</option>
+  </select>
+
+  <div class="form-group">
+  <label for="issuedDate">Tanggal Berdiri</label>
+  <input
+    type="date"
+    id="issuedDate"
+    class="form-control"
+    formControlName="issuedDate"
+    [max]="todayString"
+  />
+    <div *ngIf="regulationForm.get('issuedDate')?.errors?.['max'] && regulationForm.get('issuedDate')?.touched" class="text-danger">
+        Tanggal tidak boleh lebih dari hari ini.
+    </div>
+    </div>
+
+  <label>Description</label>
+  <textarea  class="form-control" id="exampleFormControlInput1"  formControlName="description"></textarea>
+
+  <label>Upload File</label>
+  <input class="form-control" type="file" (change)="onFileSelected($event)" />
+
+  <div *ngIf="regulationForm.get('fileName')?.value">
+    <p>Uploaded file: {{ regulationForm.get('fileName')?.value }}</p>
+  </div>
+
+  <br>
+  <button class="btn btn-primary" type="submit" [disabled]="!regulationForm.valid">Submit</button>
+</form>
+
+</div>
+</div>
+</main>
+</div>

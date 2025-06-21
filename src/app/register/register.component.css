@@ -1,0 +1,175 @@
+.container {
+  background-color: #ffffff; /* Lighter background for better contrast */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #6b7280;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.toggle-password:hover {
+  color: #4f46e5;
+}
+
+.form-card {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 10px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 100%;
+  max-width: 32rem; /* Slightly wider for better form layout */
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.logo-img {
+  width: 8rem;
+  height: auto;
+}
+
+.form-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1f2937;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  margin-top: 0.25rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  outline: none;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.form-input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3); /* Proper focus ring */
+  outline: none;
+}
+
+.form-input[type="password"] {
+  padding-right: 3rem; /* Space for toggle button */
+}
+
+.submit-button {
+  width: 100%;
+  background-color: #4f46e5;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #4338ca;
+}
+
+.submit-button:focus {
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+  outline: none;
+}
+
+.login-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.login-link a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+.error {
+  margin-top: 0.25rem;
+}
+
+.error small {
+  color: #dc2626;
+  font-size: 0.75rem;
+}
+
+.role-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.role-checkboxes label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .form-card {
+    padding: 1.5rem;
+    max-width: 100%;
+  }
+  
+  .form-title {
+    font-size: 1.5rem;
+  }
+  
+  .form-input {
+    padding: 0.625rem 0.875rem;
+  }
+  
+  .submit-button {
+    padding: 0.625rem 0.875rem;
+  }
+}
+
+.relative {
+  position: relative;
+}

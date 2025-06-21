@@ -1,0 +1,32 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+  <main class="flex-grow-1 p-4 overflow-auto bg-light">
+    <div class="container my-4">
+      <h2 class="mb-4 text-center">Detail Perusahaan Asuransi</h2>
+
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h4 class="card-title text-primary">{{ company.name }}</h4>
+          <p class="mb-1"><strong>Tanggal Berdiri:</strong> {{ company.establishedDate | date:'dd MMMM yyyy' }}</p>
+          <p class="mb-1"><strong>Alamat:</strong> {{ company.address }}</p>
+          <p class="mb-1"><strong>Kontak:</strong> {{ company.contact }}</p>
+          <p class="mb-1"><strong>NPWP:</strong> {{ company.npwp }}</p>
+          <p class="mb-1"><strong>Nomor Ijin Usaha:</strong> {{ company.licenseNumber }}</p>
+          <p class="mb-1"><strong>Status:</strong> {{ company.status }}</p>
+          <p class="mb-1"><strong>Tipe:</strong> {{ company.type }}</p>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-success">Daftar Produk</h5>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let product of company.products" class="list-group-item">
+              {{ product.name }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,18 @@
+/* appcss/app.component.css */
+.nav-link.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.main-content {
+  transition: margin-left 0.3s ease, width 0.3s ease;
+  flex-grow: 1;
+}
+
+.main-normal {
+  margin-left: 250px; /* lebar sidebar normal */
+}
+
+.main-expanded {
+  margin-left: 80px; /* lebar sidebar collapsed */
+}

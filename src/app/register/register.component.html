@@ -1,0 +1,84 @@
+<div class="container my-4">
+<div class="container">
+  <div class="form-card">
+    <!-- Logo -->
+    <div class="logo-container">
+      <a href="https://imgbb.com/">
+        <img src="https://i.ibb.co/4R6P6wqp/logo-removebg-preview.png" alt="Logo ImgBB" class="logo-img" style="width: 100px;">
+      </a>
+    </div>
+    <!-- Judul -->
+    <h2 class="form-title">Register</h2>
+    <!-- Formulir -->
+    <form class="space-y-4" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" formControlName="name" id="name" name="name" class="form-input" placeholder="Enter your full name" required>
+        <div *ngIf="submitted && f['name'].errors" class="error">
+        <small *ngIf="f['name'].errors?.['required']">Nama wajib diisi.</small>
+        <small *ngIf="f['name'].errors?.['minlength']">Nama minimal 3 karakter.</small>
+      </div>
+      </div>
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input formControlName="email" type="email" id="email" name="email" class="form-input" placeholder="Enter your email" required>
+        <div *ngIf="submitted && f['email'].errors" class="error">
+        <small *ngIf="f['email'].errors?.['required']">Email wajib diisi.</small>
+        <small *ngIf="f['email'].errors?.['email']">Format email tidak valid.</small>
+      </div>
+      </div>
+      <div class="form-group relative">
+      <label for="password" class="form-label">Password</label>
+      <div class="relative">
+        <input formControlName="password" [type]="showPassword ? 'text' : 'password'" id="password" name="password" class="form-input pr-10" placeholder="Enter your password" required style="width: 390px;">&nbsp;
+        <button type="button" (click)="togglePassword()" class="btn btn-light">
+          <i [ngClass]="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+        </button>
+      </div>
+      <div *ngIf="submitted && f['password'].errors" class="error">
+        <small *ngIf="f['password'].errors?.['required']">Password wajib diisi.</small>
+        <small *ngIf="f['password'].errors?.['minlength']">Password minimal 8 karakter.</small>
+        <small *ngIf="f['password'].errors?.['passwordStrength']">Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus.</small>
+        <small *ngIf="f['password'].errors?.['containsPersonalInfo']">Password tidak boleh mengandung nama atau email.</small>
+      </div>
+    </div>
+      <div class="form-group relative">
+        <label for="confirm-password" class="form-label">Confirm Password</label>
+        <div class="relative">
+          <input formControlName="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" id="confirm-password" name="confirm-password" class="form-input pr-10" placeholder="Confirm your password" required style="width: 390px;">&nbsp;
+          <button class="btn btn-light" type="button" (click)="toggleConfirmPassword()">
+            <i [ngClass]="showConfirmPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
+          </button>
+        </div>
+        <div *ngIf="submitted && (f['confirmPassword'].errors || registrationForm.errors?.['mismatch'])" class="error">
+          <small *ngIf="f['confirmPassword'].errors?.['required']">Konfirmasi password wajib diisi.</small>
+          <small *ngIf="registrationForm.errors?.['mismatch']">Password tidak cocok.</small>
+        </div>
+      </div>
+      <!-- <div class="form-group">
+        <label for="confirm-password" class="form-label">Role</label>
+        <div class="role-checkboxes">
+        <label *ngFor="let role of availablerole">
+        <input
+          type="checkbox"
+          [value]="role"
+          (change)="onRoleChange($event)"
+          [checked]="f['role'].value.includes(role)"
+        />
+        {{ role }}
+        </label>
+    </div>
+    <div *ngIf="submitted && f['role'].errors" class="error">
+    <small *ngIf="f['role'].errors['required']">Minimal pilih satu peran.</small>
+    </div>
+      </div> -->
+      
+      <button type="submit" class="submit-button">Register</button>
+    </form>
+    <!-- Tautan Login -->
+    <p class="login-link">
+      Already have an account? 
+      <a href="/login">Login here</a>
+    </p>
+  </div>
+</div>

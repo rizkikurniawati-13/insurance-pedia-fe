@@ -1,0 +1,92 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+  <main class="flex-grow-1 p-4 overflow-auto">
+<div class="container mt-4">
+  <h3>Tambah Audit Case</h3>
+  <form [formGroup]="auditCaseForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+    <label for="companyId">Perusahaan</label>
+    <ng-select
+        [items]="company"
+        bindLabel="name"
+        bindValue="id"
+        placeholder="Cari atau pilih perusahaan"
+        formControlName="companyId"
+        [searchable]="true"
+        [clearable]="true">
+    </ng-select>
+    </div>
+
+    <div class="mb-3">
+      <label>Judul Kasus</label>
+      <input class="form-control" type="text" aria-label="default input example" formControlName="title">
+      
+    </div>
+
+    <div class="mb-3">
+      <label>Nilai Kerugian</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Masukkan nilai kerugian"
+        [value]="formattedLossAmount"
+        (input)="onLossAmountInput($event)"
+        (keypress)="allowOnlyNumbers($event)" />
+        <div *ngIf="auditCaseForm.get('lossAmount')?.invalid && auditCaseForm.get('lossAmount')?.touched" class="text-danger">
+        Harus berupa angka dan tidak boleh negatif.
+        </div>
+    </div>
+
+    <div class="mb-3">
+      <label>Jenis Pelanggaran</label>
+      <select class="form-select" aria-label="Default select example" formControlName="violationType">
+      <option value="">Jenis Pelanggaran</option>
+      <option *ngFor="let type of violationTypes" [value]="type">{{type}}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label>Tahun Pelanggaran</label>
+      <select aria-label="Default select example" formControlName="violationYear" id="tahunTemuan" required>
+        <option value="" disabled selected>Pilih tahun</option>
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>              
+    </div>
+    <div class="mb-3">
+      <label>Tahun Temuan</label>
+      <select aria-label="Default select example" formControlName="discoveryYear" id="tahunTemuan" required>
+        <option value="" disabled selected>Pilih tahun</option>
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+        </select>  
+    </div>
+    <div class="mb-3">
+      <label>Instansi yang Menemukan</label>
+      <select class="form-select" aria-label="Default select example" formControlName="discoveringInstitution">
+      <option value="">Jenis Pelanggaran</option>
+      <option *ngFor="let instansi of instansiList" [value]="instansi">{{instansi}}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label>Terdakwa / Jabatan</label>
+      <textarea formControlName="defendants" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+      <label>Proyek Terkait</label>
+      <textarea formControlName="relatedProject" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+      <label>Pokok Temuan</label>
+      <textarea formControlName="findings" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+      <label>Rekomendasi Pemeriksaan</label>
+      <textarea formControlName="recommendations" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+      <label>Tindak Lanjut Pemeriksaan</label>
+      <textarea formControlName="followUp" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Simpan</button>
+  </form>
+</div>
+</main>
+</div>

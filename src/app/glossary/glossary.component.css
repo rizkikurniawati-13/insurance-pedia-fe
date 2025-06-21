@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+app-sidebar {
+  height: 100vh;
+  /* Pastikan tidak fixed/absolute */
+}
+
+main {
+  height: 100vh;
+  overflow-y: auto;
+}

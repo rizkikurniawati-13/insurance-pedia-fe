@@ -1,0 +1,45 @@
+<app-sidebar (collapsedChange)="sidebarCollapsed = $event"></app-sidebar>
+
+<div class="main-content" [ngClass]="{ 'collapsed': sidebarCollapsed }">
+  <div class="container" style="align-content: center;">
+    <h2>Daftar Regulasi</h2>
+    <br>
+    <button class="btn btn-sm btn-primary" (click)="goToFormRegulation()">
+      <i class="fa-solid fa-square-plus"></i> Add Regulation
+    </button>
+    <br>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Judul</th>
+          <th>Nomor</th>
+          <th>Jenis</th>
+          <th>Tanggal Terbit</th>
+          <th>Unduh</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reg of regulations">
+          <td>{{ reg.title }}</td>
+          <td>{{ reg.number }}</td>
+          <td>{{ reg.type }}</td>
+          <td>{{ reg.issuedDate }}</td>
+          <td>
+            <!-- <button (click)="downloadFile(reg)" class="btn btn-sm btn-primary">
+              <i class="fa-solid fa-download"></i>
+            </button> -->
+            <button class="btn btn-sm btn-primary">
+              <i class="fa-solid fa-download"></i>
+              <a href={{reg.link}}></a>
+            </button>
+            &nbsp;
+            <button (click)="previewPdf(reg)" class="btn btn-sm btn-primary">
+              <i class="fa-solid fa-eye"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

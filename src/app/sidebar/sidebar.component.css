@@ -1,0 +1,40 @@
+.sidebar {
+  min-height: 100vh;
+  width: 250px;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  position: fixed;
+  z-index: 1000;
+  justify-content: space-between; /* supaya tombol logout di bawah */
+  background-color: #12508e; /* contoh warna */
+  color: white;
+}
+
+.sidebar-collapsed {
+  width: 60px;
+}
+
+.sidebar-collapsed .nav-link span {
+  display: none;
+}
+
+.sidebar-collapsed h5 {
+  display: none;
+}
+
+.sidebar .nav-link.active {
+  background-color: #0d6efd;
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .sidebar-collapsed {
+    width: 100%;
+  }
+}

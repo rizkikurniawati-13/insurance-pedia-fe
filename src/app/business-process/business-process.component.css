@@ -1,0 +1,23 @@
+.graph-card {
+  min-height: 500px;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+}
+
+.chart-container {
+  width: 100%;
+  height: 600px;
+}
+
+.node text {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.edge-label {
+  font-size: 12px;
+  fill: #555;
+}
+
+.arrow-head {
+  fill: #6c757d;
+}

@@ -1,0 +1,52 @@
+<div [ngClass]="{ 'sidebar-collapsed': collapsed }" class="sidebar bg-dark text-white d-flex flex-column">
+  <div class="sidebar-header d-flex justify-content-between align-items-center p-3">
+    <h5 *ngIf="!collapsed">Menu</h5>
+    <button class="btn btn-outline-light btn-sm" (click)="toggleSidebar()">
+      <span *ngIf="collapsed">☰</span>
+      <span *ngIf="!collapsed">×</span>
+    </button>
+  </div>
+
+  <ul class="nav flex-column px-2">
+    <li class="nav-item mb-2" title="Glossarium">
+      <a routerLink="/glossary" routerLinkActive="active" class="nav-link text-white d-flex align-items-center">
+        <i class="fa-solid fa-layer-group"></i><span *ngIf="!collapsed" class="ms-2">Glossarium</span>
+      </a>
+    </li>
+    <li class="nav-item mb-2" title="Insurance Companies">
+      <a routerLink="/insurance-companies" routerLinkActive="active" class="nav-link text-white d-flex align-items-center">
+        <i class="fa-solid fa-city"></i><span *ngIf="!collapsed" class="ms-2">Insurance Companies</span>
+      </a>
+    </li>
+    <li class="nav-item mb-2" title="Business Process">
+      <a routerLink="/business-process" routerLinkActive="active" class="nav-link text-white d-flex align-items-center">
+        <i class="fa-solid fa-bars-staggered"></i><span *ngIf="!collapsed" class="ms-2">Business Process</span>
+      </a>
+    </li>
+    <li class="nav-item mb-2" title="Regulation">
+      <a routerLink="/regulations" routerLinkActive="active" class="nav-link text-white d-flex align-items-center">
+        <i class="fa-solid fa-folder-open"></i><span *ngIf="!collapsed" class="ms-2">Regulation</span>
+      </a>
+    </li>
+    <li class="nav-item" title="Audit Cases">
+      <a routerLink="/audit-case" routerLinkActive="active" class="nav-link text-white d-flex align-items-center">
+        <i class="fa-solid fa-book-journal-whills"></i><span *ngIf="!collapsed" class="ms-2">Audit Cases</span>
+      </a>
+    </li>
+    <li class="nav-item" title="Audit Cases">
+      <a routerLink="/user-management" routerLinkActive="active" class="nav-link text-white d-flex align-items-center">
+        <i class="fa-solid fa-users"></i><span *ngIf="!collapsed" class="ms-2">User Management</span>
+      </a>
+    </li>
+  </ul>
+
+ <!-- Bottom: Logout & Logo -->
+  <div class="p-3 border-top border-secondary d-flex flex-column align-items-center">
+    <!-- Logout Button -->
+    <button (click)="logout()" class="btn btn-outline-light w-100 mb-2 d-flex align-items-center justify-content-center">
+      🚪 <span *ngIf="!collapsed" class="ms-2">Logout</span>
+    </button>
+
+
+</div>
+

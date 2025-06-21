@@ -1,0 +1,38 @@
+<div class="d-flex">
+  <app-sidebar></app-sidebar>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center mb-4">
+            <div class="me-4">
+              <img
+                src="https://i.pravatar.cc/150?img=12"
+                alt="Profile"
+                class="rounded-circle shadow"
+                width="100"
+                height="100"
+              />
+            </div>
+            <div>
+              <h4 class="mb-0">{{ user.name }}</h4>
+              <small class="text-muted">{{ user.role }}</small>
+            </div>
+          </div>
+
+          <hr />
+
+          <p><strong>Email:</strong> {{ user.email }}</p>
+          <p><strong>Joined Since:</strong> {{ user.joined }}</p>
+          <p><strong>Bio:</strong></p>
+          <p class="fst-italic">"{{ user.bio }}"</p>
+
+          <button class="btn btn-primary mt-3 w-100">Edit Profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,104 @@
+<!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container">
+  <h2>Login</h2>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" formControlName="email" id="email" />
+    <ng-container *ngIf="submitted">
+      <div *ngIf="f['email'] as emailControl">
+        <small *ngIf="emailControl.errors?.['required']" class="error">Email wajib diisi.</small>
+        <small *ngIf="emailControl.errors?.['email']" class="error">Format email salah.</small>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" formControlName="password" id="password" />
+    <ng-container *ngIf="submitted">
+      <div *ngIf="f['password'] as passwordControl">
+        <small *ngIf="passwordControl.errors?.['required']" class="error">Password wajib diisi.</small>
+      </div>
+    </ng-container>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <button type="submit">Login</button>
+</form> -->
+
+<div class="login-container">
+  <div class="row justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-md-8 col-lg-4">
+      <div class="card shadow-lg border-0 animate__animated animate__fadeInUp">
+        <div class="card-body p-4 p-md-5">
+          <div class="text-center mb-4">
+            <h1 class="card-title" style="font-size: 40px;">Welcome</h1>
+            <h3 style="font-style: italic; font-size: medium;">I-Pedia</h3>
+            <a>
+              <img src="https://i.ibb.co/4R6P6wqp/logo-removebg-preview.png" alt="logo" style="width: 100px; height: auto; border:0; padding-bottom: 10px;">
+            </a> <br>
+            <!-- <p class="text-muted">Access your account</p> -->
+          </div>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container">
+            <div class="form-group mb-4 position-relative">
+              <label for="email" class="form-label">Email</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                <input
+                  type="email"
+                  formControlName="email"
+                  id="email"
+                  class="form-control"
+                  placeholder="Enter your email"
+                  [ngClass]="{'is-invalid': submitted && f['email'].errors}"
+                />
+              </div>
+              <ng-container *ngIf="submitted && f['email'] as emailControl">
+                <div class="invalid-feedback">
+                  <small *ngIf="emailControl.errors?.['required']">Email is required.</small>
+                  <small *ngIf="emailControl.errors?.['email']">Invalid email format.</small>
+                </div>
+              </ng-container>
+            </div>
+
+            <div class="form-group mb-4 position-relative">
+              <label for="password" class="form-label">Password</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                <input
+                  type="password"
+                  formControlName="password"
+                  id="password"
+                  class="form-control"
+                  placeholder="Enter your password"
+                  [ngClass]="{'is-invalid': submitted && f['password'].errors}"
+                />
+              </div>
+              <ng-container *ngIf="submitted && f['password'] as passwordControl">
+                <div class="invalid-feedback">
+                  <small *ngIf="passwordControl.errors?.['required']">Password is required.</small>
+                </div>
+              </ng-container>
+            </div>
+
+            <div *ngIf="errorMessage" class="alert alert-danger d-flex align-items-center mb-4">
+              <i class="bi bi-exclamation-circle-fill me-2"></i>{{ errorMessage }}
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 d-flex align-items-center justify-content-center">
+              <span *ngIf="!loading">Login</span>
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+              <span *ngIf="loading">Logging in...</span>
+            </button>
+          </form>
+          <div class="text-center mt-3">
+            <p class="mb-0">
+              Don't have an account? <a href="/register" class="text-primary fw-bold">Sign Up</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
