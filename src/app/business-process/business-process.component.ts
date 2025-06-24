@@ -6,11 +6,13 @@ import { CommonModule } from '@angular/common';
 import * as shape from 'd3-shape';
 import { transition } from 'd3-transition';
 import * as d3 from 'd3';
+import { MatDialog } from '@angular/material/dialog';
+import { ProcessInfoDialogComponent } from '../process-info-dialog/process-info-dialog.component';
 
 interface CustomNode extends Node {
   tooltipPosition?: string; // Hanya untuk tooltip
   dimension: { width: number; height: number; x?: number; y?: number };
-  data?: { actor?: string };
+  data?: { actor?: string, description?: string };
 }
 
 @Component({
@@ -24,6 +26,9 @@ export class BusinessProcessComponent implements OnInit {
   hierarchialGraph: { nodes: CustomNode[]; links: Edge[] } = { nodes: [], links: [] };
   curve = shape.curveBundle.beta(1);
 
+  constructor(private dialog: MatDialog) {}
+
+
   ngOnInit(): void {
     this.showGraph();
 
@@ -31,7 +36,7 @@ export class BusinessProcessComponent implements OnInit {
 
   showGraph() {
     this.hierarchialGraph.nodes = [
-      { id: 'start', label: 'Pengajuan Pertanggungan', tooltipPosition: 'x0', dimension: { width: 150, height: 70 }, data: { actor: 'Tertanggung' } },
+      { id: 'start', label: 'Pengajuan Pertanggungan', tooltipPosition: 'x0', dimension: { width: 150, height: 70 }, data: { actor: 'Tertanggung', description: 'xxx' } },
       { id: '1', label: 'Menyalurkan Pertanggungan', tooltipPosition: 'x1', dimension: { width: 150, height: 70 }, data: { actor: 'Broker/Agen' } },
       { id: '2', label: 'Penilaian Risiko', tooltipPosition: 'x2', dimension: { width: 150, height: 70 }, data: { actor: 'Asuradur' } },
       { id: '3', label: 'Penetapan Premi', tooltipPosition: 'x3', dimension: { width: 150, height: 70 }, data: { actor: 'Asuradur' } },
@@ -57,5 +62,41 @@ export class BusinessProcessComponent implements OnInit {
       { id: 'link10', source: '8', target: '9', label: '' },
     ];
   }
+
+
+  wrapText(text: string, maxCharPerLine: number): string[] {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let currentLine = '';
+
+  for (const word of words) {
+    const testLine = currentLine.length > 0 ? currentLine + ' ' + word : word;
+    if (testLine.length > maxCharPerLine) {
+      lines.push(currentLine);
+      currentLine = word;
+    } else {
+      currentLine = testLine;
+    }
+  }
+
+  if (currentLine) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+}
+
+onNodeClick(node: any): void {
+  // console.log(event.node.label);
+    this.dialog.open(ProcessInfoDialogComponent, {
+      data: {
+        title: node.label,
+        actor: node.data?.actor,
+        description: node.data?.description || 'Belum ada deskripsi.'
+      }
+    });
+  }
+
+  
 
 }

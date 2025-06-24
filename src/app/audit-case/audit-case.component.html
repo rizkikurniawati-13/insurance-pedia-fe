@@ -5,39 +5,38 @@
       <h2 class="mb-4 text-center">Audit Case</h2>
 
       <div>
-        <button type="button" class="btn btn-success" (click)="addAuditCase()"><i
-            class="fa-solid fa-square-plus"></i></button>
+        <button type="button" class="btn btn-primary" (click)="addAuditCase()"><i class="fa-solid fa-square-plus"></i>
+          Add Audit Case</button>
         <br>
         <br>
       </div>
 
-      <div class="table-responsive">
-        <table class="table table-striped table-hover table-bordered align-middle shadow-sm rounded">
-          <thead class="table-primary">
-            <tr class="text-center">
-              <th scope="col">#</th>
-              <th scope="col">Judul</th>
-              <th scope="col">Tahun</th>
-              <th scope="col">Tipe</th>
-              <th scope="col">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let case of auditCase; let i = index">
-              <td class="text-center">{{ i + 1 }}</td>
-              <td>{{ case.title }}</td>
-              <td>{{ case.violationYear }}</td>
-              <td>{{ case.violationType }}</td>
-              <td class="text-center">
-                <!-- <button class="btn btn-sm btn-info me-2" (click)="goToDetail(company.id)"><i class="fa-solid fa-eye"></i></button>
-            <button class="btn btn-sm btn-warning me-2" (click)="editCompany(company)"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button class="btn btn-sm btn-danger" (click)="deleteCompany(company.id)"> -->
-                <!-- <i class="fas fa-trash"></i></button> -->
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+
+      <table class="table table-striped table-bordered">
+        <thead class="thead-light">
+          <tr class="text-center">
+            <th scope="col">No</th>
+            <th scope="col">Perusahaan Asuransi Terkait</th>
+            <th scope="col">Judul</th>
+            <th scope="col">Tahun</th>
+            <th scope="col">Tipe</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let case of auditCase; let i = index">
+            <td class="text-center">{{ i + 1 }}</td>
+            <td>{{ case.company?.name }}</td>
+            <td>{{ case.title }}</td>
+            <td>{{ case.violationYear }}</td>
+            <td>{{ case.violationType }}</td>
+            <td class="text-center">
+              <button (click)="gotoDetail(case.id)"><i class="fa-solid fa-circle-info"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
     </div>
   </main>
 </div>

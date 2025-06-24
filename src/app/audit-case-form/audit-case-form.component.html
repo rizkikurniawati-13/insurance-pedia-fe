@@ -1,92 +1,115 @@
 <div class="d-flex" style="height: 100vh;">
   <app-sidebar style="width: 250px;"></app-sidebar>
-  <main class="flex-grow-1 p-4 overflow-auto">
-<div class="container mt-4">
-  <h3>Tambah Audit Case</h3>
-  <form [formGroup]="auditCaseForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-    <label for="companyId">Perusahaan</label>
-    <ng-select
-        [items]="company"
-        bindLabel="name"
-        bindValue="id"
-        placeholder="Cari atau pilih perusahaan"
-        formControlName="companyId"
-        [searchable]="true"
-        [clearable]="true">
-    </ng-select>
-    </div>
 
-    <div class="mb-3">
-      <label>Judul Kasus</label>
-      <input class="form-control" type="text" aria-label="default input example" formControlName="title">
-      
-    </div>
+  <main class="flex-grow-1 p-4" style="overflow: visible; position: relative;">
+    <div class="container">
+      <div class="card shadow-sm rounded-4 p-4 border-0">
+        <h4 class="mb-4 text-primary">📋 Tambah Audit Case</h4>
 
-    <div class="mb-3">
-      <label>Nilai Kerugian</label>
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Masukkan nilai kerugian"
-        [value]="formattedLossAmount"
-        (input)="onLossAmountInput($event)"
-        (keypress)="allowOnlyNumbers($event)" />
-        <div *ngIf="auditCaseForm.get('lossAmount')?.invalid && auditCaseForm.get('lossAmount')?.touched" class="text-danger">
-        Harus berupa angka dan tidak boleh negatif.
-        </div>
-    </div>
+        <form [formGroup]="auditCaseForm" (ngSubmit)="onSubmit()">
+          <div class="row g-3">
+            <!-- Perusahaan -->
+            <div class="col-md-6">
+              <label class="form-label">Perusahaan</label>
+              <ng-select class="form-select-sm" [items]="company" bindLabel="name" bindValue="id"
+                placeholder="Cari atau pilih perusahaan" formControlName="companyId" [searchable]="true"
+                [clearable]="true" 
+                appendTo="body">
+              </ng-select>
+            </div>
 
-    <div class="mb-3">
-      <label>Jenis Pelanggaran</label>
-      <select class="form-select" aria-label="Default select example" formControlName="violationType">
-      <option value="">Jenis Pelanggaran</option>
-      <option *ngFor="let type of violationTypes" [value]="type">{{type}}</option>
-      </select>
+            <!-- Judul Kasus -->
+            <div class="col-md-6">
+              <label class="form-label">Judul Kasus</label>
+              <input class="form-control" type="text" formControlName="title">
+            </div>
+
+            <!-- Nilai Kerugian -->
+            <div class="col-md-6">
+              <label class="form-label">Nilai Kerugian</label>
+              <input type="text" class="form-control" placeholder="Masukkan nilai kerugian"
+                [value]="formattedLossAmount" (input)="onLossAmountInput($event)"
+                (keypress)="allowOnlyNumbers($event)" />
+              <div *ngIf="auditCaseForm.get('lossAmount')?.invalid && auditCaseForm.get('lossAmount')?.touched"
+                class="text-danger small mt-1">
+                Harus berupa angka dan tidak boleh negatif.
+              </div>
+            </div>
+
+            <!-- Jenis Pelanggaran -->
+            <div class="col-md-6">
+              <label class="form-label">Jenis Pelanggaran</label>
+              <select class="form-select" formControlName="violationType">
+                <option value="">Pilih jenis pelanggaran</option>
+                <option *ngFor="let type of violationTypes" [value]="type">{{ type }}</option>
+              </select>
+            </div>
+
+            <!-- Tahun Pelanggaran -->
+            <div class="col-md-6">
+              <label class="form-label">Tahun Pelanggaran</label>
+              <select class="form-select" formControlName="violationYear">
+                <option value="" disabled selected>Pilih tahun</option>
+                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+              </select>
+            </div>
+
+            <!-- Tahun Temuan -->
+            <div class="col-md-6">
+              <label class="form-label">Tahun Temuan</label>
+              <select class="form-select" formControlName="discoveryYear">
+                <option value="" disabled selected>Pilih tahun</option>
+                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+              </select>
+            </div>
+
+            <!-- Instansi Penemu -->
+            <div class="col-md-6">
+              <label class="form-label">Instansi yang Menemukan</label>
+              <select class="form-select" formControlName="discoveringInstitution">
+                <option value="">Pilih instansi</option>
+                <option *ngFor="let instansi of instansiList" [value]="instansi">{{ instansi }}</option>
+              </select>
+            </div>
+
+            <!-- Terdakwa -->
+            <div class="col-md-6">
+              <label class="form-label">Terdakwa / Jabatan</label>
+              <textarea formControlName="defendants" class="form-control" rows="2"></textarea>
+            </div>
+
+            <!-- Proyek Terkait -->
+            <div class="col-md-6">
+              <label class="form-label">Proyek Terkait</label>
+              <textarea formControlName="relatedProject" class="form-control" rows="2"></textarea>
+            </div>
+
+            <!-- Pokok Temuan -->
+            <div class="col-md-6">
+              <label class="form-label">Pokok Temuan</label>
+              <textarea formControlName="findings" class="form-control" rows="2"></textarea>
+            </div>
+
+            <!-- Rekomendasi -->
+            <div class="col-md-6">
+              <label class="form-label">Rekomendasi Pemeriksaan</label>
+              <textarea formControlName="recommendations" class="form-control" rows="2"></textarea>
+            </div>
+
+            <!-- Tindak Lanjut -->
+            <div class="col-md-6">
+              <label class="form-label">Tindak Lanjut Pemeriksaan</label>
+              <textarea formControlName="followUp" class="form-control" rows="2"></textarea>
+            </div>
+          </div>
+
+          <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-primary px-4">
+              <i class="fa-solid fa-floppy-disk me-2"></i> Simpan
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="mb-3">
-      <label>Tahun Pelanggaran</label>
-      <select aria-label="Default select example" formControlName="violationYear" id="tahunTemuan" required>
-        <option value="" disabled selected>Pilih tahun</option>
-        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-        </select>              
-    </div>
-    <div class="mb-3">
-      <label>Tahun Temuan</label>
-      <select aria-label="Default select example" formControlName="discoveryYear" id="tahunTemuan" required>
-        <option value="" disabled selected>Pilih tahun</option>
-        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
-        </select>  
-    </div>
-    <div class="mb-3">
-      <label>Instansi yang Menemukan</label>
-      <select class="form-select" aria-label="Default select example" formControlName="discoveringInstitution">
-      <option value="">Jenis Pelanggaran</option>
-      <option *ngFor="let instansi of instansiList" [value]="instansi">{{instansi}}</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label>Terdakwa / Jabatan</label>
-      <textarea formControlName="defendants" class="form-control"></textarea>
-    </div>
-    <div class="mb-3">
-      <label>Proyek Terkait</label>
-      <textarea formControlName="relatedProject" class="form-control"></textarea>
-    </div>
-    <div class="mb-3">
-      <label>Pokok Temuan</label>
-      <textarea formControlName="findings" class="form-control"></textarea>
-    </div>
-    <div class="mb-3">
-      <label>Rekomendasi Pemeriksaan</label>
-      <textarea formControlName="recommendations" class="form-control"></textarea>
-    </div>
-    <div class="mb-3">
-      <label>Tindak Lanjut Pemeriksaan</label>
-      <textarea formControlName="followUp" class="form-control"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Simpan</button>
-  </form>
-</div>
-</main>
+  </main>
 </div>

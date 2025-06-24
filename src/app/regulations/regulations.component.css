@@ -1,5 +1,5 @@
 .main-content {
-  margin-left: 250px;
+  margin-left: 210px;
   transition: margin-left 0.3s ease;
 }
 
@@ -11,6 +11,11 @@
   padding: 20px;
 }
 
-.table th, .table td {
+table {
+  table-layout: auto;
+  width: 100%;
+}
+
+th, td {
   vertical-align: middle;
 }

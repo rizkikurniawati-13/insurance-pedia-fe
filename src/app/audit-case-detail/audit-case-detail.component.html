@@ -1,1 +1,82 @@
-<p>audit-case-detail works!</p>
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+  <main class="flex-grow-1 p-4 overflow-auto">
+    <div class="container mt-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">
+            <i class="fa-solid fa-file-circle-check me-2"></i>
+            Detail Audit Case
+          </h5>
+          <button class="btn btn-sm btn-light" (click)="goBack()">
+            <i class="fa-solid fa-arrow-left"></i> Kembali
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label class="fw-bold">Judul Kasus:</label>
+              <p>{{ auditCase?.title }}</p>
+            </div>
+            <div class="col-md-6">
+              <label class="fw-bold">Perusahaan:</label>
+              <p>{{ auditCase?.company?.name || '-' }}</p>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label class="fw-bold">Tahun Pelanggaran:</label>
+              <p>{{ auditCase?.violationYear || '-' }}</p>
+            </div>
+            <div class="col-md-4">
+              <label class="fw-bold">Tahun Temuan:</label>
+              <p>{{ auditCase?.findingYear || '-' }}</p>
+            </div>
+            <div class="col-md-4">
+              <label class="fw-bold">Instansi Menemukan:</label>
+              <p>{{ auditCase?.findingInstitution || '-' }}</p>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold">Jenis Pelanggaran:</label>
+            <p>{{ auditCase?.violationType || '-' }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold">Nilai Kerugian:</label>
+            <p>{{ auditCase?.lossValue ? (auditCase.lossValue | currency:'IDR':'symbol':'1.0-0') : '-' }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold">Terdakwa / Jabatan:</label>
+            <p class="white-space-pre">{{ auditCase?.defendants || '-' }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold">Proyek Terkait:</label>
+            <p>{{ auditCase?.relatedProject || '-' }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold">Pokok Temuan:</label>
+            <p>{{ auditCase?.findings || '-' }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold">Rekomendasi Pemeriksaan:</label>
+            <p>{{ auditCase?.recommendations || '-' }}</p>
+          </div>
+
+          <div class="mb-3">
+            <label class="fw-bold">Tindak Lanjut Pemeriksaan:</label>
+            <p>{{ auditCase?.followUp || '-' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+</div>

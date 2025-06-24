@@ -4,13 +4,31 @@
   <div class="container" style="align-content: center;">
     <h2>Daftar Regulasi</h2>
     <br>
+    <!-- Search -->
+    <input type="text" class="form-control mb-3" [(ngModel)]="searchText" placeholder="Cari judul regulasi..."
+      (ngModelChange)="applyFilter()" />
+
     <button class="btn btn-sm btn-primary" (click)="goToFormRegulation()">
       <i class="fa-solid fa-square-plus"></i> Add Regulation
     </button>
     <br>
-    <table class="table table-striped">
+    <br>
+    <div class="mb-3 d-flex align-items-center">
+      <label for="pageSize" class="me-2 mb-0">Tampilkan:</label>
+      <select id="pageSize" [(ngModel)]="pageSize" class="form-select form-select-sm w-auto"
+        (change)="onPageSizeChange()">
+        <option [value]="5">5</option>
+        <option [value]="10">10</option>
+        <option [value]="25">25</option>
+        <option [value]="50">50</option>
+        <option [value]="100">100</option>
+      </select>
+      <span class="ms-2">regulasi per halaman</span>
+    </div>
+    <table class="table table-striped table-bordered">
       <thead>
-        <tr>
+        <tr style="text-align: center;">
+          <th>No</th>
           <th>Judul</th>
           <th>Nomor</th>
           <th>Jenis</th>
@@ -19,27 +37,46 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let reg of regulations">
+        <tr *ngFor="let reg of pagedRegulations; let i = index">
+          <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
           <td>{{ reg.title }}</td>
           <td>{{ reg.number }}</td>
           <td>{{ reg.type }}</td>
-          <td>{{ reg.issuedDate }}</td>
+          <td>{{ reg.issuedDate | date: 'dd MMMM yyyy' : undefined : 'id-ID' }}</td>
           <td>
-            <!-- <button (click)="downloadFile(reg)" class="btn btn-sm btn-primary">
+            <a [href]="reg.link" class="btn btn-sm btn-primary" target="_blank" download>
               <i class="fa-solid fa-download"></i>
-            </button> -->
-            <button class="btn btn-sm btn-primary">
-              <i class="fa-solid fa-download"></i>
-              <a href={{reg.link}}></a>
-            </button>
+            </a>
+
             &nbsp;
-            <button (click)="previewPdf(reg)" class="btn btn-sm btn-primary">
+
+            <!-- View -->
+            <a [href]="'https://docs.google.com/gview?embedded=true&url=' + reg.link" target="_blank"
+              class="btn btn-sm btn-secondary">
               <i class="fa-solid fa-eye"></i>
-            </button>
+            </a>
+
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!-- Pagination Controls -->
+    <nav *ngIf="filteredRegulations.length > pageSize">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+        </li>
+        <li class="page-item" *ngFor="let page of totalPagesArray" [class.active]="currentPage === page">
+          <button class="page-link" (click)="changePage(page)">{{ page }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+        </li>
+      </ul>
+    </nav>
+
+
   </div>
 
 </div>

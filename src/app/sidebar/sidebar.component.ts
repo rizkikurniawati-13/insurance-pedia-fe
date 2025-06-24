@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   collapsed = false;
+  currentYear: number = new Date().getFullYear();
+
   constructor(private router: Router) {}
 
   @Output() collapsedChange = new EventEmitter<boolean>();

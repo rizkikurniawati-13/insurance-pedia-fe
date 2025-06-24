@@ -31,6 +31,9 @@ import { BusinessProcessComponent } from './business-process/business-process.co
 import { NgxGraphModule } from '@swimlane/ngx-graph';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     NgSelectModule,
     NgxGraphModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatDialogModule,
+    MatButtonModule,
+    NgxPaginationModule
   ],
   providers: [
     AuthGuard,

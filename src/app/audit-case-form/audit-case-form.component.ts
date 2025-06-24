@@ -80,7 +80,7 @@ export class AuditCaseFormComponent implements OnInit {
     this.auditCaseService.create(auditCase.companyId, auditCase).subscribe({
       next: () => {
         alert('Audit Case berhasil disimpan!');
-        this.router.navigate(['/companies']);
+        this.router.navigate(['/audit-case']);
       },
       error: (err) => {
         console.error(err);
