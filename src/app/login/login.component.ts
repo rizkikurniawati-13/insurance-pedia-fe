@@ -39,7 +39,7 @@ export class LoginComponent {
     this.loading = true;
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
-        console.log('ini bodynya', this.loginForm.value)
+        // console.log('ini bodynya', this.loginForm.value)
         this.loading = false;
         localStorage.setItem('token', res.token);
         this.router.navigate(['/glossary'])

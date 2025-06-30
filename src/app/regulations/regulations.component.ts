@@ -39,13 +39,14 @@ export class RegulationsComponent implements OnInit {
     this.sidebarCollapsed = collapsed;
   }
 
-  loadRegulation() {
+  loadRegulation() { 
     this.regulationService.getAll().subscribe(
       (data: any[]) => {
         this.regulations = data;
         this.filteredRegulations = data;
         this.updatePagination();
         this.applyFilter();
+        
       },
       error => {
         console.error('Error fetching company', error)

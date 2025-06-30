@@ -42,7 +42,7 @@ export class UserManagementComponent implements OnInit {
   this.userService.getUsers().subscribe({
     next: (users) => {
       this.users = users.map(user => {
-        console.log('Processing user:', { id: user.id, name: user.name, email: user.email, role: user.role });
+        // console.log('Processing user:', { id: user.id, name: user.name, email: user.email, role: user.role });
         return {
           ...user,
           role: Array.isArray(user.role) ? user.role : user.role ? [user.role] : ['AUDITOR']

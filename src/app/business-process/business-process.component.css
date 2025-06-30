@@ -2,6 +2,10 @@
   min-height: 200px;
   background-color: #ffffff;
   border: 1px solid #dee2e6;
+  position: relative;
+  overflow-x: auto;  /* Scroll horizontal jika konten terlalu lebar */
+  overflow-y: hidden;
+  max-width: 100%;   /* Batasi agar tidak melebar melebihi container */
 }
 
 .chart-container {
@@ -20,4 +24,9 @@
 
 .arrow-head {
   fill: #6c757d;
+}
+
+ngx-graph svg {
+  overflow: hidden;
+  max-width: 100%;
 }
