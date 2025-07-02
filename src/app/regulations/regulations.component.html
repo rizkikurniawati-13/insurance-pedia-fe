@@ -1,7 +1,7 @@
-<app-sidebar (collapsedChange)="sidebarCollapsed = $event"></app-sidebar>
+<app-sidebar (collapsedChange)="onSidebarCollapsed($event)"></app-sidebar>
 
 <div class="main-content" [ngClass]="{ 'collapsed': sidebarCollapsed }">
-  <div class="container" style="align-content: center;">
+  <div class="container">
     <h2>Daftar Regulasi</h2>
     <br>
     <!-- Search -->
@@ -44,18 +44,15 @@
           <td>{{ reg.type }}</td>
           <td>{{ reg.issuedDate | date: 'dd MMMM yyyy' : undefined : 'id-ID' }}</td>
           <td>
-            <a [href]="reg.link" class="btn btn-sm btn-primary" target="_blank" download>
-              <i class="fa-solid fa-download"></i>
-            </a>
-
-            &nbsp;
-
-            <!-- View -->
-            <a [href]="'https://docs.google.com/gview?embedded=true&url=' + reg.link" target="_blank"
-              class="btn btn-sm btn-secondary">
-              <i class="fa-solid fa-eye"></i>
-            </a>
-
+            <div class="d-flex gap-2 justify-content-center">
+              <a [href]="reg.link" class="btn btn-sm btn-primary" target="_blank" download>
+                <i class="fa-solid fa-download"></i>
+              </a>
+              <a [href]="'https://docs.google.com/gview?embedded=true&url=' + reg.link" target="_blank"
+                class="btn btn-sm btn-secondary">
+                <i class="fa-solid fa-eye"></i>
+              </a>
+            </div>
           </td>
         </tr>
       </tbody>

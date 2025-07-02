@@ -1,0 +1,19 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+<div class="puzzle-container">
+  <h2>Logic Puzzle (Level {{ level }})</h2>
+
+  <div class="question" *ngIf="puzzle">
+    <p>{{ puzzle.question }}</p>
+
+    <input [(ngModel)]="userAnswer" placeholder="Jawaban Anda" />
+    <button (click)="submit()">Kirim</button>
+
+    <p class="feedback" *ngIf="feedback">{{ feedback }}</p>
+  </div>
+
+  <div *ngIf="!puzzle">
+    <p>Memuat puzzle...</p>
+  </div>
+</div>
+</div>

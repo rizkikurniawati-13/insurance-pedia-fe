@@ -35,3 +35,33 @@ ng-select {
   position: relative;
 }
 
+ng-select {
+  width: 100%;
+  display: block;
+}
+
+.ng-select .ng-select-container {
+  min-height: 38px;
+  border-radius: 0.375rem;
+  border: 1px solid #ced4da;
+}
+
+.ng-dropdown-panel {
+  z-index: 1055 !important;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+  overflow: auto;
+  max-height: 250px;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  padding: 0.5rem;
+  font-size: 14px;
+  white-space: normal;
+}
+
+.ng-select .ng-select-container .ng-value {
+  white-space: normal !important;
+}
+
+

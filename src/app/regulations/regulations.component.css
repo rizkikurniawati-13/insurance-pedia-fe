@@ -1,16 +1,47 @@
+/* Reset & layout dasar */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* Atur agar tidak ada celah dari navbar jika fixed */
+body {
+  padding-top: 0 !important;
+}
+
+/* Sidebar Layout */
+app-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 210px;
+  height: 100vh;
+  background-color: #1e1e2d;
+  z-index: 1000;
+}
+
+/* Main content area */
 .main-content {
   margin-left: 210px;
+  padding: 2rem 2rem 2rem 2rem;
   transition: margin-left 0.3s ease;
+  min-height: 100vh;
+  background-color: #fff;
 }
 
 .main-content.collapsed {
   margin-left: 70px;
 }
 
+/* Container content layout */
 .container {
-  padding: 20px;
+  margin-top: 0 !important;
+  padding: 0 !important;
 }
 
+/* Table */
 table {
   table-layout: auto;
   width: 100%;
@@ -19,3 +50,8 @@ table {
 th, td {
   vertical-align: middle;
 }
+
+/* Debug - optional */
+/* .main-content, .container {
+  border: 1px dashed rgba(0,0,0,0.1);
+} */

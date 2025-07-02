@@ -1,0 +1,60 @@
+<div class="d-flex" style="height: 100vh;">
+  <!-- Sidebar -->
+  <app-sidebar style="width: 250px;"></app-sidebar>
+
+  <!-- Main TTS Area -->
+  <div class="tts-container">
+    <div class="tts-header text-center">
+  <h2 class="tts-title">🧩 TTS Bersilangan: <em>Istilah Asuransi</em></h2>
+
+  <div class="scoreboard">
+    ⏱ <strong>Waktu:</strong> {{ timeLeft }} detik &nbsp;&nbsp; | &nbsp;&nbsp;
+    🎯 <strong>Skor:</strong> {{ score }}
+  </div>
+</div>
+
+    <div class="d-flex flex-wrap gap-4">
+      <!-- Grid -->
+      <div class="tts-grid">
+        <div *ngFor="let row of grid; let r = index" class="tts-row">
+          <div *ngFor="let cell of row; let c = index"
+               class="tts-cell"
+               [ngClass]="{ 'blocked': grid[r][c] === null }">
+            <div class="cell-number" *ngIf="getClueNumber(r, c)">
+              {{ getClueNumber(r, c) }}
+            </div>
+            <input #inputBox
+                   *ngIf="grid[r][c] !== null"
+                   [(ngModel)]="userGrid[r][c]"
+                   maxlength="1"
+                   class="cell-input"
+                   [class.correct]="isCorrect(r, c)"
+                   [class.wrong]="checked && !isCorrect(r, c)"
+                   [attr.data-row]="r"
+                   [attr.data-col]="c"
+                   (input)="handleInput(r, c)" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Clues -->
+      <div class="tts-clues">
+        <h3>Mendatar</h3>
+        <ul>
+          <li *ngFor="let clue of cluesAcross">
+            <strong>{{ clue.number }}.</strong> {{ clue.hint }}
+          </li>
+        </ul>
+
+        <h3>Menurun</h3>
+        <ul>
+          <li *ngFor="let clue of cluesDown">
+            <strong>{{ clue.number }}.</strong> {{ clue.hint }}
+          </li>
+        </ul>
+
+        <button class="btn btn-primary mt-2" (click)="checkAnswer()">Cek Jawaban</button>
+      </div>
+    </div>
+  </div>
+</div>

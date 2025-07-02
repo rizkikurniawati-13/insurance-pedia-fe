@@ -19,6 +19,8 @@ import { UserRegisterComponent } from './user-register/user-register.component';
 import { AuthGuard } from './services/auth.guard';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { BusinessProcessComponent } from './business-process/business-process.component';
+import { PuzzleComponent } from './puzzle/puzzle.component';
+import { CrosswordComponent } from './crossword/crossword.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -38,6 +40,8 @@ export const routes: Routes = [
     { path: 'user-management', component: UserManagementComponent, canActivate: [AuthGuard],data: { roles: ['ADMIN'] } },
     { path: 'user-register', component: UserRegisterComponent, canActivate: [AuthGuard] },
     { path: 'regulations', component: RegulationsComponent, canActivate: [AuthGuard] },
+    { path: 'puzzle', component: PuzzleComponent, canActivate: [AuthGuard] },
+    { path: 'crossword', component: CrosswordComponent, canActivate: [AuthGuard] },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];

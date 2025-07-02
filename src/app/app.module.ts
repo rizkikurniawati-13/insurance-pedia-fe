@@ -34,6 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PuzzleComponent } from './puzzle/puzzle.component';
+import { CrosswordComponent } from './crossword/crossword.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
     UserManagementComponent,
     UserRegisterComponent,
     ForbiddenComponent,
-    BusinessProcessComponent
+    BusinessProcessComponent,
+    PuzzleComponent,
+    CrosswordComponent
   ],
   imports: [
     BrowserAnimationsModule,

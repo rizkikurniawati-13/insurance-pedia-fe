@@ -11,11 +11,11 @@
             <!-- Perusahaan -->
             <div class="col-md-6">
               <label class="form-label">Perusahaan</label>
-              <ng-select class="form-select-sm" [items]="company" bindLabel="name" bindValue="id"
+              <ng-select class="form-control form-select-sm" [items]="company" bindLabel="name" bindValue="id"
                 placeholder="Cari atau pilih perusahaan" formControlName="companyId" [searchable]="true"
-                [clearable]="true" 
-                appendTo="body">
+                [clearable]="true" appendTo=".card">
               </ng-select>
+
             </div>
 
             <!-- Judul Kasus -->
