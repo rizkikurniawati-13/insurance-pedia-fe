@@ -47,6 +47,9 @@
   </ul>
 
   <!-- Bottom: Logout & Logo -->
+   <small *ngIf="!collapsed" class="text-secondary mt-2 text-center">
+    © 2025 InsurancePedia
+  </small>
   <div class="p-3 border-top border-secondary d-flex flex-column align-items-center">
     <!-- Logout Button -->
     <button (click)="logout()"
