@@ -8,7 +8,9 @@ export interface InsuranceCompaniesModel{
     licenseNumber: string;
     establishedDate: Date;
     status: string;
+    link: string;
     products: ProductsModel[];
+    risks : RiskModel[];
     createdBy: string;
     createdDate: Date;
     lastModifiedBy: string;
@@ -34,4 +36,13 @@ export interface ProductCategoriesModel{
     createdDate: Date;
     lastModifiedBy: string;
     lastModifiedDate: Date;
+}
+
+export interface RiskModel{
+    id: string;
+    name: string;
+    type: string;
+    cause: string;
+    impact: string;
+    mitigation: string;
 }

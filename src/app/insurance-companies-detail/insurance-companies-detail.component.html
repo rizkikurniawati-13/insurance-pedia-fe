@@ -10,14 +10,14 @@
           <p class="mb-1"><strong>Tanggal Berdiri:</strong> {{ company.establishedDate | date:'dd MMMM yyyy' }}</p>
           <p class="mb-1"><strong>Alamat:</strong> {{ company.address }}</p>
           <p class="mb-1"><strong>Kontak:</strong> {{ company.contact }}</p>
-          <p class="mb-1"><strong>NPWP:</strong> {{ company.npwp }}</p>
+          <!-- <p class="mb-1"><strong>NPWP:</strong> {{ company.npwp }}</p> -->
           <p class="mb-1"><strong>Nomor Ijin Usaha:</strong> {{ company.licenseNumber }}</p>
           <p class="mb-1"><strong>Status:</strong> {{ company.status }}</p>
           <p class="mb-1"><strong>Tipe:</strong> {{ company.type }}</p>
         </div>
       </div>
 
-      <div class="card shadow-sm">
+      <div class="card shadow-sm mb-4">
         <div class="card-body">
           <h5 class="card-title text-success">Daftar Produk</h5>
           <ul class="list-group list-group-flush">
@@ -25,6 +25,35 @@
               {{ product.name }}
             </li>
           </ul>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-success">Daftar Risiko Utama Perusahaan</h5>
+          <table class="table table-hover table-dark">
+            <thead>
+              <tr>
+                <th scope="col">No</th>
+                <th scope="col">Nama Risiko</th>
+                <th scope="col">Jenis Risiko</th>
+                <th scope="col">Penyebab</th>
+                <th scope="col">Dampak</th>
+                <th scope="col">Mitigasi Risiko</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let risk of company.risks; let i = index">
+                <th>{{i + 1}}</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+
+          </table>
         </div>
       </div>
     </div>
