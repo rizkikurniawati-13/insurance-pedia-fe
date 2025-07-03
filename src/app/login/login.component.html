@@ -1,32 +1,3 @@
-<!-- <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="form-container">
-  <h2>Login</h2>
-
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" formControlName="email" id="email" />
-    <ng-container *ngIf="submitted">
-      <div *ngIf="f['email'] as emailControl">
-        <small *ngIf="emailControl.errors?.['required']" class="error">Email wajib diisi.</small>
-        <small *ngIf="emailControl.errors?.['email']" class="error">Format email salah.</small>
-      </div>
-    </ng-container>
-  </div>
-
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" formControlName="password" id="password" />
-    <ng-container *ngIf="submitted">
-      <div *ngIf="f['password'] as passwordControl">
-        <small *ngIf="passwordControl.errors?.['required']" class="error">Password wajib diisi.</small>
-      </div>
-    </ng-container>
-  </div>
-
-  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-
-  <button type="submit">Login</button>
-</form> -->
-
 <div class="login-container">
   <div class="row justify-content-center align-items-center min-vh-100">
     <div class="col-12 col-md-8 col-lg-4">
@@ -36,7 +7,7 @@
             <h1 class="card-title" style="font-size: 40px;">Welcome</h1>
             <h3 style="font-style: italic; font-size: medium;">I-Pedia</h3>
             <a>
-              <img src="https://i.ibb.co/4R6P6wqp/logo-removebg-preview.png" alt="logo" style="width: 100px; height: auto; border:0; padding-bottom: 10px;">
+              <img src="assets/logo.png" alt="logo" style="width: 100px; height: auto; border:0; padding-bottom: 10px;">
             </a> <br>
             <!-- <p class="text-muted">Access your account</p> -->
           </div>
