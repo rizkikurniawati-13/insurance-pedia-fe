@@ -1,0 +1,32 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+  <main class="flex-grow-1 p-4 overflow-auto bg-light">
+    <div class="container my-4">
+      <div class="container mt-4">
+        <h3>Tambah Pertanyaan</h3>
+        <form (submit)="submitQuestion()">
+          <input type="text" [(ngModel)]="newQuestion" name="question" class="form-control mb-2"
+            placeholder="Pertanyaan..." required>
+          <input type="text" [(ngModel)]="createdBy" name="createdBy" class="form-control mb-2"
+            placeholder="Nama penanya..." required>
+          <button class="btn btn-primary">Kirim</button>
+        </form>
+
+        <hr>
+
+        <h3>Jawab Pertanyaan</h3>
+        <div *ngFor="let q of questions" class="card mt-3 p-3">
+          <p><strong>{{ q.question }}</strong> ({{ q.createdBy }})</p>
+          <form (submit)="submitAnswer(q.id)">
+            <input type="text" [(ngModel)]="answers[q.id]" name="answer-{{q.id}}" class="form-control mb-2"
+              placeholder="Jawaban..." required>
+            <input type="text" [(ngModel)]="answerers[q.id]" name="answeredBy-{{q.id}}" class="form-control mb-2"
+              placeholder="Nama penjawab..." required>
+            <input type="file" (change)="onFileChange($event, q.id)" class="form-control mb-2" accept=".pdf,.jpg,.jpeg">
+            <button class="btn btn-success">Jawab</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,31 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+  <main class="flex-grow-1 p-4 overflow-auto bg-light">
+    <div class="container my-4">
+      <div class="container mt-4">
+        <div class="container mt-4">
+          <h2>Frequently Asked Questions</h2>
+
+          <div *ngFor="let q of questions" class="card mt-3 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ q.question }}</h5>
+              <p class="text-muted">Ditanyakan oleh: {{ q.createdBy }}</p>
+
+              <div *ngIf="q.answers?.length > 0; else noAnswer">
+                <div *ngFor="let a of q.answers" class="mt-2 border-top pt-2">
+                  <strong>{{ a.answeredBy }}:</strong>
+                  <p>{{ a.answer }}</p>
+                  <a *ngIf="a.fileUrl" [href]="a.fileUrl" target="_blank">📎 Lampiran</a>
+                </div>
+              </div>
+
+              <ng-template #noAnswer>
+                <p class="text-danger">Belum ada jawaban</p>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
