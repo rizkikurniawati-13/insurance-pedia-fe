@@ -17,6 +17,7 @@ export class LoginComponent {
   submitted = false;
   errorMessage = '';
   loading = false; 
+  showPassword = false; 
 
   constructor(
     private authService: AuthService,

@@ -38,13 +38,22 @@
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
                 <input
-                  type="password"
+                  [type]="showPassword ? 'text' : 'password'"
+                  
                   formControlName="password"
                   id="password"
                   class="form-control"
                   placeholder="Enter your password"
                   [ngClass]="{'is-invalid': submitted && f['password'].errors}"
                 />
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary"
+                  (click)="showPassword = !showPassword"
+                  tabindex="-1"
+                >
+                  <i class="fa-solid" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
               </div>
               <ng-container *ngIf="submitted && f['password'] as passwordControl">
                 <div class="invalid-feedback">
