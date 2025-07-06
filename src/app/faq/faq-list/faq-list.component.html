@@ -1,28 +1,74 @@
-<div class="d-flex" style="height: 100vh;">
-  <app-sidebar style="width: 250px;"></app-sidebar>
-  <main class="flex-grow-1 p-4 overflow-auto bg-light">
-    <div class="container my-4">
-      <div class="container mt-4">
-        <div class="container mt-4">
-          <h2>Frequently Asked Questions</h2>
+<div class="d-flex min-vh-100 bg-light">
+  <!-- Sidebar -->
+  <app-sidebar class="bg-dark text-white" style="width: 250px;"></app-sidebar>
 
-          <div *ngFor="let q of questions" class="card mt-3 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ q.question }}</h5>
-              <p class="text-muted">Ditanyakan oleh: {{ q.createdBy }}</p>
+  <!-- Main content -->
+  <main class="flex-grow-1 py-4 px-3 px-lg-4" style="padding-left: rem;">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+      <h2 class="fw-bold text-primary mb-0">
+        <i class="fas fa-question-circle me-2 text-primary"></i>Frequently Asked Questions
+      </h2>
+      <button (click)="gotoQuestion()" class="btn btn-primary shadow-sm">
+        <i class="fas fa-plus-circle me-2"></i> Ajukan Pertanyaan
+      </button>
+    </div>
 
-              <div *ngIf="q.answers?.length > 0; else noAnswer">
-                <div *ngFor="let a of q.answers" class="mt-2 border-top pt-2">
-                  <strong>{{ a.answeredBy }}:</strong>
-                  <p>{{ a.answer }}</p>
-                  <a *ngIf="a.fileUrl" [href]="a.fileUrl" target="_blank">📎 Lampiran</a>
-                </div>
+    <!-- FAQ Grid -->
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+      <div *ngFor="let q of questions" class="col">
+        <div class="card h-100 shadow-sm border-0 rounded-3">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title fw-semibold text-dark mb-2">{{ q.question }}</h5>
+            <p class="text-muted small mb-2">
+              <i class="fas fa-user-circle me-1"></i>{{ q.createdBy }}
+            </p>
+
+            <!-- Jawaban -->
+            <div *ngIf="q.answers?.length > 0; else noAnswer">
+              <div *ngFor="let a of q.answers" class="border-start border-3 border-primary ps-3 mt-2">
+                <p class="mb-1"><strong>{{ a.answeredBy }}:</strong></p>
+                <p class="mb-1">{{ a.answer }}</p>
+                <a *ngIf="a.fileUrl"
+                   [href]="'http://localhost:8080' + a.fileUrl"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="text-decoration-none text-primary small">
+                  <i class="fas fa-paperclip me-1"></i> Lihat Lampiran
+                </a>
               </div>
-
-              <ng-template #noAnswer>
-                <p class="text-danger">Belum ada jawaban</p>
-              </ng-template>
             </div>
+
+            <!-- Tidak Ada Jawaban -->
+            <ng-template #noAnswer>
+              <p class="text-warning fw-semibold mt-auto">
+                <i class="fas fa-info-circle me-1"></i>Belum ada jawaban
+              </p>
+            </ng-template>
+
+            <!-- Tombol Jawab -->
+            <button class="btn btn-sm btn-outline-primary mt-3 align-self-start"
+                    (click)="openAnswerForm(q)">
+              <i class="fas fa-edit me-1"></i> Jawab
+            </button>
+
+            <!-- Form Jawaban -->
+            <div *ngIf="selectedQuestion === q" class="mt-3">
+              <form (submit)="submitAnswer(q.id)">
+              <textarea [(ngModel)]="answers[q.id]"
+                        name="answer-{{ q.id }}"
+                        rows="3"
+                        class="form-control"
+                        placeholder="Tulis jawaban Anda di sini..."></textarea>
+              <input type="file" (change)="onFileChange($event, q.id)" class="form-control mb-2" accept=".pdf,.jpg,.jpeg">
+              <button class="btn btn-sm btn-success me-2">
+                <i class="fas fa-paper-plane me-1"></i> Kirim Jawaban
+              </button>
+              <button class="btn btn-sm btn-secondary" (click)="cancelAnswer()">
+                Batal
+              </button>
+              </form>
+              </div>
           </div>
         </div>
       </div>

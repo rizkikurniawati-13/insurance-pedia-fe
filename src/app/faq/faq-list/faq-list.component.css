@@ -1,0 +1,14 @@
+main {
+  padding-left: 4rem !important;
+  padding-right: 1.5rem;
+}
+
+.card-body {
+  padding-bottom: 1rem;
+}
+
+.card .border-start {
+  background-color: #f8f9fa;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+}

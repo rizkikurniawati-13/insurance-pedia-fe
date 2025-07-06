@@ -28,13 +28,16 @@ export class FaqService {
     return this.http.get<any[]>(`${this.apiUrl}/answers/${questionId}`, { headers: this.getHeaders() });
   }
 
-  submitQuestion(data: questionModel): Observable<any> {
-    console.log('data'+this.getHeaders.toString);
-    
+  submitQuestion(data: questionModel): Observable<any> {   
     return this.http.post(`${this.apiUrl}/questions`, data, { headers: this.getHeaders() });
   }
 
-  submitAnswer(questionId: string, formData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/answer/${questionId}`, formData, { headers: this.getHeaders() });
+  submitAnswer(data: FormData): Observable<any> {
+    const token = localStorage.getItem('token');
+    return this.http.post(`${this.apiUrl}/answers`, data, {
+    headers: new HttpHeaders({
+      Authorization: 'Bearer ' + token // ✅ hanya token
+    })
+  });
   }
 }

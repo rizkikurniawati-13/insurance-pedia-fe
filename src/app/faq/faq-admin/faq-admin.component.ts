@@ -15,15 +15,18 @@ export class FaqAdminComponent {
   questions: any[] = [];
   newQuestion = '';
   createdBy = '';
+  userName = '';
+  fileUploads: { [key: string]: File } = {};
 
   answers: { [id: string]: string } = {};
   answerers: { [id: string]: string } = {};
   files: { [id: string]: File | null } = {};
 
-  constructor(private faqService: FaqService) {}
+  constructor(private faqService: FaqService) { }
 
   ngOnInit(): void {
     this.loadQuestions();
+    this.userName = localStorage.getItem('userName') || 'Anonymous';
   }
 
   loadQuestions() {
@@ -31,32 +34,45 @@ export class FaqAdminComponent {
   }
 
   submitQuestion() {
-    const data = { question: this.newQuestion, createdBy: this.createdBy };
-    console.log(data);
-    this.faqService.submitQuestion(data).subscribe(() => {          
+    const data = { question: this.newQuestion, createdBy: this.userName };
+    this.faqService.submitQuestion(data).subscribe(() => {
       this.newQuestion = '';
-      this.createdBy = '';
       this.loadQuestions();
     });
-  }
-
-  onFileChange(event: any, id: string) {
-    this.files[id] = event.target.files[0];
   }
 
   submitAnswer(questionId: string) {
+    const answer = this.answers[questionId];
+    const file = this.fileUploads?.[questionId]; // optional
     const formData = new FormData();
-    formData.append('answer', this.answers[questionId]);
-    formData.append('answeredBy', this.answerers[questionId]);
-    if (this.files[questionId]) {
-      formData.append('file', this.files[questionId] as Blob);
+
+    formData.append('questionId', questionId);
+    formData.append('answer', answer);
+    formData.append('answeredBy', this.userName); // dari JWT decoded
+
+    if (file) {
+      formData.append('file', file);
     }
 
-    this.faqService.submitAnswer(questionId, formData).subscribe(() => {
-      this.answers[questionId] = '';
-      this.answerers[questionId] = '';
-      this.loadQuestions();
+    this.faqService.submitAnswer(formData).subscribe({
+      next: () => {
+        this.answers[questionId] = '';
+        delete this.fileUploads[questionId];
+        this.loadQuestions();
+      },
+      error: (err) => {
+        console.error('Upload error:', err);
+      }
     });
   }
+
+  onFileChange(event: any, questionId: string) {
+  const file = event.target.files[0];
+  if (file) {
+    this.fileUploads[questionId] = file;
+  }
+  }
+
+
 
 }
