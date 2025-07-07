@@ -15,3 +15,11 @@ export interface Regulation {
   lastModifiedBy?: string;
   lastModifiedDate?: string; // ISO datetime string
 }
+
+
+export interface PageableRegulationResponse {
+  totalItems: number;
+  data: Regulation[];
+  totalPages: number;
+  currentPage: number;
+}

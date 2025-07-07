@@ -12,3 +12,9 @@ main {
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
 }
+
+@media (max-width: 768px) {
+  main {
+    margin-left: 0 !important;
+  }
+}

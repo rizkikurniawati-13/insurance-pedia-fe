@@ -15,6 +15,8 @@ import { InsuranceCompaniesModel } from '../insurance-companies-detail/insurance
 })
 export class InsuranceCompaniesComponent implements OnInit {
   companies: InsuranceCompaniesModel[] = [];
+  totalItems: number = 0;
+  
 
   filteredCompanies: InsuranceCompaniesModel[] = [];
   pagedCompanies: InsuranceCompaniesModel[] = [];
@@ -27,7 +29,7 @@ export class InsuranceCompaniesComponent implements OnInit {
   constructor(private router: Router, private InsuranceCompanyService: InsuranceCompanyService) {}
 
   ngOnInit(): void {
-    this.loadCompany();
+    this.loadCompanyPageable();
     this.industryList;
   }
 
@@ -47,17 +49,22 @@ export class InsuranceCompaniesComponent implements OnInit {
 
 
   loadCompanyPageable() {
-    this.InsuranceCompanyService.getCompanyPageable().subscribe(
-      (data: any[]) => {      
-        this.companies = data;
-        this.filteredCompanies = data;
-        this.updatePagination();
-        this.applyFilter();
+    this.InsuranceCompanyService.getCompanyPageable(this.currentPage, this.pageSize, this.searchText).subscribe(
+      (response) => {
+        this.companies = response.data;
+        this.totalPages = response.totalPages;
+        this.totalItems = response.totalItems;
+        this.pagedCompanies = this.companies;
       },
       error => {
-        console.error('Error fetching company', error)
+        console.error('Error fetching company', error);
       }
-    )
+    );
+  }
+
+  onSearchChange() {
+  this.currentPage = 1;
+  this.loadCompanyPageable();
   }
 
   applyFilter() {
@@ -82,13 +89,13 @@ export class InsuranceCompaniesComponent implements OnInit {
 
   onPageSizeChange() {
     this.currentPage = 1;         // ⬅️ Reset ke halaman pertama
-    this.updatePagination();
+    this.loadCompanyPageable();
   }
 
   changePage(page: number) {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
-    this.updatePagination();
+    this.loadCompanyPageable();
   }
 
   get totalPagesArray(): number[] {
@@ -99,9 +106,6 @@ export class InsuranceCompaniesComponent implements OnInit {
     const industries = this.companies.map(c => c.type);
     return Array.from(new Set(industries));
   }
-
-
-
 
   openAddForm() {
     alert('Open add form (to be implemented)');

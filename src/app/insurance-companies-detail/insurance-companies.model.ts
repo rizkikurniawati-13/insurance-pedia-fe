@@ -46,3 +46,10 @@ export interface RiskModel{
     impact: string;
     mitigation: string;
 }
+
+export interface PageableCompanyResponse {
+  totalItems: number;
+  data: InsuranceCompaniesModel[];
+  totalPages: number;
+  currentPage: number;
+}

@@ -20,73 +20,56 @@ registerLocaleData(localeId, 'id-ID');
 })
 export class RegulationsComponent implements OnInit {
   sidebarCollapsed = false;
-  regulations: Regulation[] = [];
+pagedRegulations: Regulation[] = [];
 
-  filteredRegulations: Regulation[] = [];
-  pagedRegulations: Regulation[] = [];
+searchText: string = '';
+currentPage: number = 1;
+pageSize: number = 5;
+totalPages: number = 1;
+totalItems: number = 0;
 
-  searchText: string = '';
-  currentPage: number = 1;
-  pageSize: number = 5;
-  totalPages: number = 1;
+constructor(private router: Router, private regulationService: RegulationService) {}
 
-  constructor(private router: Router, private regulationService: RegulationService) { }
-  ngOnInit(): void {
-    this.loadRegulation();
-  }
+ngOnInit(): void {
+  this.loadRegulation();
+}
 
-  onSidebarCollapsed(collapsed: boolean) {
-    this.sidebarCollapsed = collapsed;
-  }
+onSidebarCollapsed(collapsed: boolean) {
+  this.sidebarCollapsed = collapsed;
+}
 
-  loadRegulation() { 
-    this.regulationService.getAll().subscribe(
-      (data: any[]) => {
-        this.regulations = data;
-        this.filteredRegulations = data;
-        this.updatePagination();
-        this.applyFilter();
-        
-      },
-      error => {
-        console.error('Error fetching company', error)
-      }
-    )
-  }
-
-  applyFilter() {
-    const searchLower = this.searchText.toLowerCase().trim();
-    this.filteredRegulations = this.regulations.filter(r =>
-      r.title.toLowerCase().includes(searchLower)
-    );
-    this.currentPage = 1;
-    this.updatePagination();
-  }
-
-  updatePagination() {
-    this.totalPages = Math.ceil(this.filteredRegulations.length / this.pageSize);
-    if (this.currentPage > this.totalPages) {
-      this.currentPage = 1;
+loadRegulation() {
+  this.regulationService.getRegulationPageable(this.currentPage, this.pageSize, this.searchText).subscribe(
+    (response) => {
+      this.pagedRegulations = response.data;
+      this.totalPages = response.totalPages;
+      this.totalItems = response.totalItems;
+    },
+    error => {
+      console.error('Error fetching regulations', error);
     }
-    const startIndex = (this.currentPage - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.pagedRegulations = this.filteredRegulations.slice(startIndex, endIndex);
-  }
+  );
+}
 
-  onPageSizeChange() {
-    this.currentPage = 1;         // ⬅️ Reset ke halaman pertama
-    this.updatePagination();
-  }
+onPageSizeChange() {
+  this.currentPage = 1;
+  this.loadRegulation();
+}
 
-  changePage(page: number) {
-    if (page < 1 || page > this.totalPages) return;
-    this.currentPage = page;
-    this.updatePagination();
-  }
+changePage(page: number) {
+  if (page < 1 || page > this.totalPages) return;
+  this.currentPage = page;
+  this.loadRegulation();
+}
 
-  get totalPagesArray(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-  }
+get totalPagesArray(): number[] {
+  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+}
+
+onSearchChange() {
+  this.currentPage = 1;
+  this.loadRegulation();
+}
 
   downloadFile(reg: Regulation): void {
     if (!reg.fileBase64 || !reg.fileName || !reg.fileType) {
@@ -121,8 +104,6 @@ export class RegulationsComponent implements OnInit {
   }
 
   goToFormRegulation() {
-    console.log('masuk sini');
-
     this.router.navigate(['/regulations-form'])
   }
 

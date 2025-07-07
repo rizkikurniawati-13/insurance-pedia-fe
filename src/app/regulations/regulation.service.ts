@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Regulation } from './regulations.model';
+import { PageableRegulationResponse, Regulation } from './regulations.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,16 @@ export class RegulationService {
   getAll(): Observable<Regulation[]> {
     return this.http.get<Regulation[]>(this.apiUrl, { headers: this.getHeaders() });
   }
+
+  getRegulationPageable(page: number = 1, size: number = 10, search: string = ''): Observable<PageableRegulationResponse> {
+      const backendPage = page - 1;
+      let url = `${this.apiUrl}/pageable?page=${backendPage}&size=${size}`;
+      if (search) {
+        url += `&search=${encodeURIComponent(search)}`;
+      }
+      return this.http.get<PageableRegulationResponse>(url, { headers: this.getHeaders() });
+
+    }
 
   getById(id: string): Observable<Regulation> {
     return this.http.get<Regulation>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });

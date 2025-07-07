@@ -45,7 +45,7 @@ export const routes: Routes = [
     { path: 'puzzle', component: PuzzleComponent, canActivate: [AuthGuard] },
     { path: 'crossword', component: CrosswordComponent, canActivate: [AuthGuard] },
     { path: 'faq-list', component: FaqListComponent, canActivate: [AuthGuard] },
-    { path: 'faq-admin', component: FaqAdminComponent, canActivate: [AuthGuard],data: { roles: ['ADMIN'] }},
+    { path: 'faq-admin', component: FaqAdminComponent, canActivate: [AuthGuard]},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];

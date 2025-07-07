@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './faq-list.component.html',
   styleUrl: './faq-list.component.css'
 })
-export class FaqListComponent implements OnInit{
+export class FaqListComponent implements OnInit {
   questions: any[] = [];
   answers: { [questionId: string]: string } = {};
   userName = '';
@@ -22,21 +22,21 @@ export class FaqListComponent implements OnInit{
   answerText: string = '';
   fileUploads: { [key: string]: File } = {};
 
-  constructor(private faqService: FaqService, 
-              private router: Router
-  ) {}
+  constructor(private faqService: FaqService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.getQuestions();
     this.userName = localStorage.getItem('userName') || 'Anonymous';
   }
 
-  getQuestions(){
+  getQuestions() {
     this.faqService.getQuestions().subscribe(res => this.questions = res);
 
   }
 
-  gotoQuestion(){
+  gotoQuestion() {
     this.router.navigate(['/faq-admin'])
   }
 
@@ -49,6 +49,11 @@ export class FaqListComponent implements OnInit{
     this.selectedQuestion = null;
     this.answerText = '';
   }
+
+  formatAnswer(text: string): string {
+    return text.replace(/\n/g, '<br>');
+  }
+
 
   submitAnswer(q: string) {
     const answer = this.answers[q];
@@ -74,18 +79,20 @@ export class FaqListComponent implements OnInit{
         console.error('Upload error:', err);
       }
     });
-    
+
   }
 
   onFileChange(event: any, questionId: string) {
-  const file = event.target.files[0];
-  if (file) {
-    this.fileUploads[questionId] = file;
-  }
+    const file = event.target.files[0];
+    if (file) {
+      this.fileUploads[questionId] = file;
+    }
+
+
   }
 
-  
 
-  
+
+
 
 }

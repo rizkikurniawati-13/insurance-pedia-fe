@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environment/environment';
 import { Observable, Observer } from 'rxjs';
-import { InsuranceCompaniesModel, ProductCategoriesModel, ProductsModel } from './insurance-companies.model';
+import { InsuranceCompaniesModel, PageableCompanyResponse, ProductCategoriesModel, ProductsModel } from './insurance-companies.model';
 
 export interface Company {
   id?: string;
@@ -24,7 +24,7 @@ export class InsuranceCompanyService {
   private apiUrlProduct = 'http://localhost:8080/api/products';
   private apiUrlProductCategories = 'http://localhost:8080/api/product-categories';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
@@ -35,8 +35,14 @@ export class InsuranceCompanyService {
     return this.http.get<Company[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
-  getCompanyPageable(page: number = 0, size: number = 10): Observable<Company[]> {
-    return this.http.get<Company[]>(`${this.apiUrl}/pageable`, { headers: this.getHeaders() });
+  getCompanyPageable(page: number = 1, size: number = 10, search: string = ''): Observable<PageableCompanyResponse> {
+    const backendPage = page - 1;
+    let url = `${this.apiUrl}/pageable?page=${backendPage}&size=${size}`;
+    if (search) {
+      url += `&search=${encodeURIComponent(search)}`;
+    }
+    return this.http.get<PageableCompanyResponse>(url, { headers: this.getHeaders() });
+
   }
 
   create(data: Company): Observable<Company> {
@@ -56,13 +62,10 @@ export class InsuranceCompanyService {
   }
 
   getAllProducts(): Observable<ProductsModel[]> {
-  return this.http.get<ProductsModel[]>(this.apiUrlProduct, { headers: this.getHeaders() });
-}
+    return this.http.get<ProductsModel[]>(this.apiUrlProduct, { headers: this.getHeaders() });
+  }
 
-getAllProductCategories(): Observable<ProductCategoriesModel[]> {
-  return this.http.get<ProductCategoriesModel[]>(this.apiUrlProductCategories, { headers: this.getHeaders() });
-}
-
-
-
+  getAllProductCategories(): Observable<ProductCategoriesModel[]> {
+    return this.http.get<ProductCategoriesModel[]>(this.apiUrlProductCategories, { headers: this.getHeaders() });
+  }
 }

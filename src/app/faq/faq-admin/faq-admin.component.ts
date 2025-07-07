@@ -3,6 +3,9 @@ import { FaqService } from '../faq.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-faq-admin',
@@ -22,7 +25,7 @@ export class FaqAdminComponent {
   answerers: { [id: string]: string } = {};
   files: { [id: string]: File | null } = {};
 
-  constructor(private faqService: FaqService) { }
+  constructor(private faqService: FaqService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadQuestions();
@@ -34,12 +37,35 @@ export class FaqAdminComponent {
   }
 
   submitQuestion() {
-    const data = { question: this.newQuestion, createdBy: this.userName };
-    this.faqService.submitQuestion(data).subscribe(() => {
+  const data = {
+    question: this.newQuestion,
+    createdBy: this.userName
+  };
+
+  this.faqService.submitQuestion(data).subscribe({
+    next: () => {
       this.newQuestion = '';
       this.loadQuestions();
-    });
-  }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Pertanyaan dikirim!',
+        text: 'Pertanyaan Anda berhasil disimpan.',
+        timer: 2000,
+        showConfirmButton: false
+      });
+
+      this.router.navigate(['/faq-list'])
+    },
+    error: () => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Gagal mengirim!',
+        text: 'Terjadi kesalahan saat menyimpan pertanyaan.',
+      });
+    }
+  });
+}
 
   submitAnswer(questionId: string) {
     const answer = this.answers[questionId];
