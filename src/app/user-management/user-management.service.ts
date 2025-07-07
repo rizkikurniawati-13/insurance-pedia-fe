@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment/environment.prod';
 
 export interface User {
   id?: string;
@@ -15,6 +16,8 @@ export interface User {
 export class UserService {
   private apiUrl = 'http://localhost:8080/api/users';
   private apiUrlRegister = 'http://localhost:8080/api/auth/register';
+  private baseUrl = environment.apiUrl;
+
   private headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -29,14 +32,14 @@ export class UserService {
 
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl, { headers: this.getHeaders() });
+    return this.http.get<User[]>(`${this.baseUrl}/users`, { headers: this.getHeaders() });
   }
 
   createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrlRegister, user, { headers: this.getHeaders() });
+    return this.http.post<User>(`${this.baseUrl}/auth/register`, user, { headers: this.getHeaders() });
   }
 
   deleteUser(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.delete<void>(`${this.baseUrl}/users/${id}`, { headers: this.getHeaders() });
   }
 }

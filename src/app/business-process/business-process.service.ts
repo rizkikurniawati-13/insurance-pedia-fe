@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environment/environment.prod';
 
 export interface BusinessProcess {
   id: string;
@@ -49,7 +50,7 @@ export interface ApiLink {
   providedIn: 'root',
 })
 export class BusinessProcessService {
-  private apiUrl = 'http://localhost:8080/api/business-processes';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -60,15 +61,15 @@ export class BusinessProcessService {
   }
 
   getAll(): Observable<BusinessProcess[]> {
-    return this.http.get<BusinessProcess[]>(this.apiUrl, { headers: this.getHeaders() });
+    return this.http.get<BusinessProcess[]>(`${this.baseUrl}/business-processes`, { headers: this.getHeaders() });
   }
 
   getProcesses(): Observable<ApiNode[]> {
-    return this.http.get<ApiNode[]>(`${this.apiUrl}/nodes`, { headers: this.getHeaders() });
+    return this.http.get<ApiNode[]>(`${this.baseUrl}/business-processes/nodes`, { headers: this.getHeaders() });
   }
 
   getLinks(): Observable<ApiLink[]> {
-    return this.http.get<ApiLink[]>(`${this.apiUrl}/links`, { headers: this.getHeaders() });
+    return this.http.get<ApiLink[]>(`${this.baseUrl}/business-processes/links`, { headers: this.getHeaders() });
   }
 
   

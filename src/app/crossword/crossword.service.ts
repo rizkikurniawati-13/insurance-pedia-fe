@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environment/environment.prod';
 
 @Injectable({ providedIn: 'root' })
 export class CrosswordService {
-  private apiUrl = 'http://localhost:8080/api/crossword';
+  private baseUrl = environment.apiUrl;
 
 
   constructor(private http: HttpClient) {}
@@ -14,6 +15,6 @@ export class CrosswordService {
   }
 
   getPuzzle(id: string) {
-    return this.http.get<any>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<any>(`${this.baseUrl}/crossword/${id}`, { headers: this.getHeaders() });
   }
 }

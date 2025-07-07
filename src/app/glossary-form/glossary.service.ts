@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environment/environment';
 import { Observable, Observer } from 'rxjs';
+import { environment } from '../../environment/environment.prod';
 
 export interface Glossarium {
   id?: string;
@@ -16,7 +16,7 @@ export interface Glossarium {
   providedIn: 'root'
 })
 export class GlossariumService {
-  private apiUrl = 'http://localhost:8080/api/glossarium';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -26,22 +26,22 @@ export class GlossariumService {
   }
 
   getAll(): Observable<Glossarium[]> {
-    return this.http.get<Glossarium[]>(this.apiUrl, { headers: this.getHeaders() });
+    return this.http.get<Glossarium[]>(`${this.baseUrl}/glossarium`, { headers: this.getHeaders() });
   }
 
   create(data: Glossarium): Observable<Glossarium> {
-    return this.http.post<Glossarium>(this.apiUrl, data, { headers: this.getHeaders() });
+    return this.http.post<Glossarium>(`${this.baseUrl}/glossarium`, data, { headers: this.getHeaders() });
   }
 
   update(id: string, data: Glossarium): Observable<Glossarium> {
-    return this.http.put<Glossarium>(`${this.apiUrl}/${id}`, data, { headers: this.getHeaders() });
+    return this.http.put<Glossarium>(`${this.baseUrl}/glossarium/${id}`, data, { headers: this.getHeaders() });
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.delete<void>(`${this.baseUrl}/glossarium/${id}`, { headers: this.getHeaders() });
   }
 
   getById(id: string): Observable<Glossarium> {
-    return this.http.get<Glossarium>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<Glossarium>(`${this.baseUrl}/glossarium/${id}`, { headers: this.getHeaders() });
   }
 }

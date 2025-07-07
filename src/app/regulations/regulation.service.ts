@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PageableRegulationResponse, Regulation } from './regulations.model';
+import { environment } from '../../environment/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegulationService {
-  private apiUrl = 'http://localhost:8080/api/regulations'; // sesuaikan endpoint Spring Boot Anda
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -17,12 +18,12 @@ export class RegulationService {
   }
 
   getAll(): Observable<Regulation[]> {
-    return this.http.get<Regulation[]>(this.apiUrl, { headers: this.getHeaders() });
+    return this.http.get<Regulation[]>(`${this.baseUrl}/regulations`, { headers: this.getHeaders() });
   }
 
   getRegulationPageable(page: number = 1, size: number = 10, search: string = ''): Observable<PageableRegulationResponse> {
       const backendPage = page - 1;
-      let url = `${this.apiUrl}/pageable?page=${backendPage}&size=${size}`;
+      let url = `${this.baseUrl}/regulations/pageable?page=${backendPage}&size=${size}`;
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
       }
@@ -31,18 +32,18 @@ export class RegulationService {
     }
 
   getById(id: string): Observable<Regulation> {
-    return this.http.get<Regulation>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.get<Regulation>(`${this.baseUrl}/regulations/${id}`, { headers: this.getHeaders() });
   }
 
   create(regulation: Regulation): Observable<Regulation> {
-    return this.http.post<Regulation>(this.apiUrl, regulation, { headers: this.getHeaders() });
+    return this.http.post<Regulation>(`${this.baseUrl}/regulations`, regulation, { headers: this.getHeaders() });
   }
 
   update(id: string, regulation: Regulation): Observable<Regulation> {
-    return this.http.put<Regulation>(`${this.apiUrl}/${id}`, regulation, { headers: this.getHeaders() });
+    return this.http.put<Regulation>(`${this.baseUrl}/regulations/${id}`, regulation, { headers: this.getHeaders() });
   }
 
   delete(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, { headers: this.getHeaders() });
+    return this.http.delete<void>(`${this.baseUrl}/regulations/${id}`, { headers: this.getHeaders() });
   }
 }

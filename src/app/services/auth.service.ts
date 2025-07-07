@@ -9,7 +9,6 @@ import { environment } from '../../environment/environment.prod';
 })
 export class AuthService {
   private baseUrl = environment.apiUrl;
-  private apiUrl = 'http://localhost:8080/api/auth';
   private roles: string[] = [];
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -36,7 +35,7 @@ export class AuthService {
   }
 
   private fetchRoles(token: string) {
-    this.http.get<{ valid: boolean, roles?: string[] }>(`${this.apiUrl}/verify-token`, {
+    this.http.get<{ valid: boolean, roles?: string[] }>(`${this.baseUrl}/auth/verify-token`, {
       headers: { Authorization: `Bearer ${token}` }
     }).subscribe(response => {
       if (response.valid && response.roles) {      
