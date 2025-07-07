@@ -36,6 +36,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { CrosswordComponent } from './crossword/crossword.component';
+import { FaqAdminComponent } from './faq/faq-admin/faq-admin.component';
+import { FaqListComponent } from './faq/faq-list/faq-list.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,9 @@ import { CrosswordComponent } from './crossword/crossword.component';
     ForbiddenComponent,
     BusinessProcessComponent,
     PuzzleComponent,
-    CrosswordComponent
+    CrosswordComponent,
+    FaqAdminComponent,
+    FaqListComponent
   ],
   imports: [
     BrowserAnimationsModule,

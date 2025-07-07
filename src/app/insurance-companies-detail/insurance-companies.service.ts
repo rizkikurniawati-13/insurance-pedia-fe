@@ -35,6 +35,10 @@ export class InsuranceCompanyService {
     return this.http.get<Company[]>(this.apiUrl, { headers: this.getHeaders() });
   }
 
+  getCompanyPageable(page: number = 0, size: number = 10): Observable<Company[]> {
+    return this.http.get<Company[]>(`${this.apiUrl}/pageable`, { headers: this.getHeaders() });
+  }
+
   create(data: Company): Observable<Company> {
     return this.http.post<Company>(this.apiUrl, data, { headers: this.getHeaders() });
   }

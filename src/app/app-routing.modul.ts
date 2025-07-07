@@ -21,6 +21,8 @@ import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { BusinessProcessComponent } from './business-process/business-process.component';
 import { PuzzleComponent } from './puzzle/puzzle.component';
 import { CrosswordComponent } from './crossword/crossword.component';
+import { FaqListComponent } from './faq/faq-list/faq-list.component';
+import { FaqAdminComponent } from './faq/faq-admin/faq-admin.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -42,6 +44,8 @@ export const routes: Routes = [
     { path: 'regulations', component: RegulationsComponent, canActivate: [AuthGuard] },
     { path: 'puzzle', component: PuzzleComponent, canActivate: [AuthGuard] },
     { path: 'crossword', component: CrosswordComponent, canActivate: [AuthGuard] },
+    { path: 'faq-list', component: FaqListComponent, canActivate: [AuthGuard] },
+    { path: 'faq-admin', component: FaqAdminComponent, canActivate: [AuthGuard],data: { roles: ['ADMIN'] }},
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];

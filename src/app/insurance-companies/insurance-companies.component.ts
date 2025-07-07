@@ -45,6 +45,21 @@ export class InsuranceCompaniesComponent implements OnInit {
     )
   }
 
+
+  loadCompanyPageable() {
+    this.InsuranceCompanyService.getCompanyPageable().subscribe(
+      (data: any[]) => {      
+        this.companies = data;
+        this.filteredCompanies = data;
+        this.updatePagination();
+        this.applyFilter();
+      },
+      error => {
+        console.error('Error fetching company', error)
+      }
+    )
+  }
+
   applyFilter() {
     const searchLower = this.searchText.toLowerCase().trim();
     this.filteredCompanies = this.companies.filter(r =>
