@@ -22,12 +22,19 @@ export class FaqListComponent implements OnInit {
   answerText: string = '';
   fileUploads: { [key: string]: File } = {};
 
+  searchText: string = '';
+  currentPage: number = 1;
+  pageSize: number = 6;
+  totalPages: number = 0;
+  totalItems: number = 0;
+
+
   constructor(private faqService: FaqService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.getQuestions();
+    this.loadFaqs();
     this.userName = localStorage.getItem('userName') || 'Anonymous';
   }
 
@@ -87,12 +94,39 @@ export class FaqListComponent implements OnInit {
     if (file) {
       this.fileUploads[questionId] = file;
     }
-
-
   }
 
 
+  loadFaqs() {
+  const backendPage = this.currentPage - 1;
+  this.faqService.getFaqs(backendPage, this.pageSize, this.searchText).subscribe(
+    (res) => {
+      this.questions = res.data;
+      this.totalPages = res.totalPages;
+      this.totalItems = res.totalItems;
+    },
+    err => console.error('Gagal load FAQ', err)
+  );
+}
 
+onSearchChange() {
+  this.currentPage = 1;
+  this.loadFaqs();
+}
 
+onPageSizeChange() {
+  this.currentPage = 1;
+  this.loadFaqs();
+}
+
+changePage(page: number) {
+  if (page < 1 || page > this.totalPages) return;
+  this.currentPage = page;
+  this.loadFaqs();
+}
+
+get totalPagesArray(): number[] {
+  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+}
 
 }

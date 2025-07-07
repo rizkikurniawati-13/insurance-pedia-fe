@@ -8,6 +8,27 @@ export interface questionModel {
   createdBy: string;
 }
 
+export interface FaqAnswer {
+  id: number;
+  answer: string;
+  answeredBy: string;
+  fileUrl?: string;
+}
+
+export interface FaqQuestion {
+  id: number;
+  question: string;
+  createdBy: string;
+  answers: FaqAnswer[];
+}
+
+export interface PageableFaqResponse {
+  data: FaqQuestion[];
+  currentPage: number;
+  totalItems: number;
+  totalPages: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class FaqService {
   private apiUrl = 'http://localhost:8080/api/faq';
@@ -18,6 +39,16 @@ export class FaqService {
   }
   
   constructor(private http: HttpClient) {}
+
+  getFaqs(page: number = 0, size: number = 10, search: string = ''): Observable<PageableFaqResponse> {
+  let url = `${this.apiUrl}/pageable?page=${page}&size=${size}`;
+  if (search) {
+    url += `&search=${encodeURIComponent(search)}`;
+  }
+  return this.http.get<PageableFaqResponse>(url, {
+    headers: this.getHeaders()
+  });
+  }
 
 
   getQuestions(): Observable<any[]> {

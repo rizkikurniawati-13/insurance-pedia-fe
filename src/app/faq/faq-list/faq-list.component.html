@@ -5,14 +5,29 @@
   <!-- Main content -->
   <main class="flex-grow-1 py-4 px-3 px-lg-4">
     <!-- Header -->
-    <div
-      class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
       <h2 class="fw-bold text-primary mb-0">
         <i class="fas fa-question-circle me-2 text-primary"></i>Frequently Asked Questions
       </h2>
       <button (click)="gotoQuestion()" class="btn btn-primary shadow-sm">
         <i class="fas fa-plus-circle me-2"></i> Ajukan Pertanyaan
       </button>
+    </div>
+
+    <!-- Search + Page Size -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-2">
+      <input type="text" class="form-control w-100 w-md-50" [(ngModel)]="searchText"
+        placeholder="Cari pertanyaan..." (ngModelChange)="onSearchChange()" />
+      <div class="d-flex align-items-center">
+        <label for="pageSize" class="me-2 mb-0">Tampilkan:</label>
+        <select id="pageSize" [(ngModel)]="pageSize" class="form-select form-select-sm w-auto"
+          (change)="onPageSizeChange()">
+          <option [value]="6">6</option>
+          <option [value]="12">12</option>
+          <option [value]="24">24</option>
+        </select>
+        <span class="ms-2">FAQ / halaman</span>
+      </div>
     </div>
 
     <!-- FAQ Grid -->
@@ -61,7 +76,7 @@
                 <button class="btn btn-sm btn-success me-2">
                   <i class="fas fa-paper-plane me-1"></i> Kirim Jawaban
                 </button>
-                <button class="btn btn-sm btn-secondary" (click)="cancelAnswer()">
+                <button class="btn btn-sm btn-secondary" type="button" (click)="cancelAnswer()">
                   Batal
                 </button>
               </form>
@@ -70,5 +85,20 @@
         </div>
       </div>
     </div>
+
+    <!-- Pagination -->
+    <nav *ngIf="totalPages > 1" class="mt-4">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+        </li>
+        <li class="page-item" *ngFor="let page of totalPagesArray" [class.active]="currentPage === page">
+          <button class="page-link" (click)="changePage(page)">{{ page }}</button>
+        </li>
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+        </li>
+      </ul>
+    </nav>
   </main>
 </div>
