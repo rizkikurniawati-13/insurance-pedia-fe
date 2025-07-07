@@ -5,6 +5,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-management',
@@ -13,18 +14,24 @@ import Swal from 'sweetalert2';
   styleUrl: './user-management.component.css'
 })
 export class UserManagementComponent implements OnInit {
-  Math = Math;
-  users: User[] = [];
-  userForm!: FormGroup;
-  filteredUsers: User[] = []; // Users after applying role filter
-  displayedUsers: User[] = []; // Users for current page
-  roleFilter = new FormControl(''); // FormControl for role filter
-  availableRoles: string[] = ['ALL', 'ADMIN', 'AUDITOR']; // Roles for filter dropdown
-  currentPage: number = 1;
-  pageSize: number = 10; // Number of users per page
-  totalPages: number = 1;
+  searchControl = new FormControl('');
+  roleFilter = new FormControl('ALL');
+  availableRoles: string[] = ['ALL', 'ADMIN', 'AUDITOR'];
 
-  constructor(private userService: UserService, private fb: FormBuilder, private route: Router) {}
+  users: User[] = [];
+  displayedUsers: User[] = [];
+  currentPage: number = 1;
+  pageSize: number = 10;
+  totalPages: number = 1;
+  totalItems: number = 0;
+
+  userForm!: FormGroup;
+
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
     this.userForm = this.fb.group({
@@ -33,33 +40,52 @@ export class UserManagementComponent implements OnInit {
     });
 
     this.loadUsers();
-    this.roleFilter.valueChanges.subscribe((role) => {
-      this.applyFilterAndPagination();
-    });
+
+    this.roleFilter.valueChanges.subscribe(() => this.resetToFirstPageAndReload());
+    this.searchControl.valueChanges.pipe(debounceTime(300)).subscribe(() => this.resetToFirstPageAndReload());
+  }
+
+  resetToFirstPageAndReload(): void {
+    this.currentPage = 1;
+    this.loadUsers();
   }
 
   loadUsers(): void {
-  this.userService.getUsers().subscribe({
-    next: (users) => {
-      this.users = users.map(user => {
-        // console.log('Processing user:', { id: user.id, name: user.name, email: user.email, role: user.role });
-        return {
-          ...user,
-          role: Array.isArray(user.role) ? user.role : user.role ? [user.role] : ['AUDITOR']
-        };
+  const search = this.searchControl.value?.toLowerCase() || '';
+  const selectedRole = this.roleFilter.value;
+  const page = this.currentPage - 1;
+
+  // Jangan kirim filter role ke backend — ambil semua dulu
+  this.userService.getUsersPageable(page, this.pageSize, search).subscribe({
+    next: (res) => {
+      this.users = res.data.map((user: any) => ({
+        ...user,
+        roles: Array.isArray(user.roles) ? user.roles : user.roles ? [user.roles] : []
+      }));
+      this.displayedUsers = this.users.filter(user => {
+        const matchRole =
+            selectedRole === 'ALL' ||
+            !selectedRole ||
+            (Array.isArray(user.roles) && user.roles.includes(selectedRole));
+
+        const matchSearch = user.name.toLowerCase().includes(search);
+        return matchRole && matchSearch;
       });
-      this.applyFilterAndPagination();
+
+      this.totalPages = res.totalPages;
     },
-    error: (error) => {
+    error: (err) => {
       Swal.fire({
         title: 'Error!',
-        text: error.error?.error || 'Failed to load users.',
+        text: err.error?.error || 'Gagal memuat data user.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
     }
   });
 }
+
+
 
 
   deleteUser(id: string): void {
@@ -71,7 +97,7 @@ export class UserManagementComponent implements OnInit {
           icon: 'success',
           confirmButtonText: 'OK'
         });
-        this.loadUsers(); // Refresh user list
+        this.loadUsers();
       },
       error: (error) => {
         Swal.fire({
@@ -84,48 +110,27 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  onGoRegister(){
-    this.route.navigate(['/user-register'])
-
+  onGoRegister(): void {
+    this.route.navigate(['/user-register']);
   }
 
-  applyFilterAndPagination(): void {
-  const selectedRole = this.roleFilter.value;
-  this.filteredUsers = selectedRole === 'ALL' || !selectedRole
-    ? this.users
-    : this.users.filter(user => {
-        if (!user.role) return false; // Exclude users with undefined/null roles
-        return Array.isArray(user.role)
-          ? user.role.includes(selectedRole)
-          : user.role === selectedRole;
-      });
-
-  this.totalPages = Math.ceil(this.filteredUsers.length / this.pageSize);
-  this.currentPage = Math.min(this.currentPage, Math.max(1, this.totalPages));
-
-  const startIndex = (this.currentPage - 1) * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
-  this.displayedUsers = this.filteredUsers.slice(startIndex, endIndex);
-  }
-
-  // New method to get pagination range
   getPaginationRange(): { start: number; end: number } {
     const start = (this.currentPage - 1) * this.pageSize + 1;
-    const end = Math.min(this.currentPage * this.pageSize, this.filteredUsers.length);
+    const end = Math.min(this.currentPage * this.pageSize, this.totalItems);
     return { start, end };
   }
 
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
-      this.applyFilterAndPagination();
+      this.loadUsers();
     }
   }
 
-  formatRoles(role: string | string[] | undefined, user?: User): string {
-  if (Array.isArray(role)) {
-    return role.join(', ').toLowerCase();
+  formatRoles(roles: string[] | undefined): string {
+  return roles && roles.length > 0 ? roles.join(', ') : '-';
   }
-  return role ? role.toLowerCase() : '-';
-  }
+
+
+
 }

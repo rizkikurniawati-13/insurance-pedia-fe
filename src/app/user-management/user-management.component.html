@@ -8,11 +8,12 @@
         <button type="button" class="btn btn-primary" (click)="onGoRegister()">
           <i class="fa-solid fa-users"></i> Add User
         </button>
-        <div>
+        <div class="d-flex gap-2 align-items-center">
           <label for="roleFilter">Filter by Role:</label>
           <select id="roleFilter" [formControl]="roleFilter" class="form-select w-auto d-inline-block">
             <option *ngFor="let role of availableRoles" [value]="role">{{ role }}</option>
           </select>
+          <input type="text" class="form-control w-auto d-inline-block" placeholder="Search by name..." [formControl]="searchControl">
         </div>
       </div>
 
@@ -29,7 +30,8 @@
           <tr *ngFor="let user of displayedUsers">
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
-            <td>{{ formatRoles(user.role) }}</td>
+            <!-- <td>{{ formatRoles(user.roles) }}</td> -->
+             <td>{{ user.roles?.join(', ') }}</td>
             <td>
               <button class="btn btn-danger" (click)="deleteUser(user.id!)">
                 <i class="fa-solid fa-trash"></i>
@@ -45,7 +47,7 @@
       <!-- Pagination Controls -->
       <div class="d-flex justify-content-between align-items-center mt-3">
         <div>
-          Showing {{ getPaginationRange().start }} to {{ getPaginationRange().end }} of {{ filteredUsers.length }} users
+          Showing {{ getPaginationRange().start }} to {{ getPaginationRange().end }} of {{ totalItems }} users
         </div>
         <div>
           <button class="btn btn-outline-primary me-2" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">

@@ -7,15 +7,13 @@ export interface User {
   id?: string;
   name: string;
   email: string;
-  role?: string[];
+  roles?: string[];
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8080/api/users';
-  private apiUrlRegister = 'http://localhost:8080/api/auth/register';
   private baseUrl = environment.apiUrl;
 
   private headers = new HttpHeaders({
@@ -29,6 +27,27 @@ export class UserService {
     const token = localStorage.getItem('token');
     return new HttpHeaders(token ? { Authorization: `Bearer ${token}` } : {});
   }
+
+  getUsersPageable(page: number, size: number, search?: string, role?: string): Observable<any> {
+  const params: any = {
+    page,
+    size
+  };
+
+  if (search) {
+    params.search = search;
+  }
+
+  if (role && role !== 'ALL') {
+    params.role = role;
+  }
+
+  return this.http.get<any>(`${this.baseUrl}/users/pageable`, {
+    headers: this.getHeaders(),
+    params
+  });
+  }
+
 
 
   getUsers(): Observable<User[]> {
