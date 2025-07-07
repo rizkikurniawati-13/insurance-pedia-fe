@@ -24,8 +24,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let case of auditCase; let i = index">
-            <td class="text-center">{{ i + 1 }}</td>
+          <tr *ngFor="let case of auditCases; let i = index">
+            <td class="text-center">{{ (currentPage - 1) * pageSize + i + 1 }}</td>
             <td>{{ case.company?.name }}</td>
             <td>{{ case.title }}</td>
             <td>{{ case.violationYear }}</td>
@@ -36,6 +36,33 @@
           </tr>
         </tbody>
       </table>
+
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <div class="d-flex align-items-center">
+          <label class="me-2 mb-0">Tampilkan:</label>
+          <select [(ngModel)]="pageSize" (change)="onPageSizeChange()" class="form-select form-select-sm w-auto">
+            <option [value]="5">5</option>
+            <option [value]="10">10</option>
+            <option [value]="25">25</option>
+          </select>
+          <span class="ms-2">data per halaman</span>
+        </div>
+
+        <nav>
+          <ul class="pagination mb-0">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+            </li>
+            <li class="page-item" *ngFor="let page of totalPagesArray" [class.active]="currentPage === page">
+              <button class="page-link" (click)="changePage(page)">{{ page }}</button>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
 
     </div>
   </main>

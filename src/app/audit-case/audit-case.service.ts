@@ -22,6 +22,14 @@ export class AuditCaseService {
     return this.http.get<AuditCase[]>(`${this.baseUrl}/audit-cases`, { headers: this.getHeaders() });
   }
 
+  getPaged(page: number, size: number): Observable<any> {
+  return this.http.get<any>(
+    `${this.baseUrl}/audit-cases/pageable?page=${page}&size=${size}`,
+    { headers: this.getHeaders() }
+  );
+  }
+
+
   getByCompany(companyId: string): Observable<AuditCase[]> {
     return this.http.get<AuditCase[]>(`${this.baseUrl}/audit-cases/company/${companyId}`, { headers: this.getHeaders() });
   }
