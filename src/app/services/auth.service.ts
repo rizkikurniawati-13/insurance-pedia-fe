@@ -28,7 +28,6 @@ export class AuthService {
       .pipe(
         tap(response => {
           localStorage.setItem('token', response.token);
-          // Ambil peran setelah register
           this.fetchRoles(response.token);
         })
       );

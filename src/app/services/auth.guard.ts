@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environment/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class AuthGuard implements CanActivate {
     private router: Router,
     private http: HttpClient
   ) {}
+
+  private baseUrl = environment.apiUrl;
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -31,7 +34,7 @@ export class AuthGuard implements CanActivate {
 
     const requiredRoles = route.data['roles'] as string[] | undefined;
 
-    return this.http.get<{ valid: boolean, roles?: string[] }>('http://localhost:8080/api/auth/verify-token', {
+    return this.http.get<{ valid: boolean, roles?: string[] }>(`${this.baseUrl}/auth/verify-token`, {
       headers: { Authorization: `Bearer ${token}` }
     }).pipe(
       map(response => {
