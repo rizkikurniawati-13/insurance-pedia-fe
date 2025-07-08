@@ -1,0 +1,33 @@
+<div class="card p-4 text-center">
+  <h3>Setup MFA</h3>
+  <p>Scan QR code di bawah dengan aplikasi Google Authenticator atau Authy, lalu masukkan 6 digit kode OTP yang muncul.</p>
+
+  <div *ngIf="qrUrl; else loadingQR">
+    <img [src]="qrUrl" alt="QR Code MFA" style="max-width: 200px;" />
+  </div>
+  <ng-template #loadingQR>
+    <p>Sedang memuat QR Code...</p>
+  </ng-template>
+
+  <form [formGroup]="otpForm" (ngSubmit)="onSubmit()" class="mt-3">
+    <div class="form-group">
+      <label for="otp">OTP (6 digit)</label>
+      <input
+        type="text"
+        formControlName="otp"
+        class="form-control"
+        placeholder="Masukkan OTP"
+        [ngClass]="{ 'is-invalid': submitted && otpForm.controls['otp'].invalid }"
+      />
+      <div *ngIf="submitted && otpForm.controls['otp'].invalid" class="invalid-feedback">
+        Kode OTP wajib diisi dan harus 6 digit angka
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100 mt-3">Verifikasi MFA</button>
+
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>

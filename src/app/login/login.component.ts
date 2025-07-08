@@ -40,10 +40,21 @@ export class LoginComponent {
     this.loading = true;
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
-        this.loading = false;
-        localStorage.setItem('token', res.token);
-        localStorage.setItem('userName', this.loginForm.value.email);
-        this.router.navigate(['/glossary'])
+        if ('token' in res) {
+      // Login langsung sukses
+      if (res.token) {
+          localStorage.setItem('token', res.token);
+        } else {
+          console.error('Token undefined saat login tanpa MFA');
+        }
+
+      localStorage.setItem('userName', this.loginForm.value.email);
+      this.router.navigate(['/glossary']);
+      } else if ('mfaRequired' in res) {
+        // Butuh MFA → simpan email sementara & redirect ke halaman OTP
+        localStorage.setItem('pendingMfaEmail', this.loginForm.value.email);
+        this.router.navigate(['/mfa']);
+      }
       },
       error: (err) => {
         this.loading = false;
