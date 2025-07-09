@@ -54,6 +54,10 @@ export class UserService {
     return this.http.get<User[]>(`${this.baseUrl}/users`, { headers: this.getHeaders() });
   }
 
+  getUsersbyUsername(username :any): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/users/${username}`, { headers: this.getHeaders() });
+  }
+
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.baseUrl}/auth/register`, user, { headers: this.getHeaders() });
   }

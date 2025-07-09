@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../services/auth.service';
+import { UserService } from '../user-management/user-management.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   imports: [FormsModule, CommonModule, ReactiveFormsModule]
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   submitted = false;
   errorMessage = '';
@@ -21,6 +22,7 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -28,6 +30,10 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]]
     });
+  }
+
+  ngOnInit(): void {
+    
   }
 
   get f() {
@@ -47,7 +53,6 @@ export class LoginComponent {
         } else {
           console.error('Token undefined saat login tanpa MFA');
         }
-
       localStorage.setItem('userName', this.loginForm.value.email);
       this.router.navigate(['/glossary']);
       } else if ('mfaRequired' in res) {
@@ -62,9 +67,6 @@ export class LoginComponent {
       }
     });
   }
-
-
-
 
   
 }

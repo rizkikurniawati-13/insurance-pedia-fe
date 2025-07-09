@@ -15,7 +15,7 @@ export class ForbiddenComponent {
   }
 
   goToHome() {
-    this.router.navigate(['/profile']); // Atau rute lain yang diizinkan
+    this.router.navigate(['/glossary']); // Atau rute lain yang diizinkan
   }
 
 }

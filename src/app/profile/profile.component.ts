@@ -1,18 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { UserService } from '../user-management/user-management.service';
 
 @Component({
   selector: 'app-profile',
-  imports: [SidebarComponent],
+  imports: [],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
-export class ProfileComponent {
-  user = {
-    name: 'Rizki Kurniawati',
-    email: 'rizki@example.com',
-    role: 'IT Business Analyst',
-    joined: '2020-05-10',
-    bio: 'The best life is a life that gives meaning to others.'
-  };
-}
+export class ProfileComponent implements OnInit {
+  user : any;
+  userName : any = '';
+
+  constructor(private userService: UserService){
+
+  }
+
+  ngOnInit(): void {
+    // this.getUserbyUserName();
+    console.log(localStorage.getItem('userName'));
+  }
+
+  getUserbyUserName(){
+    this.userName = localStorage.getItem('userName');
+    console.log(this.userName);
+    
+    this.userService.getUsersbyUsername(this.userName).subscribe({
+      next: (res) => {
+        this.user = res;
+        console.log(res);
+      },
+      error: (err) => {
+        alert(err.errorMessage);
+      }
+    })
+  }
+
+  }
