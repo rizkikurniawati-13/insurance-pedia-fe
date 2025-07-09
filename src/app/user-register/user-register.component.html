@@ -38,9 +38,9 @@
           <i [ngClass]="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
         </button>
       </div>
-      <div *ngIf="submitted && f['password'].errors" class="error">
+      <div *ngIf="(submitted || f['password'].touched) && f['password'].errors" class="error">
         <small *ngIf="f['password'].errors?.['required']">Password wajib diisi.</small>
-        <small *ngIf="f['password'].errors?.['minlength']">Password minimal 8 karakter.</small>
+        <small *ngIf="f['password'].errors?.['minlength']">Password minimal 16 karakter.</small>
         <small *ngIf="f['password'].errors?.['passwordStrength']">Password harus mengandung huruf besar, huruf kecil, angka, dan karakter khusus.</small>
         <small *ngIf="f['password'].errors?.['containsPersonalInfo']">Password tidak boleh mengandung nama atau email.</small>
       </div>
