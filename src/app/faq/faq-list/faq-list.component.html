@@ -45,7 +45,7 @@
               <div *ngFor="let a of q.answers" class="border-start border-3 border-primary ps-3 mt-2">
                 <p class="mb-1"><strong>{{ a.answeredBy }}:</strong></p>
                 <p class="mb-1" [innerHTML]="formatAnswer(a.answer)"></p>
-                <a *ngIf="a.fileUrl" [href]="'http://localhost:8080' + a.fileUrl" target="_blank"
+                <a *ngIf="a.fileUrl" [href]="apiUrl + a.fileUrl" target="_blank"
                   rel="noopener noreferrer" class="text-decoration-none text-primary small">
                   <i class="fas fa-paperclip me-1"></i> Lihat Lampiran
                 </a>

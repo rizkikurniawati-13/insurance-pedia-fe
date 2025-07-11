@@ -27,7 +27,7 @@ export class RegisterComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(16),
         this.passwordStrengthValidator()
       ]],
       confirmPassword: ['', Validators.required],
@@ -37,7 +37,7 @@ export class RegisterComponent {
     // Add personalInfoValidator separately to ensure it updates dynamically
     this.registrationForm.get('password')?.setValidators([
       Validators.required,
-      Validators.minLength(8),
+      Validators.minLength(16),
       this.passwordStrengthValidator(),
       this.personalInfoValidator()
     ]);

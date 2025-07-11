@@ -1,0 +1,142 @@
+<div class="d-flex" style="height: 100vh;">
+  <!-- Sidebar -->
+  <app-sidebar style="width: 250px;"></app-sidebar>
+<!-- dashboard.component.html (Bootstrap version with sidebar layout) -->
+<div class="container-fluid" [ngStyle]="{ 'margin-left': collapsed ? '-500px' : '-250px' }">
+  <div class="row">
+    <!-- Main Content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
+        <h2 class="h4 text-primary fw-bold"><i class="fas fa-chart-line me-2"></i>Dashboard Statistik Industri Asuransi</h2>
+      </div>
+
+      <!-- Upload Form -->
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title text-primary mb-3"><i class="fas fa-upload me-2"></i>Upload Data Excel</h5>
+          <form (ngSubmit)="upload()" class="row g-3">
+            <div class="col-md-4">
+              <label for="periode" class="form-label">Periode</label>
+              <input type="date" id="periode" [(ngModel)]="periode" name="periode" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+              <label for="createdBy" class="form-label">Created By</label>
+              <input type="text" id="createdBy" [(ngModel)]="createdBy" name="createdBy" class="form-control" required />
+            </div>
+            <div class="col-md-4">
+              <label for="file" class="form-label">File Excel (.xlsx)</label>
+              <input type="file" id="file" (change)="onFileChange($event)" accept=".xlsx" class="form-control" required />
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary w-100" [disabled]="!file || !periode || !createdBy">
+                ⬆️ Upload dan Tampilkan Data
+              </button>
+            </div>
+          </form>
+
+          <div *ngIf="message" class="alert alert-success mt-3">✅ {{ message }}</div>
+          <div *ngIf="error" class="alert alert-danger mt-3">❌ {{ error }}</div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body" [ngStyle]="{ width: '500px', height: '500px' }">
+              <h6 class="card-title text-primary">🏭 Jumlah Industri</h6>
+              <canvas baseChart [data]="chartJumlahIndustri" [options]="chartJumlahIndustriOptions" [type]="'bar'"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body" >
+              <h6 class="card-title text-primary">💰 Aset vs Liabilitas</h6>
+              <canvas baseChart [data]="chartAsetLiabilitas" [options]="chartAsetLiabilitasOptions" [type]="'bar'" [ngStyle]="{ width: '500px', height: '500px'}"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body" >
+              <h6 class="card-title text-primary">📉 Premi vs Klaim</h6>
+              <canvas baseChart [data]="chartPremiKlaim" [options]="chartPremiKlaimOptions" [type]="'bar'" [ngStyle]="{ width: '500px', height: '500px'}"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body" >
+              <h6 class="card-title text-primary">🍰 Komposisi Industri</h6>
+              <canvas baseChart [data]="chartKomposisiKategori" [options]="chartKomposisiKategoriOptions" [type]="'pie'"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 mb-4">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h6 class="card-title text-primary">📈 Tren Premi & Klaim</h6>
+              <canvas baseChart [data]="chartTrendPremiKlaim" [options]="chartTrendOptions" [type]="'line'"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="card shadow-sm mb-5" *ngIf="groupedData.length > 0">
+        <div class="card-body">
+          <h5 class="card-title text-primary">📋 Tabel Data Ringkasan</h5>
+          <div class="table-responsive">
+            <table class="table table-bordered table-sm">
+              <thead class="table-light">
+                <tr>
+                  <th rowspan="2">Komponen</th>
+                  <th colspan="2">Jumlah Industri</th>
+                  <th colspan="2">Aset</th>
+                  <th colspan="2">Liabilitas</th>
+                  <th colspan="2">Ekuitas</th>
+                  <th colspan="2">Pinjaman</th>
+                  <th colspan="2">Premi</th>
+                  <th colspan="2">Klaim</th>
+                  
+                </tr>
+                <tr>
+                  <th>Konv</th><th>Syariah</th>
+                  <th>Konv</th><th>Syariah</th>
+                  <th>Konv</th><th>Syariah</th>
+                  <th>Konv</th><th>Syariah</th>
+                  <th>Konv</th><th>Syariah</th>
+                  <th>Konv</th><th>Syariah</th>
+                  <th>Konv</th><th>Syariah</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of groupedData">
+                  <td>{{ row.komponen }}</td>
+                  <td>{{ row.jumlahIndustriKonv }}</td>
+                  <td>{{ row.jumlahIndustriSyariah }}</td>
+                  <td>{{ row.asetKonv | number:'1.0-0' }}</td>
+                  <td>{{ row.asetSyariah | number:'1.0-0' }}</td>
+                  <td>{{ row.liabilitasKonv | number:'1.0-0' }}</td>
+                  <td>{{ row.liabilitasSyariah | number:'1.0-0' }}</td>
+                  <td>{{ row.ekuitasKonv | number:'1.0-0' }}</td>
+                  <td>{{ row.ekuitasSyariah | number:'1.0-0' }}</td>
+                  <td>{{ row.pinjamanKonv | number:'1.0-0' }}</td>
+                  <td>{{ row.pinjamanSyariah | number:'1.0-0' }}</td>
+                  <td>{{ row.premiKonv | number:'1.0-0' }}</td>
+                  <td>{{ row.premiSyariah | number:'1.0-0' }}</td>
+                  <td>{{ row.klaimKonv | number:'1.0-0' }}</td>
+                  <td>{{ row.klaimSyariah | number:'1.0-0' }}</td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</div>
+

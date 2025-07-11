@@ -1,0 +1,41 @@
+.card-title {
+  border-left: 4px solid #2563eb; /* biru profesional */
+  padding-left: 12px;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+h2.h4 {
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+button.btn-primary {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+button.btn-primary:hover {
+  background-color: #1e40af;
+  border-color: #1e40af;
+}
+
+.table thead th {
+  background-color: #e8f0fe;
+  color: #1e3a8a;
+  font-weight: 600;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table tbody td {
+  vertical-align: middle;
+}

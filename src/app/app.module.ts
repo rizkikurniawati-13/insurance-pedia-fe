@@ -38,6 +38,8 @@ import { PuzzleComponent } from './puzzle/puzzle.component';
 import { CrosswordComponent } from './crossword/crossword.component';
 import { FaqAdminComponent } from './faq/faq-admin/faq-admin.component';
 import { FaqListComponent } from './faq/faq-list/faq-list.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,8 @@ import { FaqListComponent } from './faq/faq-list/faq-list.component';
     PuzzleComponent,
     CrosswordComponent,
     FaqAdminComponent,
-    FaqListComponent
+    FaqListComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -76,7 +79,8 @@ import { FaqListComponent } from './faq/faq-list/faq-list.component';
     NgxChartsModule,
     MatDialogModule,
     MatButtonModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgChartsModule
   ],
   providers: [
     AuthGuard,

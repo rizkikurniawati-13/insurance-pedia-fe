@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environment/environment.prod';
 
 @Component({
   selector: 'app-faq-list',
@@ -16,6 +17,7 @@ export class FaqListComponent implements OnInit {
   questions: any[] = [];
   answers: { [questionId: string]: string } = {};
   userName = '';
+  apiUrl = environment.apiUrl;
 
   // Tambahan untuk fitur "Jawab"
   selectedQuestion: any = null;
