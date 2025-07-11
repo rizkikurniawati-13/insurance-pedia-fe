@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
           console.error('Token undefined saat login tanpa MFA');
         }
       localStorage.setItem('userName', this.loginForm.value.email);
-      this.router.navigate(['/glossary']);
+      this.router.navigate(['/dashboard']);
       } else if ('mfaRequired' in res) {
         // Butuh MFA → simpan email sementara & redirect ke halaman OTP
         localStorage.setItem('pendingMfaEmail', this.loginForm.value.email);

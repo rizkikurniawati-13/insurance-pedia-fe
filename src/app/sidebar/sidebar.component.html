@@ -8,6 +8,11 @@
   </div>
 
   <ul class="nav flex-column px-2">
+    <li class="nav-item mb-2" title="Dashboard">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-link text-white d-flex align-items-center">
+        <i class="fa-solid fa-chart-line"></i><span *ngIf="!collapsed" class="ms-2">Dashboard</span>
+      </a>
+    </li>
     <li class="nav-item mb-2" title="Glossarium">
       <a routerLink="/glossary" routerLinkActive="active" class="nav-link text-white d-flex align-items-center">
         <i class="fa-solid fa-layer-group"></i><span *ngIf="!collapsed" class="ms-2">Glossarium</span>
