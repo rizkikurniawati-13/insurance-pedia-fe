@@ -1,31 +1,40 @@
 <div class="d-flex" style="height: 100vh;">
   <app-sidebar style="width: 250px;"></app-sidebar>
-  <main class="flex-grow-1 p-4 overflow-auto bg-light">
+
+  <main class="flex-grow-1 overflow-auto bg-light p-4">
     <div class="container my-4">
-    <h1>Glossarium</h1>
-    <button (click)="addGlossary()" class="btn btn-primary" >
-      <i class="fa-solid fa-plus"></i> Add Glossary</button>
-    <br>
-    <br>
-    <input
-      type="text"
-      class="form-control mb-3"
-      placeholder="Search term..."
-      [(ngModel)]="searchTerm"
-    />
+      <div class="card shadow-sm">
+        <div class="card-body d-flex flex-column" style="height: 80vh;">
+          <!-- Sticky Header -->
+          <div class="mb-3 sticky-top bg-white pb-3" style="z-index: 1;">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h2 class="text-primary fw-bold mb-0"><i class="fa-solid fa-book me-2"></i>Glossarium</h2>
+              <button (click)="addGlossary()" class="btn btn-primary shadow-sm">
+                <i class="fa-solid fa-plus"></i> Tambah Istilah
+              </button>
+            </div>
 
-    <div *ngIf="filteredGlossary.length === 0">
-      <p>No terms found.</p>
-    </div>
+            <div class="input-group shadow-sm">
+              <span class="input-group-text bg-white"><i class="fa-solid fa-search text-muted"></i></span>
+              <input type="text" class="form-control" placeholder="Cari istilah..." [(ngModel)]="searchTerm" />
+            </div>
+          </div>
 
-    <ul class="list-group">
-      <li
-        *ngFor="let item of filteredGlossary"
-        class="list-group-item"
-      >
-        <strong>{{ item.term }}</strong>: {{ item.definition }}
-      </li>
-    </ul>
+          <!-- Scrollable List -->
+          <div class="flex-grow-1 overflow-auto mt-3 pe-1">
+            <div *ngIf="filteredGlossary.length === 0" class="alert alert-warning">
+              <i class="fa-solid fa-circle-info me-2"></i> Tidak ada istilah yang cocok.
+            </div>
+
+            <ul class="list-group">
+              <li *ngFor="let item of filteredGlossary" class="list-group-item list-group-item-action">
+                <h6 class="mb-1 text-primary fw-semibold">{{ item.term }}</h6>
+                <p class="mb-0 text-muted">{{ item.definition }}</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </div>

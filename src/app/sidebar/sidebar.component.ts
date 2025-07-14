@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Route, RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,21 +13,35 @@ import { Router } from '@angular/router';
   
 })
 export class SidebarComponent {
-  collapsed = false;
-  currentYear: number = new Date().getFullYear();
-
-  constructor(private router: Router) {}
-
+  isSidebarOpen = false;
   @Output() collapsedChange = new EventEmitter<boolean>();
 
+  constructor(private router: Router){}
+
+  menus = [
+    { label: 'Dashboard', icon: 'fa-solid fa-chart-line', link: '/dashboard' },
+    { label: 'Glossarium', icon: 'fa-solid fa-layer-group', link: '/glossary' },
+    { label: 'Insurance Companies', icon: 'fa-solid fa-city', link: '/insurance-companies' },
+    { label: 'Business Process', icon: 'fa-solid fa-bars-staggered', link: '/business-process' },
+    { label: 'Regulation', icon: 'fa-solid fa-folder-open', link: '/regulations' },
+    { label: 'Audit Cases', icon: 'fa-solid fa-book-journal-whills', link: '/audit-case' },
+    { label: 'Games', icon: 'fa-solid fa-gamepad', link: '/crossword' },
+    { label: 'FAQ', icon: 'fa-solid fa-circle-question', link: '/faq-list' },
+    { label: 'User Management', icon: 'fa-solid fa-users', link: '/user-management' },
+  ];
+
   toggleSidebar() {
-    this.collapsed = !this.collapsed;
+    this.isSidebarOpen = !this.isSidebarOpen;
+    this.collapsedChange.emit(this.isSidebarOpen);
+  }
+
+  closeSidebarOnMobile() {
+    if (window.innerWidth < 768) this.isSidebarOpen = false;
   }
 
   logout() {
-  localStorage.clear();
-  this.router.navigate(['/']);
+    localStorage.clear();
+    this.router.navigate(['/']);
   }
-
   
 }

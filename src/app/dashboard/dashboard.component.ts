@@ -29,30 +29,42 @@ export class DashboardComponent implements OnInit {
   groupedData: any[] = [];
   collapsed: boolean = false;
   order: string = 'komponen';
-  reverse: boolean = false; 
+  reverse: boolean = false;
+  periodes: string[] = [];
+  selectedPeriode: string = '';
+  
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    this.createdBy = localStorage.getItem('userName') || '';
     this.periode = '';
     this.fetchOverview();
     this.fetchTrendData();
+    this.fetchPeriodes();
   }
+
+
+isMobile(): boolean {
+  return window.innerWidth < 768;
+}
+
+
+  
 
   setOrder(value: string): void {
-  if (this.order === value) {
-    this.reverse = !this.reverse;
-  } else {
-    this.order = value;
-    this.reverse = false;
+    if (this.order === value) {
+      this.reverse = !this.reverse;
+    } else {
+      this.order = value;
+      this.reverse = false;
+    }
   }
-}
 
-getSortIcon(field: string): string {
-  if (this.order !== field) return 'fa-solid fa-sort'; // default icon
-  return this.reverse ? 'fa-solid fa-sort-down' : 'fa-solid fa-sort-up';
-}
-
+  getSortIcon(field: string): string {
+    if (this.order !== field) return 'fa-solid fa-sort'; // default icon
+    return this.reverse ? 'fa-solid fa-sort-down' : 'fa-solid fa-sort-up';
+  }
 
   private getCurrentPeriode(): string {
     const now = new Date();
@@ -66,7 +78,7 @@ getSortIcon(field: string): string {
   }
 
   upload(): void {
-    if (!this.file || !this.periode || !this.createdBy) return;
+    if (!this.file || !this.periode) return;
     this.dashboardService.uploadOverview(this.file, this.periode, this.createdBy).subscribe({
       next: (res) => {
         this.message = res;
@@ -81,9 +93,25 @@ getSortIcon(field: string): string {
     });
   }
 
+  fetchPeriodes(): void {
+    this.dashboardService.getAvailablePeriodes().subscribe({
+      next: (data) => {
+        this.periodes = data;
+        this.selectedPeriode = data[0];
+        this.fetchOverview();
+      },
+      error: (err) => {
+        console.error('Gagal ambil periode:', err);
+      }
+    });
+  }
+
+
   fetchOverview(): void {
+    if (!this.selectedPeriode) return;
+
     this.loading = true;
-    const periodeParam = this.periode?.trim() ? this.periode : undefined;
+    const periodeParam = this.selectedPeriode?.trim() ? this.selectedPeriode : undefined;
     this.dashboardService.getOverviewByPeriode(periodeParam).subscribe(data => {
       const grouped = new Map();
 
@@ -267,7 +295,7 @@ getSortIcon(field: string): string {
         ticks: {
           autoSkip: false,
           maxRotation: 45,
-          minRotation: 0,
+          minRotation: 30,
           callback: function (val, index, ticks) {
             const label = this.getLabelForValue(val as number);
             if (typeof label === 'string') {
@@ -319,7 +347,7 @@ getSortIcon(field: string): string {
         ticks: {
           autoSkip: false,
           maxRotation: 45,
-          minRotation: 0,
+          minRotation: 30,
           callback: function (val, index, ticks) {
             const label = this.getLabelForValue(val as number);
             if (typeof label === 'string') {
@@ -370,7 +398,7 @@ getSortIcon(field: string): string {
         ticks: {
           autoSkip: false,
           maxRotation: 45,
-          minRotation: 0,
+          minRotation: 30,
           callback: function (val, index, ticks) {
             const label = this.getLabelForValue(val as number);
             if (typeof label === 'string') {
@@ -441,6 +469,7 @@ getSortIcon(field: string): string {
     }
   };
 
+
   fetchTrendData(): void {
     this.dashboardService.getOverviewTrend().subscribe(data => {
       const labels: string[] = [];
@@ -493,14 +522,11 @@ getSortIcon(field: string): string {
     });
   }
 
-  private formatPeriodeToMonthYear(isoDate: string): string {
+  public formatPeriodeToMonthYear(isoDate: string): string {
     const date = new Date(isoDate);
     const bulan = date.toLocaleString('id-ID', { month: 'long' });
     const tahun = date.getFullYear();
     return `${bulan.charAt(0).toUpperCase() + bulan.slice(1)} ${tahun}`;
   }
-
-
-
 
 }

@@ -1,7 +1,9 @@
 <div class="d-flex" style="height: 100vh;">
   <!-- Sidebar -->
-  <app-sidebar style="width: 250px;"></app-sidebar>
-  <!-- dashboard.component.html (Bootstrap version with sidebar layout) -->
+  <app-sidebar class="sidebar-full-height"></app-sidebar>
+  
+
+  <div class="main-content">
   <div class="container-fluid" [ngStyle]="{ 'margin-left': collapsed ? '-500px' : '-250px' }">
     <div class="row">
       <!-- Main Content -->
@@ -9,44 +11,69 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
           <h2 class="h4 text-primary fw-bold"><i class="fas fa-chart-line me-2"></i>Dashboard Statistik Industri
             Asuransi</h2>
+          <div class="d-flex justify-content-end mb-3 align-items-center">
+            <label for="periodeSelect" class="me-2 fw-semibold">Periode:</label>
+            <select class="form-select w-auto" id="periodeSelect" [(ngModel)]="selectedPeriode"
+              (change)="fetchOverview()">
+              <option *ngFor="let p of periodes" [value]="p">
+                {{ formatPeriodeToMonthYear(p) }}
+              </option>
+            </select>
+          </div>
+
         </div>
 
-        <!-- Upload Form -->
         <div class="card shadow-sm mb-4">
           <div class="card-body">
-            <h5 class="card-title text-primary mb-3"><i class="fas fa-upload me-2"></i>Upload Data Excel</h5>
-            <form (ngSubmit)="upload()" class="row g-3">
-              <div class="col-md-4">
-                <label for="periode" class="form-label">Periode</label>
-                <input type="date" id="periode" [(ngModel)]="periode" name="periode" class="form-control" required />
+            <h5 class="card-title text-primary mb-4">
+              <i class="fas fa-upload me-2"></i>Upload Data Excel
+            </h5>
+
+            <form (ngSubmit)="upload()" class="row gy-3 align-items-end">
+              <!-- Periode -->
+              <div class="col-md-5">
+                <label for="periode" class="form-label fw-semibold">📅 Periode</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light"><i class="fas fa-calendar-alt text-primary"></i></span>
+                  <input type="date" id="periode" [(ngModel)]="periode" name="periode" class="form-control"
+                    placeholder="Pilih tanggal periode" required />
+                </div>
               </div>
-              <div class="col-md-4">
-                <label for="createdBy" class="form-label">Created By</label>
-                <input type="text" id="createdBy" [(ngModel)]="createdBy" name="createdBy" class="form-control"
-                  required />
+
+              <!-- File -->
+              <div class="col-md-5">
+                <label for="file" class="form-label fw-semibold">📎 File Excel (.xlsx)</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light"><i class="fas fa-file-excel text-success"></i></span>
+                  <input type="file" id="file" (change)="onFileChange($event)" accept=".xlsx" class="form-control"
+                    required />
+                </div>
               </div>
-              <div class="col-md-4">
-                <label for="file" class="form-label">File Excel (.xlsx)</label>
-                <input type="file" id="file" (change)="onFileChange($event)" accept=".xlsx" class="form-control"
-                  required />
-              </div>
-              <div class="col-12">
-                <button type="submit" class="btn btn-primary w-100" [disabled]="!file || !periode || !createdBy">
-                  ⬆️ Upload dan Tampilkan Data
+
+              <!-- Tombol Upload -->
+              <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="!file || !periode">
+                  <i class="fa-solid fa-upload"></i>
                 </button>
               </div>
             </form>
 
-            <div *ngIf="message" class="alert alert-success mt-3">✅ {{ message }}</div>
-            <div *ngIf="error" class="alert alert-danger mt-3">❌ {{ error }}</div>
+            <!-- Notifikasi -->
+            <div *ngIf="message" class="alert alert-success mt-4" role="alert">
+              ✅ {{ message }}
+            </div>
+            <div *ngIf="error" class="alert alert-danger mt-4" role="alert">
+              ❌ {{ error }}
+            </div>
           </div>
         </div>
+
 
         <!-- Charts -->
         <div class="row">
           <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
-              <div class="card-body" [ngStyle]="{ width: '800px', height: '500px' }">
+              <div class="card-body" style="width: 570px; height: 500px;">
                 <h6 class="card-title text-primary">🏭 Jumlah Industri</h6>
                 <canvas baseChart [data]="chartJumlahIndustri" [options]="chartJumlahIndustriOptions"
                   [type]="'bar'"></canvas>
@@ -55,19 +82,19 @@
           </div>
           <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
-              <div class="card-body" [ngStyle]="{ width: '800px', height: '500px' }">
+              <div class="card-body" style="width: 570px; height: 500px;">
                 <h6 class="card-title text-primary">💰 Aset vs Liabilitas</h6>
                 <canvas baseChart [data]="chartAsetLiabilitas" [options]="chartAsetLiabilitasOptions" [type]="'bar'"
-                  [ngStyle]="{ width: '800px', height: '500px'}"></canvas>
+                  style="width: 570px; height: 500px;"></canvas>
               </div>
             </div>
           </div>
           <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
-              <div class="card-body" [ngStyle]="{ width: '800px', height: '500px' }">
+              <div class="card-body" style="width: 570px; height: 500px;">
                 <h6 class="card-title text-primary">📉 Premi vs Klaim</h6>
                 <canvas baseChart [data]="chartPremiKlaim" [options]="chartPremiKlaimOptions" [type]="'bar'"
-                  [ngStyle]="{ width: '800px', height: '500px'}"></canvas>
+                  style="width: 570px; height: 500px;"></canvas>
               </div>
             </div>
           </div>
@@ -77,7 +104,7 @@
                 style="height: 500px;">
                 <h6 class="card-title text-primary mb-3">🍰 Komposisi Industri</h6>
                 <canvas baseChart [data]="chartKomposisiKategori" [options]="chartKomposisiKategoriOptions"
-                  [type]="'pie'" style="max-width: 500px; max-height: 500px;">
+                  [type]="'pie'" style="max-width: 300px; max-height: 300px;">
                 </canvas>
               </div>
             </div>
@@ -85,9 +112,9 @@
 
           <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
-              <div class="card-body" [ngStyle]="{ width: '800px', height: '500px' }">
+              <div class="card-body" style="width: 600px; height: 500px;">
                 <h6 class="card-title text-primary">📈 Tren Premi & Klaim</h6>
-                <canvas baseChart [data]="chartTrendPremiKlaim" [options]="chartTrendOptions" [type]="'line'"></canvas>
+                <canvas baseChart [data]="chartTrendPremiKlaim" [options]="chartTrendOptions" [type]="'line'" style="width: 600px; height: 400px;"></canvas>
               </div>
             </div>
           </div>
@@ -176,6 +203,7 @@
           </div>
         </div>
       </main>
+    </div>
     </div>
   </div>
 </div>

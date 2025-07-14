@@ -1,18 +1,26 @@
-.graph-card {
-  min-height: 200px;
-  background-color: #ffffff;
-  border: 1px solid #dee2e6;
-  position: relative;
-  overflow-x: auto;  /* Scroll horizontal jika konten terlalu lebar */
-  overflow-y: hidden;
-  max-width: 100%;   /* Batasi agar tidak melebar melebihi container */
+/* Card container untuk semua graph */
+.graph-wrapper {
+  background-color: #fff;
+  border-radius: 1rem;
 }
 
+/* Setiap blok graph */
+.graph-card {
+  min-height: 250px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+}
+
+/* ngx-graph canvas */
 .chart-container {
   width: 100%;
   height: 600px;
 }
 
+/* Node & edge styling */
 .node text {
   font-family: 'Segoe UI', sans-serif;
 }
@@ -22,11 +30,26 @@
   fill: #555;
 }
 
-.arrow-head {
-  fill: #6c757d;
-}
-
 ngx-graph svg {
   overflow: hidden;
   max-width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 450px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h4 {
+    font-size: 1.1rem;
+  }
+
+  .graph-card {
+    padding: 1rem !important;
+  }
 }

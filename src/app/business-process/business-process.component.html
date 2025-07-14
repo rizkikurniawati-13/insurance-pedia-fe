@@ -1,22 +1,27 @@
-<!-- Container Layout -->
-<div class="d-flex vh-100 bg-light">
+<div class="d-flex flex-column flex-md-row vh-100 bg-light">
   <app-sidebar style="width: 250px;"></app-sidebar>
 
-  <main class="flex-grow-1 p-4 overflow-auto">
-    <div class="container my-4">
-      <h1 class="mb-4 text-center text-primary">Insurance Business Process</h1>
+  <main class="flex-grow-1 p-3 p-md-4 overflow-auto bg-light">
+    <div class="container my-3 my-md-4">
+      <h1 class="mb-4 text-center fw-bold text-primary">
+        <i class="fa-solid fa-sitemap me-2"></i> Insurance Business Process
+      </h1>
 
-      <div class="graph-card p-4 rounded shadow bg-white">
+      <!-- Wrapper Card -->
+      <div class="graph-wrapper card p-4 border-0 shadow-sm rounded-4 bg-white">
+
         <!-- Loop Setiap Group Proses Bisnis -->
-        <div *ngFor="let graph of multipleGraphs" class="graph-card mb-5 p-4 rounded shadow bg-white">
-          <h4 class="mb-3 text-secondary">{{ graph.title }}</h4>
+        <div *ngFor="let graph of multipleGraphs" class="graph-card mb-5 p-4 bg-white shadow-sm rounded-4">
+          <h4 class="text-secondary fw-semibold mb-3">
+            <i class="fa-solid fa-diagram-project me-2 text-muted"></i>{{ graph.title }}
+          </h4>
 
-          <!-- ✅ Buka tag ngx-graph dengan benar -->
-          <ngx-graph [nodes]="graph.nodes" [links]="graph.links" [nodeTemplates]="{ custom: nodeTemplate }"
-            [showCustomNode]="true" [curve]="curve" layout="dagre" class="chart-container"
-            (select)="onNodeClick($event.node)">
+          <!-- ✅ ngx-graph Component -->
+          <ngx-graph [nodes]="graph.nodes" [links]="graph.links"
+            [nodeTemplates]="{ custom: nodeTemplate }" [showCustomNode]="true" [curve]="curve"
+            layout="dagre" class="chart-container" (select)="onNodeClick($event.node)">
 
-            <!-- ✅ SEMUA templates HARUS DI DALAM SINI -->
+            <!-- ✅ Template Node -->
             <ng-template #nodeTemplate let-node>
               <ng-container *ngIf="node.data?.category === 'decision'; else processNode">
                 <svg:g class="node" (click)="onNodeClick(node)" ngx-tooltip [tooltipTitle]="node.label">
@@ -27,9 +32,10 @@
 
               <ng-template #processNode>
                 <svg:g class="node" (click)="onNodeClick(node)" ngx-tooltip [tooltipTitle]="node.label">
-                  <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height" rx="10" ry="10"
-                    fill="#f1f3f5" stroke="#0d6efd" stroke-width="2" />
-                  <svg:text text-anchor="middle" font-size="12" fill="#000" [attr.x]="node.dimension.width / 2"
+                  <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
+                    rx="10" ry="10" fill="#f8f9fa" stroke="#0d6efd" stroke-width="2" />
+                  <svg:text text-anchor="middle" font-size="12" fill="#000"
+                    [attr.x]="node.dimension.width / 2"
                     [attr.y]="(node.dimension.height / 2 - 7)">
                     <tspan *ngFor="let line of wrapText(node.label, 20); let i = index"
                       [attr.x]="node.dimension.width / 2" [attr.dy]="i === 0 ? 0 : 15">
@@ -43,7 +49,8 @@
                 </svg:g>
               </ng-template>
             </ng-template>
-            <!-- OPTIONAL: Jika pakai custom link -->
+
+            <!-- OPTIONAL: Custom Link -->
             <ng-template #linkTemplate let-link>
               <svg:g class="edge" pointer-events="none">
                 <svg:path class="line" [attr.id]="link.id" stroke-width="2" stroke="#6c757d" marker-end="url(#arrow)" />
@@ -62,10 +69,10 @@
                 <svg:path d="M0,-5L10,0L0,5" fill="#333" />
               </svg:marker>
             </ng-template>
-          </ngx-graph> <!-- ✅ TAG PENUTUP -->
 
-
+          </ngx-graph>
         </div>
+
       </div>
     </div>
   </main>

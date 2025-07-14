@@ -1,45 +1,69 @@
 <div class="d-flex" style="height: 100vh;">
   <app-sidebar style="width: 250px;"></app-sidebar>
-  <main class="flex-grow-1 p-4 overflow-auto">
-<div class="container my-4">
-<h2>Tambah Glossarium</h2>
 
-<form [formGroup]="glossariumForm" (ngSubmit)="onSubmit()">
-  <label>Istilah</label>
-  <input class="form-control" type="text" formControlName="term" required />
-  <br />
+  <main class="flex-grow-1 p-4 overflow-auto bg-light">
+    <div class="container my-4">
+      <div class="card shadow rounded-4 border-0">
+        <div class="card-body px-5 py-4">
+          <!-- Judul -->
+          <div class="d-flex align-items-center mb-4">
+            <div class="me-3 border-start border-4 border-primary ps-3">
+              <h3 class="text-primary fw-bold mb-0"><i class="fa-solid fa-circle-plus me-2"></i>Tambah Istilah</h3>
+            </div>
+          </div>
 
-  <label>Definisi</label>
-  <textarea class="form-control" formControlName="definition" required></textarea>
-  <br />
+          <!-- Form -->
+          <form [formGroup]="glossariumForm" (ngSubmit)="onSubmit()" class="row g-4">
+            <!-- Istilah -->
+            <div class="col-md-6">
+              <label class="form-label text-secondary fw-semibold">📌 Istilah</label>
+              <input class="form-control shadow-sm" type="text" formControlName="term" required />
+            </div>
 
-  <label>Kategori</label>
-  <input class="form-control" type="text" formControlName="category" />
-  <br />
+            <!-- Kategori -->
+            <div class="col-md-6">
+              <label class="form-label text-secondary fw-semibold">🏷️ Kategori</label>
+              <input class="form-control shadow-sm" type="text" formControlName="category" />
+            </div>
 
-  <label>Referensi</label>
-  <input class="form-control" type="text" formControlName="reference" />
-  <br />
+            <!-- Definisi -->
+            <div class="col-12">
+              <label class="form-label text-secondary fw-semibold">📝 Definisi</label>
+              <textarea rows="4" class="form-control shadow-sm" formControlName="definition" required></textarea>
+            </div>
 
-  <label>Status</label>
-  <select class="form-control" formControlName="status">
-    <option value="Aktif">Aktif</option>
-    <option value="Nonaktif">Nonaktif</option>
-  </select>
-  <br /><br />
+            <!-- Referensi -->
+            <div class="col-md-6">
+              <label class="form-label text-secondary fw-semibold">🔗 Referensi</label>
+              <input class="form-control shadow-sm" type="text" formControlName="reference" />
+            </div>
 
-  <button class="btn btn-success" type="submit" [disabled]="glossariumForm.invalid">Simpan</button>
-</form>
+            <!-- Status -->
+            <div class="col-md-6">
+              <label class="form-label text-secondary fw-semibold">⚙️ Status</label>
+              <select class="form-select shadow-sm" formControlName="status">
+                <option value="Aktif">Aktif</option>
+                <option value="Nonaktif">Nonaktif</option>
+              </select>
+            </div>
 
-<p *ngIf="successMessage" style="color:green">{{ successMessage }}</p>
-<p *ngIf="errorMessage" style="color:red">{{ errorMessage }}</p>
+            <!-- Tombol Simpan -->
+            <div class="col-12 text-end mt-3">
+              <button class="btn btn-success btn-lg px-4 shadow-sm" type="submit" [disabled]="glossariumForm.invalid">
+                <i class="fa-solid fa-floppy-disk me-2"></i> Simpan Istilah
+              </button>
+            </div>
+          </form>
 
+          <!-- Alert -->
+          <div *ngIf="successMessage" class="alert alert-success mt-4 rounded-3 shadow-sm">
+            ✅ {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger mt-4 rounded-3 shadow-sm">
+            ❌ {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>
-</main>
-</div>
-
-
-
-
-<!-- yuhuuuu -->
-

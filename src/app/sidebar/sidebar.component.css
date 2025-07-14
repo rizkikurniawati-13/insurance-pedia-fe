@@ -1,53 +1,41 @@
+/* sidebar.component.css */
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100vh;
   min-height: 100vh;
   width: 250px;
-  transition: width 0.3s ease;
-  overflow: hidden;
-  position: fixed;
-  z-index: 1000;
-  justify-content: space-between; /* supaya tombol logout di bawah */
-  background-color: #12508e; /* contoh warna */
+  background-color: #12508e;
   color: white;
+  z-index: 1040;
+  transition: left 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
 }
 
-.sidebar-collapsed {
-  width: 60px;
+.sidebar.open {
+  left: 0;
 }
 
-.sidebar-collapsed .nav-link span {
-  display: none;
-}
-
-.sidebar-collapsed h5 {
-  display: none;
-}
-
-.sidebar .nav-link.active {
+.nav-link.active {
   background-color: #0d6efd;
   border-radius: 5px;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .sidebar {
+    left: 0;
     position: relative;
-    width: 100%;
-    min-height: auto;
   }
 
-  .sidebar-collapsed {
-    width: 100%;
+  .btn.position-fixed {
+    display: none;
   }
 }
+
 
 :host {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
+  display: block;
+  height: 100%;
 }
-
-.sidebar-footer {
-  margin-top: auto;
-  font-size: 0.75rem;
-  color: #6c757d;
-}
-

@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+main {
+  background-color: #f3f4f6;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+}
+
+.table th, .table td {
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.list-group-item {
+  border: none;
+  font-size: 0.95rem;
+}
+
+i {
+  opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  .card-body {
+    padding: 1.5rem !important;
+  }
+
+  .table th, .table td {
+    font-size: 0.75rem;
+  }
+}

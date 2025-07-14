@@ -1,104 +1,114 @@
-<div class="d-flex" style="height: 100vh;">
+<div class="d-flex flex-column flex-md-row" style="height: 100vh;">
   <app-sidebar style="width: 250px;"></app-sidebar>
-  <main class="flex-grow-1 p-4 overflow-auto">
-    <div class="container my-4">
-      <div class="main-content p-6">
-        <h2>Form Pendaftaran Company</h2>
+
+  <main class="flex-grow-1 p-3 p-md-4 overflow-auto bg-light">
+    <div class="container my-3 my-md-4">
+      <div class="main-content mx-auto">
+        <h2 class="text-primary fw-bold mb-4 text-center">
+          <i class="fa-solid fa-file-circle-plus me-2"></i> Form Pendaftaran Company
+        </h2>
 
         <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
-          <div class="Form-group">
-            <input type="hidden" class="form-control" formControlName="id" id="id">
-          </div>
-          <div>
+          <input type="hidden" formControlName="id" />
+
+          <div class="form-group">
             <label>Nama Perusahaan</label>
-            <input formControlName="name" />
+            <input type="text" formControlName="name" />
           </div>
-          <div>
+
+          <div class="form-group">
             <label>Tipe Perusahaan</label>
-            <select class="form-select" aria-label="Default select example" formControlName="type">
+            <select class="form-select" formControlName="type">
               <option value="">Tipe Perusahaan</option>
-              <option *ngFor="let type of insuranceTypes" [value]="type">{{type}}</option>
+              <option *ngFor="let type of insuranceTypes" [value]="type">{{ type }}</option>
             </select>
           </div>
-          <div>
+
+          <div class="form-group">
             <label>Alamat</label>
-            <input formControlName="address" />
+            <input type="text" formControlName="address" />
           </div>
-          <div>
+
+          <div class="form-group">
             <label>Kontak</label>
-            <input formControlName="contact" />
+            <input type="text" formControlName="contact" />
           </div>
-          <div>
+
+          <div class="form-group">
             <label>NPWP</label>
-            <input formControlName="npwp" />
+            <input type="text" formControlName="npwp" />
           </div>
-          <div>
+
+          <div class="form-group">
             <label>No Ijin Usaha</label>
-            <input formControlName="licenseNumber" />
+            <input type="text" formControlName="licenseNumber" />
           </div>
+
           <div class="form-group">
             <label for="establishedDate">Tanggal Berdiri</label>
-            <input type="date" id="establishedDate" class="form-control" formControlName="establishedDate"
-              [max]="todayString" />
-            <div
-              *ngIf="companyForm.get('establishedDate')?.errors?.['max'] && companyForm.get('establishedDate')?.touched"
-              class="text-danger">
+            <input type="date" id="establishedDate" formControlName="establishedDate" [max]="todayString" />
+            <div *ngIf="companyForm.get('establishedDate')?.errors?.['max'] && companyForm.get('establishedDate')?.touched"
+              class="text-danger mt-1">
               Tanggal tidak boleh lebih dari hari ini.
             </div>
           </div>
-          <div>
-            <label>Jenis</label>
-            <select class="form-select" aria-label="Default select example" formControlName="status">
-              <option value="">Status Perusahaan</option>
-              <option *ngFor="let status of insuranceStatus" [value]="status">{{status}}</option>
+
+          <div class="form-group">
+            <label>Status Perusahaan</label>
+            <select class="form-select" formControlName="status">
+              <option value="">Pilih Status</option>
+              <option *ngFor="let status of insuranceStatus" [value]="status">{{ status }}</option>
             </select>
           </div>
 
-          <div>
+          <div class="form-group">
             <label>BUMN / Non BUMN</label>
-            <select class="form-select" aria-label="Default select example" formControlName="status">
-              <option value="">BUMN / Non BUMN</option>
-              <option *ngFor="let ot of ownershipType" [value]="ownershipType">{{ot}}</option>
+            <select class="form-select" formControlName="ownershipType">
+              <option value="">Pilih Kepemilikan</option>
+              <option *ngFor="let ot of ownershipType" [value]="ot">{{ ot }}</option>
             </select>
           </div>
 
-          <div>
+          <div class="form-group">
             <label>Syariah / Konvensional</label>
-            <select class="form-select" aria-label="Default select example" formControlName="status">
-              <option value="">Syariah / Konvensional</option>
-              <option *ngFor="let st of shariaType" [value]="shariaType">{{st}}</option>
+            <select class="form-select" formControlName="shariaType">
+              <option value="">Pilih Jenis</option>
+              <option *ngFor="let st of shariaType" [value]="st">{{ st }}</option>
             </select>
           </div>
 
-          <div>
+          <div class="form-group">
             <label>Tipe Pendanaan</label>
-            <select class="form-select" aria-label="Default select example" formControlName="status">
-              <option value="">Tipe Pendanaan</option>
-              <option *ngFor="let it of investmentType" [value]="investmentType">{{it}}</option>
+            <select class="form-select" formControlName="investmentType">
+              <option value="">Pilih Pendanaan</option>
+              <option *ngFor="let it of investmentType" [value]="it">{{ it }}</option>
             </select>
           </div>
 
-          <div formArrayName="products">
+          <div class="form-group" formArrayName="products">
             <label>Produk</label>
-            <div *ngFor="let category of productsCategory">
-              <!-- Parent Checkbox (Category) -->
-              <label>
+            <div *ngFor="let category of productsCategory" class="mb-2">
+              <label class="fw-semibold">
                 <input type="checkbox" [checked]="isCategorySelected(category)"
                   (change)="onCategoryCheck($event, category)" />
-                <strong>{{ category.name }}</strong>
+                {{ category.name }}
               </label>
-
-              <!-- Child Checkbox (Products) -->
-              <div style="margin-left: 20px" *ngFor="let product of category.products">
+              <div class="ms-4 mt-1" *ngFor="let product of category.products">
                 <label>
-                  <input type="checkbox" [value]="product.id" [checked]="selectedProductIds.includes(product.id)"
+                  <input type="checkbox" [value]="product.id"
+                    [checked]="selectedProductIds.includes(product.id)"
                     (change)="onProductCheck($event, category)" />
                   {{ product.name }}
                 </label>
               </div>
             </div>
           </div>
-          <button [disabled]="!companyForm.valid" type="submit">Simpan</button>
+
+          <div class="text-end mt-4">
+            <button type="submit" [disabled]="!companyForm.valid">
+              <i class="fa-solid fa-floppy-disk me-2"></i> Simpan
+            </button>
+          </div>
         </form>
       </div>
     </div>

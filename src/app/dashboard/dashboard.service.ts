@@ -50,4 +50,11 @@ export class DashboardService {
     const headers = new HttpHeaders(token ? { Authorization: `Bearer ${token}` } : {});
     return this.http.get<any[]>(`${this.baseUrl}/dashboard/overview/trend`, { headers });
   }
+
+  getAvailablePeriodes(): Observable<string[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders(token ? { Authorization: `Bearer ${token}` } : {});
+  return this.http.get<string[]>(`${this.baseUrl}/dashboard/overview/periodes`, { headers });
+  }
+
 }

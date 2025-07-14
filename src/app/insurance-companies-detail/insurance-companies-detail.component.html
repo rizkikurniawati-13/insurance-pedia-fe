@@ -1,61 +1,94 @@
-<div class="d-flex" style="height: 100vh;">
+<div class="d-flex flex-column flex-md-row" style="height: 100vh;">
   <app-sidebar style="width: 250px;"></app-sidebar>
-  <main class="flex-grow-1 p-4 overflow-auto bg-light">
-    <div class="container my-4">
-      <h2 class="mb-4 text-center">Detail Perusahaan Asuransi</h2>
 
-      <div class="card shadow-sm mb-4">
-        <div class="card-body">
-          <h4 class="card-title text-primary">{{ company.name }}</h4>
-          <p class="mb-1"><strong>Tanggal Berdiri:</strong> {{ company.establishedDate | date:'dd MMMM yyyy' }}</p>
-          <p class="mb-1"><strong>Alamat:</strong> {{ company.address }}</p>
-          <p class="mb-1"><strong>Kontak:</strong> {{ company.contact }}</p>
-          <!-- <p class="mb-1"><strong>NPWP:</strong> {{ company.npwp }}</p> -->
-          <p class="mb-1"><strong>Nomor Ijin Usaha:</strong> {{ company.licenseNumber }}</p>
-          <p class="mb-1"><strong>Status:</strong> {{ company.status }}</p>
-          <p class="mb-1"><strong>Tipe:</strong> {{ company.type }}</p>
+  <main class="flex-grow-1 p-3 p-md-4 overflow-auto bg-light">
+    <div class="container my-3 my-md-4">
+
+      <!-- Header -->
+      <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary mb-1">
+          <i class="fa-solid fa-building-circle-check me-2"></i>Detail Perusahaan Asuransi
+        </h2>
+        <p class="text-muted fs-6 d-none d-md-block">Informasi lengkap entitas perusahaan asuransi terdaftar</p>
+      </div>
+
+      <!-- Informasi Perusahaan -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4" *ngIf="company">
+        <div class="card-body bg-white px-4 px-md-5 py-4">
+          <h4 class="text-primary fw-semibold mb-4">
+            <i class="fa-solid fa-circle-info me-2"></i>{{ company.name }}
+          </h4>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <p><i class="fa-regular fa-calendar me-2 text-secondary"></i><strong>Tanggal Berdiri:</strong> {{ company.establishedDate | date:'dd MMMM yyyy' }}</p>
+              <p><i class="fa-solid fa-phone me-2 text-secondary"></i><strong>Kontak:</strong> {{ company.contact }}</p>
+              <p><i class="fa-solid fa-layer-group me-2 text-secondary"></i><strong>Status:</strong> {{ company.status }}</p>
+            </div>
+            <div class="col-md-6">
+              <p><i class="fa-solid fa-map-marker-alt me-2 text-secondary"></i><strong>Alamat:</strong> {{ company.address }}</p>
+              <p><i class="fa-solid fa-id-card me-2 text-secondary"></i><strong>Nomor Izin:</strong> {{ company.licenseNumber }}</p>
+              <p><i class="fa-solid fa-building me-2 text-secondary"></i><strong>Tipe:</strong> {{ company.type }}</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="card shadow-sm mb-4">
-        <div class="card-body">
-          <h5 class="card-title text-success">Daftar Produk</h5>
-          <ul class="list-group list-group-flush">
-            <li *ngFor="let product of company.products" class="list-group-item">
-              {{ product.name }}
-            </li>
-          </ul>
+      <!-- Produk -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4" *ngIf="company">
+        <div class="card-body bg-white px-4 px-md-5 py-4">
+          <h5 class="fw-semibold text-success mb-3">
+            <i class="fa-solid fa-box me-2"></i>Produk Asuransi
+          </h5>
+
+          <div *ngIf="company?.products?.length; else noProduct">
+            <ul class="list-group list-group-flush">
+              <li *ngFor="let product of company.products" class="list-group-item ps-0">
+                <i class="fa-solid fa-circle-check text-success me-2"></i>{{ product.name }}
+              </li>
+            </ul>
+          </div>
+
+          <ng-template #noProduct>
+            <p class="text-muted fst-italic">Belum ada produk terdaftar.</p>
+          </ng-template>
         </div>
       </div>
 
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title text-success">Daftar Risiko Utama Perusahaan</h5>
-          <table class="table table-hover table-dark">
-            <thead>
-              <tr>
-                <th scope="col">No</th>
-                <th scope="col">Nama Risiko</th>
-                <th scope="col">Jenis Risiko</th>
-                <th scope="col">Penyebab</th>
-                <th scope="col">Dampak</th>
-                <th scope="col">Mitigasi Risiko</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let risk of company.risks; let i = index">
-                <th>{{i + 1}}</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
+      <!-- Risiko -->
+      <div class="card border-0 shadow-sm rounded-4 mb-5" *ngIf="company">
+        <div class="card-body bg-white px-2 px-md-4 py-4">
+          <h5 class="fw-semibold text-danger mb-3">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>Risiko Utama Perusahaan
+          </h5>
 
-          </table>
+          <div class="table-responsive">
+            <table class="table table-bordered align-middle table-striped table-hover text-nowrap">
+              <thead class="table-danger text-center">
+                <tr>
+                  <th>No</th>
+                  <th>Nama Risiko</th>
+                  <th>Jenis</th>
+                  <th>Penyebab</th>
+                  <th>Dampak</th>
+                  <th>Mitigasi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let risk of company.risks; let i = index">
+                  <td class="text-center">{{ i + 1 }}</td>
+                  <td>{{ risk.name }}</td>
+                  <td>{{ risk.type }}</td>
+                  <td>{{ risk.cause }}</td>
+                  <td>{{ risk.impact }}</td>
+                  <td>{{ risk.mitigation }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
+
     </div>
   </main>
 </div>

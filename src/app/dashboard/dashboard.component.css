@@ -87,3 +87,20 @@ button.btn-primary:hover {
   text-align: right !important;
 }
 
+
+.sidebar-full-height {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  background-color: #0d47a1; /* atau biru sidebar kamu */
+  overflow-y: auto;
+}
+
+.main-content {
+  margin-left: 250px;
+  padding: 1rem;
+}
+
+
