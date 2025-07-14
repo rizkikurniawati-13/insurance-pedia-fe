@@ -1,17 +1,4 @@
-/* Reset & layout dasar */
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  box-sizing: border-box;
-}
-
-/* Atur agar tidak ada celah dari navbar jika fixed */
-body {
-  padding-top: 0 !important;
-}
-
-/* Sidebar Layout */
+/* Sidebar Fix */
 app-sidebar {
   position: fixed;
   top: 0;
@@ -22,36 +9,70 @@ app-sidebar {
   z-index: 1000;
 }
 
-/* Main content area */
+/* Main Content */
 .main-content {
-  margin-left: 210px;
-  padding: 2rem 2rem 2rem 2rem;
+  margin-left: 250px;
+  padding: 2rem;
+  background-color: #fff;
   transition: margin-left 0.3s ease;
   min-height: 100vh;
-  background-color: #fff;
 }
 
 .main-content.collapsed {
   margin-left: 70px;
 }
 
-/* Container content layout */
+/* Top Header Fix */
+body {
+  overflow-x: hidden;
+}
+
 .container {
-  margin-top: 0 !important;
-  padding: 0 !important;
+  max-width: 100%;
 }
 
-/* Table */
-table {
-  table-layout: auto;
-  width: 100%;
+/* Table Improvements */
+.table thead th {
+  vertical-align: middle;
+  text-align: center;
+  font-size: 0.85rem;
 }
 
-th, td {
+.table tbody td {
+  font-size: 0.85rem;
   vertical-align: middle;
 }
 
-/* Debug - optional */
-/* .main-content, .container {
-  border: 1px dashed rgba(0,0,0,0.1);
-} */
+.table tbody td:nth-child(2),
+.table tbody td:nth-child(3),
+.table tbody td:nth-child(4) {
+  text-align: left;
+}
+
+.table-responsive {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+}
+
+/* Button download/eye size */
+.btn-sm i {
+  font-size: 0.8rem;
+}
+
+/* Responsive Search + Button */
+@media (max-width: 768px) {
+  .search-add-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .search-add-row input {
+    width: 100% !important;
+  }
+
+  .search-add-row button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+}

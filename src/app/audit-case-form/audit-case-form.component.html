@@ -1,13 +1,15 @@
-<div class="d-flex" style="height: 100vh;">
-  <app-sidebar style="width: 250px;"></app-sidebar>
+<div class="d-flex flex-column flex-md-row" style="height: 100vh;">
+  <app-sidebar style="width: 250px; background-color: #f8f9fa;"></app-sidebar>
 
-  <main class="flex-grow-1 p-4" style="overflow: visible; position: relative;">
+  <main class="flex-grow-1 p-4 bg-light overflow-auto">
     <div class="container">
-      <div class="card shadow-sm rounded-4 p-4 border-0">
-        <h4 class="mb-4 text-primary">📋 Tambah Audit Case</h4>
+      <div class="card shadow rounded-4 border-0 p-4">
+        <h4 class="mb-4 fw-bold text-primary d-flex align-items-center gap-2">
+          <i class="fa-solid fa-clipboard-list"></i> Tambah Audit Case
+        </h4>
 
         <form [formGroup]="auditCaseForm" (ngSubmit)="onSubmit()">
-          <div class="row g-3">
+          <div class="row g-4">
             <!-- Perusahaan -->
             <div class="col-md-6">
               <label class="form-label">Perusahaan</label>
@@ -15,13 +17,12 @@
                 placeholder="Cari atau pilih perusahaan" formControlName="companyId" [searchable]="true"
                 [clearable]="true" appendTo=".card">
               </ng-select>
-
             </div>
 
             <!-- Judul Kasus -->
             <div class="col-md-6">
               <label class="form-label">Judul Kasus</label>
-              <input class="form-control" type="text" formControlName="title">
+              <input class="form-control" type="text" formControlName="title" placeholder="Masukkan judul kasus">
             </div>
 
             <!-- Nilai Kerugian -->
@@ -72,39 +73,35 @@
               </select>
             </div>
 
-            <!-- Terdakwa -->
+            <!-- Textarea Fields -->
             <div class="col-md-6">
               <label class="form-label">Terdakwa / Jabatan</label>
-              <textarea formControlName="defendants" class="form-control" rows="2"></textarea>
+              <textarea formControlName="defendants" class="form-control" rows="2" placeholder="Tulis nama/jabatan terdakwa"></textarea>
             </div>
 
-            <!-- Proyek Terkait -->
             <div class="col-md-6">
               <label class="form-label">Proyek Terkait</label>
-              <textarea formControlName="relatedProject" class="form-control" rows="2"></textarea>
+              <textarea formControlName="relatedProject" class="form-control" rows="2" placeholder="Sebutkan proyek jika ada"></textarea>
             </div>
 
-            <!-- Pokok Temuan -->
             <div class="col-md-6">
               <label class="form-label">Pokok Temuan</label>
-              <textarea formControlName="findings" class="form-control" rows="2"></textarea>
+              <textarea formControlName="findings" class="form-control" rows="2" placeholder="Ringkasan pokok temuan"></textarea>
             </div>
 
-            <!-- Rekomendasi -->
             <div class="col-md-6">
               <label class="form-label">Rekomendasi Pemeriksaan</label>
-              <textarea formControlName="recommendations" class="form-control" rows="2"></textarea>
+              <textarea formControlName="recommendations" class="form-control" rows="2" placeholder="Tuliskan rekomendasi"></textarea>
             </div>
 
-            <!-- Tindak Lanjut -->
             <div class="col-md-6">
               <label class="form-label">Tindak Lanjut Pemeriksaan</label>
-              <textarea formControlName="followUp" class="form-control" rows="2"></textarea>
+              <textarea formControlName="followUp" class="form-control" rows="2" placeholder="Tindak lanjut hasil audit"></textarea>
             </div>
           </div>
 
           <div class="mt-4 text-end">
-            <button type="submit" class="btn btn-primary px-4">
+            <button type="submit" class="btn btn-primary btn-lg px-4 shadow-sm">
               <i class="fa-solid fa-floppy-disk me-2"></i> Simpan
             </button>
           </div>

@@ -1,82 +1,80 @@
-<div class="d-flex" style="height: 100vh;">
-  <app-sidebar style="width: 250px;"></app-sidebar>
-  <main class="flex-grow-1 p-4 overflow-auto">
+<div class="d-flex flex-column flex-md-row" style="height: 100vh;">
+  <app-sidebar style="width: 250px; background-color: #f8f9fa;"></app-sidebar>
+
+  <main class="flex-grow-1 p-4 overflow-auto bg-light">
     <div class="container mt-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-          <h5 class="mb-0">
-            <i class="fa-solid fa-file-circle-check me-2"></i>
-            Detail Audit Case
+      <div class="card border-0 shadow rounded-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center rounded-top-4">
+          <h5 class="mb-0 d-flex align-items-center gap-2">
+            <i class="fa-solid fa-file-circle-check"></i> Detail Audit Case
           </h5>
-          <button class="btn btn-sm btn-light" (click)="goBack()">
-            <i class="fa-solid fa-arrow-left"></i> Kembali
+          <button class="btn btn-sm btn-light shadow-sm" (click)="goBack()">
+            <i class="fa-solid fa-arrow-left me-1"></i> Kembali
           </button>
         </div>
+
         <div class="card-body">
-          <div class="row mb-3">
+          <div class="row g-4">
             <div class="col-md-6">
-              <label class="fw-bold">Judul Kasus:</label>
-              <p>{{ auditCase?.title }}</p>
+              <label class="fw-semibold text-muted">Judul Kasus</label>
+              <div class="border rounded p-2 bg-white">{{ auditCase?.title || '-' }}</div>
             </div>
             <div class="col-md-6">
-              <label class="fw-bold">Perusahaan:</label>
-              <p>{{ auditCase?.company?.name || '-' }}</p>
+              <label class="fw-semibold text-muted">Perusahaan</label>
+              <div class="border rounded p-2 bg-white">{{ auditCase?.company?.name || '-' }}</div>
             </div>
-          </div>
 
-          <div class="row mb-3">
             <div class="col-md-4">
-              <label class="fw-bold">Tahun Pelanggaran:</label>
-              <p>{{ auditCase?.violationYear || '-' }}</p>
+              <label class="fw-semibold text-muted">Tahun Pelanggaran</label>
+              <div class="border rounded p-2 bg-white">{{ auditCase?.violationYear || '-' }}</div>
             </div>
             <div class="col-md-4">
-              <label class="fw-bold">Tahun Temuan:</label>
-              <p>{{ auditCase?.findingYear || '-' }}</p>
+              <label class="fw-semibold text-muted">Tahun Temuan</label>
+              <div class="border rounded p-2 bg-white">{{ auditCase?.findingYear || '-' }}</div>
             </div>
             <div class="col-md-4">
-              <label class="fw-bold">Instansi Menemukan:</label>
-              <p>{{ auditCase?.findingInstitution || '-' }}</p>
+              <label class="fw-semibold text-muted">Instansi Menemukan</label>
+              <div class="border rounded p-2 bg-white">{{ auditCase?.findingInstitution || '-' }}</div>
             </div>
-          </div>
 
-          <div class="mb-3">
-            <label class="fw-bold">Jenis Pelanggaran:</label>
-            <p>{{ auditCase?.violationType || '-' }}</p>
-          </div>
+            <div class="col-md-6">
+              <label class="fw-semibold text-muted">Jenis Pelanggaran</label>
+              <div class="border rounded p-2 bg-white">{{ auditCase?.violationType || '-' }}</div>
+            </div>
+            <div class="col-md-6">
+              <label class="fw-semibold text-muted">Nilai Kerugian</label>
+              <div class="border rounded p-2 bg-white">
+                {{ auditCase?.lossValue ? (auditCase.lossValue | currency:'IDR':'symbol':'1.0-0') : '-' }}
+              </div>
+            </div>
 
-          <div class="mb-3">
-            <label class="fw-bold">Nilai Kerugian:</label>
-            <p>{{ auditCase?.lossValue ? (auditCase.lossValue | currency:'IDR':'symbol':'1.0-0') : '-' }}</p>
-          </div>
+            <div class="col-md-6">
+              <label class="fw-semibold text-muted">Terdakwa / Jabatan</label>
+              <div class="border rounded p-2 bg-white white-space-pre">{{ auditCase?.defendants || '-' }}</div>
+            </div>
 
-          <div class="mb-3">
-            <label class="fw-bold">Terdakwa / Jabatan:</label>
-            <p class="white-space-pre">{{ auditCase?.defendants || '-' }}</p>
-          </div>
+            <div class="col-md-6">
+              <label class="fw-semibold text-muted">Proyek Terkait</label>
+              <div class="border rounded p-2 bg-white">{{ auditCase?.relatedProject || '-' }}</div>
+            </div>
 
-          <div class="mb-3">
-            <label class="fw-bold">Proyek Terkait:</label>
-            <p>{{ auditCase?.relatedProject || '-' }}</p>
-          </div>
+            <div class="col-12">
+              <label class="fw-semibold text-muted">Pokok Temuan</label>
+              <div class="border rounded p-3 bg-white">{{ auditCase?.findings || '-' }}</div>
+            </div>
 
-          <div class="mb-3">
-            <label class="fw-bold">Pokok Temuan:</label>
-            <p>{{ auditCase?.findings || '-' }}</p>
-          </div>
+            <div class="col-12">
+              <label class="fw-semibold text-muted">Rekomendasi Pemeriksaan</label>
+              <div class="border rounded p-3 bg-white">{{ auditCase?.recommendations || '-' }}</div>
+            </div>
 
-          <div class="mb-3">
-            <label class="fw-bold">Rekomendasi Pemeriksaan:</label>
-            <p>{{ auditCase?.recommendations || '-' }}</p>
-          </div>
-
-          <div class="mb-3">
-            <label class="fw-bold">Tindak Lanjut Pemeriksaan:</label>
-            <p>{{ auditCase?.followUp || '-' }}</p>
+            <div class="col-12">
+              <label class="fw-semibold text-muted">Tindak Lanjut Pemeriksaan</label>
+              <div class="border rounded p-3 bg-white">{{ auditCase?.followUp || '-' }}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-
   </main>
 </div>

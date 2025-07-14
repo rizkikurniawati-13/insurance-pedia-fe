@@ -1,3 +1,27 @@
 .white-space-pre {
   white-space: pre-wrap;
 }
+
+.card-header {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.card-body label {
+  font-size: 0.85rem;
+}
+
+.card-body .border {
+  font-size: 0.95rem;
+  background-color: #fdfdfd;
+}
+
+.btn-light:hover {
+  background-color: #e2e6ea;
+}
+
+@media (max-width: 768px) {
+  .card-header h5 {
+    font-size: 1rem;
+  }
+}

@@ -5,34 +5,32 @@
 }
 
 .form-label {
-  font-weight: 500;
-  color: #34495e;
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 0.9rem;
 }
 
-textarea.form-control {
-  resize: vertical;
+textarea.form-control,
+input.form-control,
+select.form-select {
+  border-radius: 0.5rem;
+  transition: box-shadow 0.2s ease;
+}
+
+textarea.form-control:focus,
+input.form-control:focus,
+select.form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 }
 
 button.btn-primary {
-  border-radius: 8px;
-  font-weight: 500;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-main,
-.container,
-.card {
-  overflow: visible !important;
-  position: relative;
-  z-index: 0;
-}
-
-.ng-dropdown-panel {
-  z-index: 9999 !important;
-}
-
-ng-select {
-  z-index: 1050;
-  position: relative;
+button.btn-primary:hover {
+  transform: scale(1.02);
 }
 
 ng-select {
@@ -54,14 +52,7 @@ ng-select {
   max-height: 250px;
 }
 
-.ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+.ng-dropdown-panel .ng-option {
   padding: 0.5rem;
   font-size: 14px;
-  white-space: normal;
 }
-
-.ng-select .ng-select-container .ng-value {
-  white-space: normal !important;
-}
-
-
