@@ -11,6 +11,9 @@ export interface InsuranceCompaniesModel{
     link: string;
     products: ProductsModel[];
     risks : RiskModel[];
+    ownershipType : string;
+    shariaType: string;
+    investmentType : string;
     createdBy: string;
     createdDate: Date;
     lastModifiedBy: string;

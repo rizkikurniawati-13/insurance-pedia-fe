@@ -7,12 +7,13 @@ import { FormsModule } from '@angular/forms';
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { OrderModule } from 'ngx-order-pipe';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgChartsModule, SidebarComponent],
+  imports: [CommonModule, FormsModule, NgChartsModule, SidebarComponent, OrderModule],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -27,14 +28,32 @@ export class DashboardComponent implements OnInit {
   loading = false;
   groupedData: any[] = [];
   collapsed: boolean = false;
+  order: string = 'komponen';
+  reverse: boolean = false; 
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    console.log(this.groupedData); 
     this.periode = '';
     this.fetchOverview();
     this.fetchTrendData();
   }
+
+  setOrder(value: string): void {
+  if (this.order === value) {
+    this.reverse = !this.reverse;
+  } else {
+    this.order = value;
+    this.reverse = false;
+  }
+}
+
+getSortIcon(field: string): string {
+  if (this.order !== field) return 'fa-solid fa-sort'; // default icon
+  return this.reverse ? 'fa-solid fa-sort-down' : 'fa-solid fa-sort-up';
+}
+
 
   private getCurrentPeriode(): string {
     const now = new Date();

@@ -18,6 +18,9 @@ export class InsuranceCompaniesFormComponent implements OnInit {
   insuranceTypes: string[] = [];
   insuranceCompany: InsuranceCompaniesModel[]= [];
   insuranceStatus: string[] = [];
+  ownershipType: string[] =[];
+  shariaType: string[]=[];
+  investmentType: string[]= [];
   today: Date = new Date();
   todayString: string = '';
   products: ProductsModel[] = [];
@@ -29,8 +32,11 @@ export class InsuranceCompaniesFormComponent implements OnInit {
   ngOnInit(): void {
   this.getAllProducts();
   this.getAllProductsCategoris();
-  this.insuranceTypes = ['UMUM', 'JIWA', 'REINSURANCE', 'BROKER', 'AGENT', 'SOSIAL', 'WAJIB'];
+  this.insuranceTypes = ['UMUM', 'JIWA', 'REINSURANCE', 'BROKER', 'AGENT', 'SOSIAL', 'WAJIB', 'PENJAMINAN'];
   this.insuranceStatus = ['Aktif', 'Tidak Aktif'];
+  this.ownershipType = ['BUMN', 'Non BUMN'];
+  this.shariaType = ['Syariah', 'Konvensional'];
+  this.investmentType = ['PMA', 'PMN'];
 
   this.companyForm = this.fb.group({
       id: [''],
@@ -45,9 +51,25 @@ export class InsuranceCompaniesFormComponent implements OnInit {
         [
           Validators.required,
           this.maxDateValidator(this.today)
-        ],
+        ]
       ],
-      status: [''],
+      status: ['',
+        [
+          Validators.required
+        ]
+      ],
+      ownershipType: ['',
+        [
+          Validators.required
+        ]],
+      shariaType: ['',
+        [
+          Validators.required
+        ]],
+      investmentType: ['',
+        [
+          Validators.required
+        ]],
       products: this.fb.array([])
     });
     

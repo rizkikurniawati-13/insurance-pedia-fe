@@ -54,7 +54,7 @@ export class InsuranceCompaniesComponent implements OnInit {
         this.companies = response.data;
         this.totalPages = response.totalPages;
         this.totalItems = response.totalItems;
-        this.pagedCompanies = this.companies;
+        this.pagedCompanies = this.companies;       
       },
       error => {
         console.error('Error fetching company', error);

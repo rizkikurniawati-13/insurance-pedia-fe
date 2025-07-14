@@ -40,6 +40,7 @@ import { FaqAdminComponent } from './faq/faq-admin/faq-admin.component';
 import { FaqListComponent } from './faq/faq-list/faq-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
+import { OrderModule } from 'ngx-order-pipe';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,8 @@ import { NgChartsModule } from 'ng2-charts';
     MatDialogModule,
     MatButtonModule,
     NgxPaginationModule,
-    NgChartsModule
+    NgChartsModule,
+    OrderModule
   ],
   providers: [
     AuthGuard,

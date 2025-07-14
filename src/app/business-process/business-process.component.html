@@ -17,7 +17,6 @@
             (select)="onNodeClick($event.node)">
 
             <!-- ✅ SEMUA templates HARUS DI DALAM SINI -->
-
             <ng-template #nodeTemplate let-node>
               <ng-container *ngIf="node.data?.category === 'decision'; else processNode">
                 <svg:g class="node" (click)="onNodeClick(node)" ngx-tooltip [tooltipTitle]="node.label">
@@ -44,7 +43,6 @@
                 </svg:g>
               </ng-template>
             </ng-template>
-
             <!-- OPTIONAL: Jika pakai custom link -->
             <ng-template #linkTemplate let-link>
               <svg:g class="edge" pointer-events="none">
@@ -64,7 +62,6 @@
                 <svg:path d="M0,-5L10,0L0,5" fill="#333" />
               </svg:marker>
             </ng-template>
-
           </ngx-graph> <!-- ✅ TAG PENUTUP -->
 
 

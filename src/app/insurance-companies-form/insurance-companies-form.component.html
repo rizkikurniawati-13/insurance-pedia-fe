@@ -1,98 +1,106 @@
 <div class="d-flex" style="height: 100vh;">
   <app-sidebar style="width: 250px;"></app-sidebar>
   <main class="flex-grow-1 p-4 overflow-auto">
-<div class="container my-4">
-<div class="main-content p-6">
-  <h2>Form Pendaftaran Company</h2>
+    <div class="container my-4">
+      <div class="main-content p-6">
+        <h2>Form Pendaftaran Company</h2>
 
-  <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
-    <div class="Form-group">
+        <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+          <div class="Form-group">
             <input type="hidden" class="form-control" formControlName="id" id="id">
-    </div>
-    <div>
-      <label>Nama Perusahaan</label>
-      <input formControlName="name" />
-    </div>
-    <div>
-      <label>Tipe Perusahaan</label>
-      <select class="form-select" aria-label="Default select example" formControlName="type">
-      <option value="">Tipe Perusahaan</option>
-      <option *ngFor="let type of insuranceTypes" [value]="type">{{type}}</option>
-      </select>
-    </div>
-    <div>
-      <label>Alamat</label>
-      <input formControlName="address" />
-    </div>
-    <div>
-      <label>Kontak</label>
-      <input formControlName="contact" />
-    </div>
-    <div>
-      <label>NPWP</label>
-      <input formControlName="npwp" />
-    </div>
-    <div>
-      <label>No Ijin Usaha</label>
-      <input formControlName="licenseNumber" />
-    </div>
-    <div class="form-group">
-  <label for="establishedDate">Tanggal Berdiri</label>
-  <input
-    type="date"
-    id="establishedDate"
-    class="form-control"
-    formControlName="establishedDate"
-    [max]="todayString"
-  />
-    <div *ngIf="companyForm.get('establishedDate')?.errors?.['max'] && companyForm.get('establishedDate')?.touched" class="text-danger">
-        Tanggal tidak boleh lebih dari hari ini.
-    </div>
-    </div>
-    <div>
-      <label>Jenis</label>
-      <select class="form-select" aria-label="Default select example" formControlName="status">
-      <option value="">Status Perusahaan</option>
-      <option *ngFor="let status of insuranceStatus" [value]="status">{{status}}</option>
-      </select>
-    </div>
+          </div>
+          <div>
+            <label>Nama Perusahaan</label>
+            <input formControlName="name" />
+          </div>
+          <div>
+            <label>Tipe Perusahaan</label>
+            <select class="form-select" aria-label="Default select example" formControlName="type">
+              <option value="">Tipe Perusahaan</option>
+              <option *ngFor="let type of insuranceTypes" [value]="type">{{type}}</option>
+            </select>
+          </div>
+          <div>
+            <label>Alamat</label>
+            <input formControlName="address" />
+          </div>
+          <div>
+            <label>Kontak</label>
+            <input formControlName="contact" />
+          </div>
+          <div>
+            <label>NPWP</label>
+            <input formControlName="npwp" />
+          </div>
+          <div>
+            <label>No Ijin Usaha</label>
+            <input formControlName="licenseNumber" />
+          </div>
+          <div class="form-group">
+            <label for="establishedDate">Tanggal Berdiri</label>
+            <input type="date" id="establishedDate" class="form-control" formControlName="establishedDate"
+              [max]="todayString" />
+            <div
+              *ngIf="companyForm.get('establishedDate')?.errors?.['max'] && companyForm.get('establishedDate')?.touched"
+              class="text-danger">
+              Tanggal tidak boleh lebih dari hari ini.
+            </div>
+          </div>
+          <div>
+            <label>Jenis</label>
+            <select class="form-select" aria-label="Default select example" formControlName="status">
+              <option value="">Status Perusahaan</option>
+              <option *ngFor="let status of insuranceStatus" [value]="status">{{status}}</option>
+            </select>
+          </div>
 
-  <div formArrayName="products">
-  <label>Produk</label>
-  <div *ngFor="let category of productsCategory">
-    <!-- Parent Checkbox (Category) -->
-    <label>
-      <input
-        type="checkbox"
-        [checked]="isCategorySelected(category)"
-        (change)="onCategoryCheck($event, category)"
-      />
-      <strong>{{ category.name }}</strong>
-    </label>
+          <div>
+            <label>BUMN / Non BUMN</label>
+            <select class="form-select" aria-label="Default select example" formControlName="status">
+              <option value="">BUMN / Non BUMN</option>
+              <option *ngFor="let ot of ownershipType" [value]="ownershipType">{{ot}}</option>
+            </select>
+          </div>
 
-    <!-- Child Checkbox (Products) -->
-    <div style="margin-left: 20px" *ngFor="let product of category.products">
-      <label>
-        <input
-          type="checkbox"
-          [value]="product.id"
-          [checked]="selectedProductIds.includes(product.id)"
-          (change)="onProductCheck($event, category)"
-        />
-        {{ product.name }}
-      </label>
+          <div>
+            <label>Syariah / Konvensional</label>
+            <select class="form-select" aria-label="Default select example" formControlName="status">
+              <option value="">Syariah / Konvensional</option>
+              <option *ngFor="let st of shariaType" [value]="shariaType">{{st}}</option>
+            </select>
+          </div>
+
+          <div>
+            <label>Tipe Pendanaan</label>
+            <select class="form-select" aria-label="Default select example" formControlName="status">
+              <option value="">Tipe Pendanaan</option>
+              <option *ngFor="let it of investmentType" [value]="investmentType">{{it}}</option>
+            </select>
+          </div>
+
+          <div formArrayName="products">
+            <label>Produk</label>
+            <div *ngFor="let category of productsCategory">
+              <!-- Parent Checkbox (Category) -->
+              <label>
+                <input type="checkbox" [checked]="isCategorySelected(category)"
+                  (change)="onCategoryCheck($event, category)" />
+                <strong>{{ category.name }}</strong>
+              </label>
+
+              <!-- Child Checkbox (Products) -->
+              <div style="margin-left: 20px" *ngFor="let product of category.products">
+                <label>
+                  <input type="checkbox" [value]="product.id" [checked]="selectedProductIds.includes(product.id)"
+                    (change)="onProductCheck($event, category)" />
+                  {{ product.name }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <button [disabled]="!companyForm.valid" type="submit">Simpan</button>
+        </form>
+      </div>
     </div>
-  </div>
-  </div>
-
-  
-
-    <button [disabled]="!companyForm.valid" type="submit">Simpan</button>
-  </form>
-
-  
+  </main>
 </div>
-</div>
-</main>
-</div>
-

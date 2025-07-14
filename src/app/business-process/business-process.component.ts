@@ -95,7 +95,7 @@ export class BusinessProcessComponent implements OnInit {
   }
 
   loadGraph(): void {
-    this.businessProcessService.getLinks().subscribe((links: ApiLink[]) => {
+    this.businessProcessService.getLinks().subscribe((links: ApiLink[]) => {     
       const grouped: { [key: string]: { nodes: GraphNode[]; links: GraphLink[] } } = {};
 
       for (const link of links) {
