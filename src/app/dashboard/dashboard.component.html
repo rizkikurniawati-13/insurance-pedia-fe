@@ -71,15 +71,18 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6 mb-4">
+          <div class="col-md-6 mb-4 mx-auto">
             <div class="card shadow-sm">
-              <div class="card-body" [ngStyle]="{ width: '800px', height: '500px' }">
-                <h6 class="card-title text-primary">🍰 Komposisi Industri</h6>
+              <div class="card-body d-flex flex-column align-items-center justify-content-center"
+                style="height: 500px;">
+                <h6 class="card-title text-primary mb-3">🍰 Komposisi Industri</h6>
                 <canvas baseChart [data]="chartKomposisiKategori" [options]="chartKomposisiKategoriOptions"
-                  [type]="'pie'" [ngStyle]="{ width: '800px', height: '500px'}"></canvas>
+                  [type]="'pie'" style="max-width: 500px; max-height: 500px;">
+                </canvas>
               </div>
             </div>
           </div>
+
           <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
               <div class="card-body" [ngStyle]="{ width: '800px', height: '500px' }">

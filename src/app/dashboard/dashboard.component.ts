@@ -462,7 +462,9 @@ getSortIcon(field: string): string {
       const sortedPeriode = Array.from(grouped.keys()).sort();
 
       sortedPeriode.forEach(periode => {
-        labels.push(periode);
+        const formattedLabel = this.formatPeriodeToMonthYear(periode);
+        labels.push(formattedLabel);
+
         const rows = grouped.get(periode);
 
         let konv: any = null;
@@ -490,6 +492,14 @@ getSortIcon(field: string): string {
       };
     });
   }
+
+  private formatPeriodeToMonthYear(isoDate: string): string {
+    const date = new Date(isoDate);
+    const bulan = date.toLocaleString('id-ID', { month: 'long' });
+    const tahun = date.getFullYear();
+    return `${bulan.charAt(0).toUpperCase() + bulan.slice(1)} ${tahun}`;
+  }
+
 
 
 
