@@ -5,11 +5,11 @@ export interface AuditCase {
   title: string;
   company?: InsuranceCompaniesModel;
   companyId?: string; // untuk post
-  lossAmount: string;
+  lossValue: string;
   violationType: string;
   violationYear: number;
-  discoveryYear: number;
-  discoveringInstitution: string;
+  findingYear: number;
+  findingInstitution: string;
   defendants: string;
   relatedProject: string;
   findings: string;

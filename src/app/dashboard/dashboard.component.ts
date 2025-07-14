@@ -34,7 +34,6 @@ export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
-    console.log(this.groupedData); 
     this.periode = '';
     this.fetchOverview();
     this.fetchTrendData();

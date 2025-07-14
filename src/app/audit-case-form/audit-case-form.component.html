@@ -28,7 +28,7 @@
             <div class="col-md-6">
               <label class="form-label">Nilai Kerugian</label>
               <input type="text" class="form-control" placeholder="Masukkan nilai kerugian"
-                [value]="formattedLossAmount" (input)="onLossAmountInput($event)"
+                [value]="formattedLossValue" (input)="onLossValueInput($event)"
                 (keypress)="allowOnlyNumbers($event)" />
               <div *ngIf="auditCaseForm.get('lossAmount')?.invalid && auditCaseForm.get('lossAmount')?.touched"
                 class="text-danger small mt-1">
@@ -57,7 +57,7 @@
             <!-- Tahun Temuan -->
             <div class="col-md-6">
               <label class="form-label">Tahun Temuan</label>
-              <select class="form-select" formControlName="discoveryYear">
+              <select class="form-select" formControlName="findingYear">
                 <option value="" disabled selected>Pilih tahun</option>
                 <option *ngFor="let year of years" [value]="year">{{ year }}</option>
               </select>
@@ -66,7 +66,7 @@
             <!-- Instansi Penemu -->
             <div class="col-md-6">
               <label class="form-label">Instansi yang Menemukan</label>
-              <select class="form-select" formControlName="discoveringInstitution">
+              <select class="form-select" formControlName="findingInstitution">
                 <option value="">Pilih instansi</option>
                 <option *ngFor="let instansi of instansiList" [value]="instansi">{{ instansi }}</option>
               </select>

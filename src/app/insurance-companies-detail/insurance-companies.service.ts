@@ -29,8 +29,8 @@ export class InsuranceCompanyService {
     return new HttpHeaders(token ? { Authorization: `Bearer ${token}` } : {});
   }
 
-  getAll(): Observable<Company[]> {
-    return this.http.get<Company[]>(`${this.baseUrl}/companies`, { headers: this.getHeaders() });
+  getAll(): Observable<InsuranceCompaniesModel[]> {
+    return this.http.get<InsuranceCompaniesModel[]>(`${this.baseUrl}/companies`, { headers: this.getHeaders() });
   }
 
   getCompanyPageable(page: number = 1, size: number = 10, search: string = ''): Observable<PageableCompanyResponse> {

@@ -18,9 +18,9 @@ export class AuditCaseFormComponent implements OnInit {
 
   auditCaseForm!: FormGroup;
   companyId!: string;
-  company: InsuranceCompaniesModel[]= [];
+  company: InsuranceCompaniesModel[] = [];
   violationTypes: string[] = [];
-  formattedLossAmount: string = '0';
+  formattedLossValue: string = '0';
   years: number[] = [];
   instansiList: string[] = [];
 
@@ -30,42 +30,42 @@ export class AuditCaseFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private companyService: InsuranceCompanyService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {
-    this.instansiList= [
-    'BPK',
-    'BPKP',
-    'OJK',
-    'KPK',
-    'Kejaksaan Agung',
-    'Inspektorat Jenderal',
-    'Bareskrim Polri',
-    'Auditor Independen (KAP)',
-    'Komisi VI DPR RI',
-    'Lembaga Swadaya Masyarakat (LSM)',
-    'Internal Audit'
+  ngOnInit() {    
+    this.loadCompany();
+    this.instansiList = [
+      'BPK',
+      'BPKP',
+      'OJK',
+      'KPK',
+      'Kejaksaan Agung',
+      'Inspektorat Jenderal',
+      'Bareskrim Polri',
+      'Auditor Independen (KAP)',
+      'Komisi VI DPR RI',
+      'Lembaga Swadaya Masyarakat (LSM)',
+      'Internal Audit'
     ];
     this.generateYears();
     this.violationTypes = [
-    'Korupsi',
-    'Fraud (Kecurangan)',
-    'Pelanggaran Prosedur',
-    'Pelanggaran Hukum/Peraturan',
-    'Kelalaian (Negligence)',
-    'Benturan Kepentingan',
-    'Tindak Pidana Lainnya'
+      'Korupsi',
+      'Fraud (Kecurangan)',
+      'Pelanggaran Prosedur',
+      'Pelanggaran Hukum/Peraturan',
+      'Kelalaian (Negligence)',
+      'Benturan Kepentingan',
+      'Tindak Pidana Lainnya'
     ];
-    this.loadCompany();
     this.companyId = this.route.snapshot.paramMap.get('companyId') || '';
     this.auditCaseForm = this.fb.group({
       title: ['', Validators.required],
       companyId: ['', Validators.required],
-      lossAmount: [0, [Validators.required, Validators.min(0)]],
+      lossValue: [0, [Validators.required, Validators.min(0)]],
       violationType: ['', Validators.required],
       violationYear: ['', [Validators.required, Validators.min(1900)]],
-      discoveryYear: ['', [Validators.required, Validators.min(1900)]],
-      discoveringInstitution: ['', Validators.required],
+      findingYear: ['', [Validators.required, Validators.min(1900)]],
+      findingInstitution: ['', Validators.required],
       defendants: ['', Validators.required],
       relatedProject: ['', Validators.required],
       findings: [''],
@@ -75,50 +75,49 @@ export class AuditCaseFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-  if (this.auditCaseForm.valid) {
-    const auditCase = this.auditCaseForm.value;
-    this.auditCaseService.create(auditCase.companyId, auditCase).subscribe({
-      next: () => {
-        alert('Audit Case berhasil disimpan!');
-        this.router.navigate(['/audit-case']);
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Terjadi kesalahan saat menyimpan.');
-      },
-    });
+    if (this.auditCaseForm.valid) {     
+      const auditCase = this.auditCaseForm.value;     
+      this.auditCaseService.create(auditCase.companyId, auditCase).subscribe({
+        next: () => {
+          alert('Audit Case berhasil disimpan!');
+          this.router.navigate(['/audit-case']);
+        },
+        error: (err) => {
+          alert('Terjadi kesalahan saat menyimpan.');
+        },
+      });
+    }
   }
-  }
 
-  onLossAmountInput(event: Event) {
-  const input = event.target as HTMLInputElement;
-  const value = input.value;
+  onLossValueInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const value = input.value;
 
-  // Hapus semua karakter non-angka
-  const cleaned = value.replace(/[^0-9]/g, '');
-  const numeric = Number(cleaned);
-  const validNumber = Math.max(numeric, 0);
+    // Hapus semua karakter non-angka
+    const cleaned = value.replace(/[^0-9]/g, '');
+    const numeric = Number(cleaned);
+    const validNumber = Math.max(numeric, 0);
 
-  // Set ke form
-  this.auditCaseForm.get('lossAmount')?.setValue(validNumber);
+    // Set ke form
+    this.auditCaseForm.get('lossValue')?.setValue(validNumber);
 
-  // Format tampilan input
-  this.formattedLossAmount = validNumber.toLocaleString('id-ID');
+    // Format tampilan input
+    this.formattedLossValue = validNumber.toLocaleString('id-ID');
   }
 
   allowOnlyNumbers(event: KeyboardEvent) {
-  const charCode = event.charCode;
-  // Hanya izinkan angka (0–9)
-  if (charCode < 48 || charCode > 57) {
-    event.preventDefault();
-  }
+    const charCode = event.charCode;
+    // Hanya izinkan angka (0–9)
+    if (charCode < 48 || charCode > 57) {
+      event.preventDefault();
+    }
   }
 
 
-   loadCompany() {
+  loadCompany() {
     this.companyService.getAll().subscribe(
-      (data: any[]) => {      
-       this.company = data;
+      (data: InsuranceCompaniesModel[]) => {
+        this.company = data;
       },
       error => {
         console.error('Error fetching company', error)

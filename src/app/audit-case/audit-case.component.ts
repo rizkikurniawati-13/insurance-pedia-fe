@@ -29,21 +29,21 @@ export class AuditCaseComponent implements OnInit {
   }
 
   loadAuditCase() {
-  this.auditCaseService.getPaged(this.currentPage - 1, this.pageSize).subscribe(
-    (response) => {
-      this.auditCases = response.data;
-      this.totalPages = response.totalPages;
-    },
-    error => {
-      console.error('Error fetching auditcase:', error);
-    }
-  );
+    this.auditCaseService.getPaged(this.currentPage - 1, this.pageSize).subscribe(
+      (response) => {
+        this.auditCases = response.data;
+        this.totalPages = response.totalPages;
+      },
+      error => {
+        console.error('Error fetching auditcase:', error);
+      }
+    );
   }
 
   changePage(page: number) {
-  if (page < 1 || page > this.totalPages) return;
-  this.currentPage = page;
-  this.loadAuditCase();
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.loadAuditCase();
   }
 
   onPageSizeChange() {
