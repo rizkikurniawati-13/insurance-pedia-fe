@@ -1,0 +1,24 @@
+<div class="d-flex" style="height: 100vh;">
+  <app-sidebar style="width: 250px;"></app-sidebar>
+
+  <main class="flex-grow-1 overflow-auto bg-light p-4">
+
+    <div class="welcome-wrapper d-flex flex-column align-items-center justify-content-center p-4">
+      <div
+        class="d-flex flex-column flex-md-row align-items-center justify-content-center text-center text-md-start gap-3 mb-4">
+        <img src="../../assets/logo.png" alt="IPedia Logo" class="logo" />
+        <div>
+          <h1 class="fw-bold text-primary mb-1">Selamat Datang di <span class="text-dark">IPedia</span></h1>
+          <p class="lead text-muted mb-0">Insurance Knowledge Management System</p>
+        </div>
+      </div>
+
+
+      <div class="video-wrapper ratio ratio-16x9 mb-4">
+        <iframe [src]="youtubeUrl | safe" title="IPedia Welcome Video" allowfullscreen allow="autoplay"></iframe>
+      </div>
+
+      <p class="text-secondary small">Video akan diputar otomatis. Silakan lanjut menjelajahi IPedia.</p>
+    </div>
+  </main>
+</div>

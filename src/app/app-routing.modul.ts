@@ -25,6 +25,7 @@ import { FaqListComponent } from './faq/faq-list/faq-list.component';
 import { FaqAdminComponent } from './faq/faq-admin/faq-admin.component';
 import { MfaComponent } from './mfa/mfa.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -48,6 +49,7 @@ export const routes: Routes = [
     { path: 'crossword', component: CrosswordComponent, canActivate: [AuthGuard] },
     { path: 'faq-list', component: FaqListComponent, canActivate: [AuthGuard] },
     { path: 'faq-admin', component: FaqAdminComponent, canActivate: [AuthGuard]},
+    { path: 'welcome', component: WelcomePageComponent, canActivate: [AuthGuard]},
     { path: 'mfa', component: MfaComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: '', redirectTo: '/login', pathMatch: 'full' },

@@ -63,7 +63,7 @@ export class MfaComponent implements OnInit {
       localStorage.setItem('token', res.token);
       localStorage.removeItem('pendingMfaEmail');
       this.authService.fetchRoles(res.token); // ⬅️ tambahkan ini
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/welcome']);
     },
     error: () => {
       this.errorMessage = 'OTP salah atau sudah kadaluarsa.';

@@ -41,6 +41,7 @@ import { FaqListComponent } from './faq/faq-list/faq-list.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
 import { OrderModule } from 'ngx-order-pipe';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { OrderModule } from 'ngx-order-pipe';
     CrosswordComponent,
     FaqAdminComponent,
     FaqListComponent,
-    DashboardComponent
+    DashboardComponent,
+    WelcomePageComponent
   ],
   imports: [
     BrowserAnimationsModule,
