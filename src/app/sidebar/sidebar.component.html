@@ -1,26 +1,31 @@
 <!-- sidebar.component.html -->
-<nav class="sidebar d-flex flex-column h-100" [ngClass]="{ 'open': isSidebarOpen }">
+<nav class="sidebar d-flex flex-column h-100" [ngClass]="{ 'open': isSidebarOpen, 'collapsed': isCollapsed }">
   <div class="sidebar-header d-flex justify-content-between align-items-center px-3 py-2">
-    <h5 class="mb-0 text-white">Menu</h5>
+    <h5 class="mb-0 text-white" *ngIf="!isCollapsed">Menu</h5>
     <button class="btn btn-sm btn-light d-md-none" (click)="toggleSidebar()">×</button>
+    <button class="btn btn-sm btn-light d-none d-md-inline" (click)="toggleCollapse()">
+      <i class="fas" [ngClass]="{ 'fa-angle-left': !isCollapsed, 'fa-angle-right': isCollapsed }"></i>
+    </button>
   </div>
 
   <ul class="nav flex-column px-2">
     <li class="nav-item" *ngFor="let menu of menus">
       <a [routerLink]="menu.link" routerLinkActive="active"
          class="nav-link text-white d-flex align-items-center mb-2" (click)="closeSidebarOnMobile()">
-        <i [class]="menu.icon"></i><span class="ms-2">{{ menu.label }}</span>
+        <i [class]="menu.icon"></i>
+        <span class="ms-2" *ngIf="!isCollapsed">{{ menu.label }}</span>
       </a>
     </li>
   </ul>
 
   <div class="p-3 border-top border-secondary text-center mt-auto">
-    <button (click)="logout()" class="btn btn-outline-light w-100">🚪 Logout</button>
-    <small class="d-block text-secondary mt-2">© 2025 InsurancePedia</small>
+    <button (click)="logout()" class="btn btn-outline-light w-100" *ngIf="!isCollapsed">🚪 Logout</button>
+    <i *ngIf="isCollapsed" class="fas fa-sign-out-alt text-white"></i>
+    <small class="d-block text-secondary mt-2" *ngIf="!isCollapsed">© 2025 InsurancePedia</small>
   </div>
 </nav>
 
-<!-- Hamburger for mobile -->
+<!-- Hamburger (mobile only) -->
 <button class="btn btn-primary position-fixed top-0 start-0 m-2 d-md-none z-3" (click)="toggleSidebar()">
   ☰
 </button>

@@ -1,20 +1,70 @@
-main {
-  padding-left: 4rem !important;
-  padding-right: 1.5rem;
+/* Tinggi tetap untuk kartu FAQ */
+.card.h-100, .card.flex-fill {
+  height: 100%;
+  min-height: 300px; /* atau sesuai kebutuhan */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Bagian jawaban dibungkus scroll */
+.faq-answer-scroll {
+  overflow-y: auto;
+  max-height: 140px;  /* sesuaikan dengan ukuran layout */
+  padding-right: 6px;
+}
+
+/* Tambahan agar scroll terlihat rapi */
+.faq-answer-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.faq-answer-scroll::-webkit-scrollbar-thumb {
+  background-color: #ced4da;
+  border-radius: 4px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+
+/* Pastikan .card dan .card-body memanjang vertikal */
+.col.d-flex {
+  display: flex;
+}
+
+.card.flex-fill {
+  display: flex;
+  flex-direction: column;
 }
 
 .card-body {
-  padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
+/* Container jawaban */
 .card .border-start {
   background-color: #f8f9fa;
   border-radius: 0.25rem;
   padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
 }
 
-@media (max-width: 768px) {
-  main {
-    margin-left: 0 !important;
-  }
+/* Form textarea */
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Tombol di bawah */
+.card-body > .btn,
+.card-body > form,
+.card-body > .mt-auto {
+  margin-top: auto;
 }

@@ -7,6 +7,8 @@ import { InsuranceCompanyService } from '../insurance-companies-detail/insurance
 import { InsuranceCompaniesModel } from '../insurance-companies-detail/insurance-companies.model';
 import { CommonModule } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-audit-case-form',
@@ -75,19 +77,42 @@ export class AuditCaseFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (this.auditCaseForm.valid) {     
-      const auditCase = this.auditCaseForm.value;     
-      this.auditCaseService.create(auditCase.companyId, auditCase).subscribe({
-        next: () => {
-          alert('Audit Case berhasil disimpan!');
+  if (this.auditCaseForm.valid) {
+    const auditCase = this.auditCaseForm.value;
+
+    this.auditCaseService.create(auditCase.companyId, auditCase).subscribe({
+      next: () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil!',
+          text: 'Audit Case berhasil disimpan.',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK'
+        }).then(() => {
           this.router.navigate(['/audit-case']);
-        },
-        error: (err) => {
-          alert('Terjadi kesalahan saat menyimpan.');
-        },
-      });
-    }
+        });
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Gagal!',
+          text: 'Terjadi kesalahan saat menyimpan.',
+          confirmButtonColor: '#d33',
+          confirmButtonText: 'Tutup'
+        });
+      },
+    });
+  } else {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Form Belum Lengkap',
+      text: 'Silakan lengkapi semua isian yang wajib diisi.',
+      confirmButtonColor: '#f0ad4e',
+      confirmButtonText: 'Oke'
+    });
   }
+}
+
 
   onLossValueInput(event: Event) {
     const input = event.target as HTMLInputElement;

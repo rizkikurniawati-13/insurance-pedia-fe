@@ -24,6 +24,7 @@ export class CrosswordComponent implements OnInit {
   direction: 'across' | 'down' = 'across';
 
   @ViewChildren('inputBox') inputBoxes!: QueryList<ElementRef<HTMLInputElement>>;
+  // @ViewChildren('inputBox') inputBoxes!: QueryList<ElementRef>;
 
 
 
@@ -105,15 +106,15 @@ export class CrosswordComponent implements OnInit {
   }
 
   startTimer() {
-  this.timer = setInterval(() => {
-    if (this.timeLeft > 0) {
-      this.timeLeft--;
-    } else {
-      clearInterval(this.timer);
-      this.timeExpired = true;
-      this.checkAnswer();
-    }
-  }, 1000);
+    this.timer = setInterval(() => {
+      if (this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        clearInterval(this.timer);
+        this.timeExpired = true;
+        this.checkAnswer();
+      }
+    }, 1000);
   }
 
   handleInput(row: number, col: number) {
@@ -129,6 +130,57 @@ export class CrosswordComponent implements OnInit {
     }
   }
 
+  handleKeyDown(event: KeyboardEvent, row: number, col: number) {
+  let nextRow = row;
+  let nextCol = col;
+
+  switch (event.key) {
+    case 'PageDown':
+    case 'ArrowDown':
+      nextRow++;
+      break;
+    case 'PageUp':
+    case 'ArrowUp':
+      nextRow--;
+      break;
+    case 'ArrowRight':
+      nextCol++;
+      break;
+    case 'ArrowLeft':
+      nextCol--;
+      break;
+    default:
+      return;
+  }
+
+  event.preventDefault();
+
+  // Batas valid grid
+  const maxRow = this.grid.length;
+  const maxCol = this.grid[0]?.length ?? 0;
+
+  if (
+    nextRow < 0 || nextRow >= maxRow ||
+    nextCol < 0 || nextCol >= maxCol ||
+    this.grid[nextRow][nextCol] === null
+  ) {
+    console.log(`Invalid target cell at (${nextRow}, ${nextCol})`);
+    return;
+  }
+
+  const nextInput = this.inputBoxes.find(input => {
+    const el = input.nativeElement;
+    const r = +(el.dataset?.['row'] ?? -1);
+    const c = +(el.dataset?.['col'] ?? -1);
+    return r === nextRow && c === nextCol;
+  });
+
+  if (nextInput) {
+    nextInput.nativeElement.focus();
+  } else {
+    // console.log(`No input found at (${nextRow}, ${nextCol})`);
+  }
+}
 
 
 

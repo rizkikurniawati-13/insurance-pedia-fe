@@ -1,19 +1,20 @@
-<div class="d-flex" style="height: 100vh;">
+<div class="d-flex" style="height: 100vh; overflow: hidden;">
   <!-- Sidebar -->
   <app-sidebar style="width: 250px;"></app-sidebar>
 
   <!-- Main TTS Area -->
-  <div class="tts-container">
+  <div class="tts-container flex-grow-1 overflow-auto">
+    <!-- Header -->
     <div class="tts-header text-center">
-  <h2 class="tts-title">🧩 TTS Bersilangan: <em>Istilah Asuransi</em></h2>
+      <h2 class="tts-title">🧩 TTS Bersilangan: <em>Istilah Asuransi</em></h2>
+      <div class="scoreboard">
+        ⏱ <strong>Waktu:</strong> {{ timeLeft }} detik &nbsp;&nbsp; | &nbsp;&nbsp;
+        🎯 <strong>Skor:</strong> {{ score }}
+      </div>
+    </div>
 
-  <div class="scoreboard">
-    ⏱ <strong>Waktu:</strong> {{ timeLeft }} detik &nbsp;&nbsp; | &nbsp;&nbsp;
-    🎯 <strong>Skor:</strong> {{ score }}
-  </div>
-</div>
-
-    <div class="d-flex flex-wrap gap-4">
+    <!-- Grid + Clue -->
+    <div class="tts-content d-flex flex-wrap justify-content-center gap-4">
       <!-- Grid -->
       <div class="tts-grid">
         <div *ngFor="let row of grid; let r = index" class="tts-row">
@@ -30,14 +31,13 @@
                    class="cell-input"
                    [class.correct]="isCorrect(r, c)"
                    [class.wrong]="checked && !isCorrect(r, c)"
-                   [attr.data-row]="r"
-                   [attr.data-col]="c"
+                   (keydown)="handleKeyDown($event, r, c)"
                    (input)="handleInput(r, c)" />
           </div>
         </div>
       </div>
 
-      <!-- Clues -->
+      <!-- Clue Box -->
       <div class="tts-clues">
         <h3>Mendatar</h3>
         <ul>

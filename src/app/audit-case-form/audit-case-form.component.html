@@ -15,14 +15,14 @@
               <label class="form-label">Perusahaan</label>
               <ng-select class="form-control form-select-sm" [items]="company" bindLabel="name" bindValue="id"
                 placeholder="Cari atau pilih perusahaan" formControlName="companyId" [searchable]="true"
-                [clearable]="true" appendTo=".card">
+                [clearable]="true" appendTo=".card" style="height: 60px;">
               </ng-select>
             </div>
 
             <!-- Judul Kasus -->
             <div class="col-md-6">
               <label class="form-label">Judul Kasus</label>
-              <input class="form-control" type="text" formControlName="title" placeholder="Masukkan judul kasus">
+              <textarea style="overflow:hidden; resize:vertical; min-height:50px;" class="form-control" type="text" formControlName="title" placeholder="Masukkan judul kasus"></textarea>
             </div>
 
             <!-- Nilai Kerugian -->
@@ -81,22 +81,22 @@
 
             <div class="col-md-6">
               <label class="form-label">Proyek Terkait</label>
-              <textarea formControlName="relatedProject" class="form-control" rows="2" placeholder="Sebutkan proyek jika ada"></textarea>
+              <textarea style="overflow:hidden; resize:vertical; min-height:120px;" formControlName="relatedProject" class="form-control" rows="2" placeholder="Sebutkan proyek jika ada"></textarea>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Pokok Temuan</label>
-              <textarea formControlName="findings" class="form-control" rows="2" placeholder="Ringkasan pokok temuan"></textarea>
+              <textarea style="overflow:hidden; resize:vertical; min-height:120px;" formControlName="findings" class="form-control" rows="2" placeholder="Ringkasan pokok temuan"></textarea>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Rekomendasi Pemeriksaan</label>
-              <textarea formControlName="recommendations" class="form-control" rows="2" placeholder="Tuliskan rekomendasi"></textarea>
+              <textarea style="overflow:hidden; resize:vertical; min-height:200px;" formControlName="recommendations" class="form-control" rows="2" placeholder="Tuliskan rekomendasi"></textarea>
             </div>
 
             <div class="col-md-6">
               <label class="form-label">Tindak Lanjut Pemeriksaan</label>
-              <textarea formControlName="followUp" class="form-control" rows="2" placeholder="Tindak lanjut hasil audit"></textarea>
+              <textarea style="overflow:hidden; resize:vertical; min-height:200px;" formControlName="followUp" class="form-control" rows="2" placeholder="Tindak lanjut hasil audit"></textarea>
             </div>
           </div>
 

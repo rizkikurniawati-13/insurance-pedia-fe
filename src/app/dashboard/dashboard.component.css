@@ -88,19 +88,41 @@ button.btn-primary:hover {
 }
 
 
+/* Sidebar tetap (fixed), penuh tinggi layar */
 .sidebar-full-height {
-  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   width: 250px;
-  background-color: #0d47a1; /* atau biru sidebar kamu */
+  height: 100vh;
+  background-color: #0d47a1;
   overflow-y: auto;
+  z-index: 1000;
 }
 
+/* Konten utama bergeser ke kanan, tidak tertimpa sidebar */
 .main-content {
-  margin-left: 250px;
-  padding: 1rem;
+  margin-left: 0px;
+  padding: 2rem 1rem;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  overflow-x: hidden;
 }
 
+/* Responsive layout: sidebar sembunyi di mobile */
+@media (max-width: 768px) {
+  .sidebar-full-height {
+    position: absolute;
+    transform: translateX(-250px);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar-full-height.show {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+}
 

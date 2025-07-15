@@ -12,3 +12,12 @@ body {
 main {
   flex-grow: 1;
 }
+
+.main-content {
+  transition: margin-left 0.3s ease;
+  margin-left: 250px;
+}
+
+.sidebar.collapsed ~ .main-content {
+  margin-left: 80px;
+}
