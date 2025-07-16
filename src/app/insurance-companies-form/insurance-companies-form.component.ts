@@ -8,7 +8,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 
 
 @Component({
-  selector: 'app-insurance-companies-form', 
+  selector: 'app-insurance-companies-form',
   imports: [CommonModule, ReactiveFormsModule, SidebarComponent],
   templateUrl: './insurance-companies-form.component.html',
   styleUrl: './insurance-companies-form.component.css'
@@ -16,29 +16,29 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 export class InsuranceCompaniesFormComponent implements OnInit {
   companyForm!: FormGroup;
   insuranceTypes: string[] = [];
-  insuranceCompany: InsuranceCompaniesModel[]= [];
+  insuranceCompany: InsuranceCompaniesModel[] = [];
   insuranceStatus: string[] = [];
-  ownershipType: string[] =[];
-  shariaType: string[]=[];
-  investmentType: string[]= [];
+  ownershipType: string[] = [];
+  shariaType: string[] = [];
+  investmentType: string[] = [];
   today: Date = new Date();
   todayString: string = '';
   products: ProductsModel[] = [];
-  productsCategory: ProductCategoriesModel[]=[];
+  productsCategory: ProductCategoriesModel[] = [];
   selectedProductIds: string[] = [];
 
-  constructor(private fb: FormBuilder, private InsuranceCompanyService: InsuranceCompanyService  ) {}
+  constructor(private fb: FormBuilder, private InsuranceCompanyService: InsuranceCompanyService) { }
 
   ngOnInit(): void {
-  this.getAllProducts();
-  this.getAllProductsCategoris();
-  this.insuranceTypes = ['UMUM', 'JIWA', 'REINSURANCE', 'BROKER', 'AGENT', 'SOSIAL', 'WAJIB', 'PENJAMINAN'];
-  this.insuranceStatus = ['Aktif', 'Tidak Aktif'];
-  this.ownershipType = ['BUMN', 'Non BUMN'];
-  this.shariaType = ['Syariah', 'Konvensional'];
-  this.investmentType = ['PMA', 'PMN'];
+    this.getAllProducts();
+    this.getAllProductsCategoris();
+    this.insuranceTypes = ['UMUM', 'JIWA', 'REINSURANCE', 'BROKER', 'AGENT', 'SOSIAL', 'WAJIB', 'PENJAMINAN'];
+    this.insuranceStatus = ['Aktif', 'Tidak Aktif'];
+    this.ownershipType = ['BUMN', 'Non BUMN'];
+    this.shariaType = ['Syariah', 'Konvensional'];
+    this.investmentType = ['PMA', 'PMN'];
 
-  this.companyForm = this.fb.group({
+    this.companyForm = this.fb.group({
       id: [''],
       name: ['', Validators.required],
       address: [''],
@@ -53,26 +53,14 @@ export class InsuranceCompaniesFormComponent implements OnInit {
           this.maxDateValidator(this.today)
         ]
       ],
-      status: ['',
-        [
-          Validators.required
-        ]
-      ],
-      ownershipType: ['',
-        [
-          Validators.required
-        ]],
-      shariaType: ['',
-        [
-          Validators.required
-        ]],
-      investmentType: ['',
-        [
-          Validators.required
-        ]],
-      products: this.fb.array([])
+      status: ['', Validators.required],
+      ownershipType: ['', Validators.required],
+      shariaType: ['', Validators.required],
+      investmentType: ['', Validators.required],
+      products: this.fb.array([]),
+      risks: this.fb.array([]) // ✅ TAMBAH DI SINI
     });
-    
+
   }
 
   maxDateValidator(maxDate: Date) {
@@ -86,17 +74,24 @@ export class InsuranceCompaniesFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.companyForm.valid) {
-      // ✨ Update nilai 'products' di form dari selectedProductIds
+      // Inject selected product ids ke FormArray products
       const productArray = this.companyForm.get('products') as FormArray;
       productArray.clear();
       this.selectedProductIds.forEach(id => {
-        productArray.push(new FormControl({ id })); // 👈 pastikan sesuai dengan yang diterima backend
+        productArray.push(new FormControl(id));
       });
-      this.InsuranceCompanyService.create(this.companyForm.value).subscribe({
-        next: (data) => {
+
+      // ✨ NO NEED TO TOUCH risks here — if already in FormArray
+
+      const payload = this.companyForm.value;
+      console.log(payload); // ✅ Pastikan risks[] muncul di sini
+
+      this.InsuranceCompanyService.create(payload).subscribe({
+        next: () => {
           alert('Company berhasil disimpan!');
           this.companyForm.reset();
           this.selectedProductIds = [];
+          (this.companyForm.get('risks') as FormArray).clear(); // optional: bersihkan risiko juga
         },
         error: (err) => {
           console.error(err);
@@ -106,13 +101,14 @@ export class InsuranceCompaniesFormComponent implements OnInit {
     }
   }
 
+
   onProductCheck(event: any, category: any) {
-  const productId = event.target.value;
-  if (event.target.checked) {
-    this.selectedProductIds.push(productId);
-  } else {
-    this.selectedProductIds = this.selectedProductIds.filter(id => id !== productId);
-  }
+    const productId = event.target.value;
+    if (event.target.checked) {
+      this.selectedProductIds.push(productId);
+    } else {
+      this.selectedProductIds = this.selectedProductIds.filter(id => id !== productId);
+    }
   }
 
   onCategoryCheck(event: any, category: any) {
@@ -129,34 +125,53 @@ export class InsuranceCompaniesFormComponent implements OnInit {
         (id: string) => !productIds.includes(id)
       );
     }
-  } 
+  }
 
   isCategorySelected(category: any): boolean {
-  return category.products.every((p: { id: string }) => 
-    this.selectedProductIds.includes(p.id)
-  );
+    return category.products.every((p: { id: string }) =>
+      this.selectedProductIds.includes(p.id)
+    );
   }
 
   getAllProducts() {
-  this.InsuranceCompanyService.getAllProducts().subscribe({
-    next: (data) => {
-      this.products = data;
-    },
-    error: (err) => {
-      console.error('Gagal mengambil produk:', err);
-    }
-  })};
+    this.InsuranceCompanyService.getAllProducts().subscribe({
+      next: (data) => {
+        this.products = data;
+      },
+      error: (err) => {
+        console.error('Gagal mengambil produk:', err);
+      }
+    })
+  };
 
-getAllProductsCategoris() {
-  this.InsuranceCompanyService.getAllProductCategories().subscribe({
-    next: (data) => {
-      this.productsCategory = data;
-    },
-    error: (err) => {
-      console.error('Gagal mengambil kategori produk:', err);
-    }
-  })};
+  getAllProductsCategoris() {
+    this.InsuranceCompanyService.getAllProductCategories().subscribe({
+      next: (data) => {
+        this.productsCategory = data;
+      },
+      error: (err) => {
+        console.error('Gagal mengambil kategori produk:', err);
+      }
+    })
+  };
 
+  get risks(): FormArray {
+    return this.companyForm.get('risks') as FormArray;
+  }
+
+  addRisk(): void {
+    this.risks.push(this.fb.group({
+      name: ['', Validators.required],
+      type: ['', Validators.required],
+      cause: [''],
+      impact: [''],
+      mitigation: ['']
+    }));
+  }
+
+  removeRisk(index: number): void {
+    this.risks.removeAt(index);
+  }
 
 
 }

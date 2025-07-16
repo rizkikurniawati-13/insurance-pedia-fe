@@ -21,13 +21,17 @@
 
           <div class="row g-3">
             <div class="col-md-6">
-              <p><i class="fa-regular fa-calendar me-2 text-secondary"></i><strong>Tanggal Berdiri:</strong> {{ company.establishedDate | date:'dd MMMM yyyy' }}</p>
+              <p><i class="fa-regular fa-calendar me-2 text-secondary"></i><strong>Tanggal Berdiri:</strong> {{
+                company.establishedDate | date:'dd MMMM yyyy' }}</p>
               <p><i class="fa-solid fa-phone me-2 text-secondary"></i><strong>Kontak:</strong> {{ company.contact }}</p>
-              <p><i class="fa-solid fa-layer-group me-2 text-secondary"></i><strong>Status:</strong> {{ company.status }}</p>
+              <p><i class="fa-solid fa-layer-group me-2 text-secondary"></i><strong>Status:</strong> {{ company.status
+                }}</p>
             </div>
             <div class="col-md-6">
-              <p><i class="fa-solid fa-map-marker-alt me-2 text-secondary"></i><strong>Alamat:</strong> {{ company.address }}</p>
-              <p><i class="fa-solid fa-id-card me-2 text-secondary"></i><strong>Nomor Izin:</strong> {{ company.licenseNumber }}</p>
+              <p><i class="fa-solid fa-map-marker-alt me-2 text-secondary"></i><strong>Alamat:</strong> {{
+                company.address }}</p>
+              <p><i class="fa-solid fa-id-card me-2 text-secondary"></i><strong>Nomor Izin:</strong> {{
+                company.licenseNumber }}</p>
               <p><i class="fa-solid fa-building me-2 text-secondary"></i><strong>Tipe:</strong> {{ company.type }}</p>
             </div>
           </div>
@@ -41,13 +45,15 @@
             <i class="fa-solid fa-box me-2"></i>Produk Asuransi
           </h5>
 
-          <div *ngIf="company?.products?.length; else noProduct">
-            <ul class="list-group list-group-flush">
-              <li *ngFor="let product of company.products" class="list-group-item ps-0">
-                <i class="fa-solid fa-circle-check text-success me-2"></i>{{ product.name }}
-              </li>
-            </ul>
+          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-2">
+            <div class="col" *ngFor="let product of company.products">
+              <div class="d-flex align-items-center">
+                <i class="fa-solid fa-circle-check text-success me-2"></i>
+                {{ product.name }}
+              </div>
+            </div>
           </div>
+
 
           <ng-template #noProduct>
             <p class="text-muted fst-italic">Belum ada produk terdaftar.</p>
@@ -77,11 +83,11 @@
               <tbody>
                 <tr *ngFor="let risk of company.risks; let i = index">
                   <td class="text-center">{{ i + 1 }}</td>
-                  <td>{{ risk.name }}</td>
-                  <td>{{ risk.type }}</td>
-                  <td>{{ risk.cause }}</td>
-                  <td>{{ risk.impact }}</td>
-                  <td>{{ risk.mitigation }}</td>
+                  <td class="pre-line">{{ risk.name }}</td>
+                  <td class="pre-line">{{ risk.type }}</td>
+                  <td class="pre-line">{{ risk.cause }}</td>
+                  <td class="pre-line">{{ risk.impact }}</td>
+                  <td class="pre-line">{{ risk.mitigation }}</td>
                 </tr>
               </tbody>
             </table>

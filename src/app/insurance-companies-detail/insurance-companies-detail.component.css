@@ -3,6 +3,11 @@
   height: 100vh;
 }
 
+.pre-line {
+  white-space: pre-line;
+}
+
+
 main {
   background-color: #f3f4f6;
 }

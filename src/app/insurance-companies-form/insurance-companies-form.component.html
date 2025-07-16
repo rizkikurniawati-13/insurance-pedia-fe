@@ -4,106 +4,162 @@
   <main class="flex-grow-1 p-3 p-md-4 overflow-auto bg-light">
     <div class="container my-3 my-md-4">
       <div class="main-content mx-auto">
-        <h2 class="text-primary fw-bold mb-4 text-center">
+        <h2 class="fw-bold mb-4 text-center text-primary">
           <i class="fa-solid fa-file-circle-plus me-2"></i> Form Pendaftaran Company
         </h2>
 
         <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
           <input type="hidden" formControlName="id" />
 
-          <div class="form-group">
-            <label>Nama Perusahaan</label>
-            <input type="text" formControlName="name" />
-          </div>
-
-          <div class="form-group">
-            <label>Tipe Perusahaan</label>
-            <select class="form-select" formControlName="type">
-              <option value="">Tipe Perusahaan</option>
-              <option *ngFor="let type of insuranceTypes" [value]="type">{{ type }}</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label>Alamat</label>
-            <input type="text" formControlName="address" />
-          </div>
-
-          <div class="form-group">
-            <label>Kontak</label>
-            <input type="text" formControlName="contact" />
-          </div>
-
-          <div class="form-group">
-            <label>NPWP</label>
-            <input type="text" formControlName="npwp" />
-          </div>
-
-          <div class="form-group">
-            <label>No Ijin Usaha</label>
-            <input type="text" formControlName="licenseNumber" />
-          </div>
-
-          <div class="form-group">
-            <label for="establishedDate">Tanggal Berdiri</label>
-            <input type="date" id="establishedDate" formControlName="establishedDate" [max]="todayString" />
-            <div *ngIf="companyForm.get('establishedDate')?.errors?.['max'] && companyForm.get('establishedDate')?.touched"
-              class="text-danger mt-1">
-              Tanggal tidak boleh lebih dari hari ini.
+          <!-- Informasi Umum: 2 kolom -->
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label>Nama Perusahaan</label>
+              <input type="text" formControlName="name" />
             </div>
-          </div>
 
-          <div class="form-group">
-            <label>Status Perusahaan</label>
-            <select class="form-select" formControlName="status">
-              <option value="">Pilih Status</option>
-              <option *ngFor="let status of insuranceStatus" [value]="status">{{ status }}</option>
-            </select>
-          </div>
+            <div class="col-md-6 form-group">
+              <label>Tipe Perusahaan</label>
+              <select class="form-select" formControlName="type">
+                <option value="">Tipe Perusahaan</option>
+                <option *ngFor="let type of insuranceTypes" [value]="type">{{ type }}</option>
+              </select>
+            </div>
 
-          <div class="form-group">
-            <label>BUMN / Non BUMN</label>
-            <select class="form-select" formControlName="ownershipType">
-              <option value="">Pilih Kepemilikan</option>
-              <option *ngFor="let ot of ownershipType" [value]="ot">{{ ot }}</option>
-            </select>
-          </div>
+            <div class="col-md-12 form-group">
+              <label>Alamat</label>
+              <textarea formControlName="address" rows="3" cols="105" class="form-control custom-textarea" placeholder="Masukkan alamat lengkap perusahaan..."></textarea>
+            </div>
 
-          <div class="form-group">
-            <label>Syariah / Konvensional</label>
-            <select class="form-select" formControlName="shariaType">
-              <option value="">Pilih Jenis</option>
-              <option *ngFor="let st of shariaType" [value]="st">{{ st }}</option>
-            </select>
-          </div>
+            <div class="col-md-6 form-group">
+              <label>Kontak</label>
+              <input type="text" formControlName="contact" />
+            </div>
 
-          <div class="form-group">
-            <label>Tipe Pendanaan</label>
-            <select class="form-select" formControlName="investmentType">
-              <option value="">Pilih Pendanaan</option>
-              <option *ngFor="let it of investmentType" [value]="it">{{ it }}</option>
-            </select>
-          </div>
+            <div class="col-md-6 form-group">
+              <label>NPWP</label>
+              <input type="text" formControlName="npwp" />
+            </div>
 
-          <div class="form-group" formArrayName="products">
-            <label>Produk</label>
-            <div *ngFor="let category of productsCategory" class="mb-2">
-              <label class="fw-semibold">
-                <input type="checkbox" [checked]="isCategorySelected(category)"
-                  (change)="onCategoryCheck($event, category)" />
-                {{ category.name }}
-              </label>
-              <div class="ms-4 mt-1" *ngFor="let product of category.products">
-                <label>
-                  <input type="checkbox" [value]="product.id"
-                    [checked]="selectedProductIds.includes(product.id)"
-                    (change)="onProductCheck($event, category)" />
-                  {{ product.name }}
-                </label>
+            <div class="col-md-6 form-group">
+              <label>No Ijin Usaha</label>
+              <input type="text" formControlName="licenseNumber" />
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label for="establishedDate">Tanggal Berdiri</label>
+              <input type="date" id="establishedDate" formControlName="establishedDate" [max]="todayString" />
+              <div
+                *ngIf="companyForm.get('establishedDate')?.errors?.['max'] && companyForm.get('establishedDate')?.touched"
+                class="text-danger mt-1">
+                Tanggal tidak boleh lebih dari hari ini.
               </div>
             </div>
           </div>
 
+          <!-- Status dan Klasifikasi -->
+          <div class="row">
+            <div class="col-md-6 form-group">
+              <label>Status Perusahaan</label>
+              <select class="form-select" formControlName="status">
+                <option value="">Pilih Status</option>
+                <option *ngFor="let status of insuranceStatus" [value]="status">{{ status }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label>BUMN / Non BUMN</label>
+              <select class="form-select" formControlName="ownershipType">
+                <option value="">Pilih Kepemilikan</option>
+                <option *ngFor="let ot of ownershipType" [value]="ot">{{ ot }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label>Syariah / Konvensional</label>
+              <select class="form-select" formControlName="shariaType">
+                <option value="">Pilih Jenis</option>
+                <option *ngFor="let st of shariaType" [value]="st">{{ st }}</option>
+              </select>
+            </div>
+
+            <div class="col-md-6 form-group">
+              <label>Tipe Pendanaan</label>
+              <select class="form-select" formControlName="investmentType">
+                <option value="">Pilih Pendanaan</option>
+                <option *ngFor="let it of investmentType" [value]="it">{{ it }}</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Produk -->
+          <div class="form-group mt-4" formArrayName="products">
+            <label class="fw-bold mb-3">Produk Asuransi</label>
+
+            <div *ngFor="let category of productsCategory" class="mb-4">
+              <div class="d-flex align-items-center mb-2">
+                <input type="checkbox" [checked]="isCategorySelected(category)"
+                  (change)="onCategoryCheck($event, category)" class="form-check-input me-2" />
+                <span class="fs-6 fw-semibold text-primary-emphasis">{{ category.name }}</span>
+              </div>
+
+              <div class="d-flex flex-wrap gap-3 ps-4">
+                <div class="product-card" *ngFor="let product of category.products">
+                  <label class="d-flex align-items-center gap-2">
+                    <input type="checkbox" [value]="product.id"
+                      [checked]="selectedProductIds.includes(product.id)"
+                      (change)="onProductCheck($event, category)" />
+                    <span>{{ product.name }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Risiko -->
+          <div formArrayName="risks" class="mt-4">
+            <label class="fw-bold mb-3">Risiko Perusahaan</label>
+
+            <div *ngFor="let risk of risks.controls; let i = index" [formGroupName]="i" class="risk-card">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <label>Nama Risiko</label>
+                  <input type="text" class="form-control" formControlName="name" />
+                </div>
+                <div class="col-md-6 form-group">
+                  <label>Tipe Risiko</label>
+                  <input type="text" class="form-control" formControlName="type" />
+                </div>
+
+                <div class="col-12 form-group">
+                  <label>Penyebab</label>
+                  <textarea class="form-control" formControlName="cause" rows="2"></textarea>
+                </div>
+
+                <div class="col-12 form-group">
+                  <label>Dampak</label>
+                  <textarea class="form-control custom-textarea" formControlName="impact" rows="2"></textarea>
+                </div>
+
+                <div class="col-12 form-group">
+                  <label>Mitigasi</label>
+                  <textarea class="form-control custom-textarea" formControlName="mitigation" rows="2"></textarea>
+                </div>
+              </div>
+
+              <div class="text-end">
+                <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeRisk(i)">
+                  <i class="fa fa-trash me-1"></i> Hapus Risiko
+                </button>
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="addRisk()">
+              <i class="fa fa-plus me-1"></i> Tambah Risiko
+            </button>
+          </div>
+
+          <!-- Submit -->
           <div class="text-end mt-4">
             <button type="submit" [disabled]="!companyForm.valid">
               <i class="fa-solid fa-floppy-disk me-2"></i> Simpan

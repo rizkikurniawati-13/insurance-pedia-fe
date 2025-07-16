@@ -27,7 +27,7 @@ export class InsuranceCompaniesDetailComponent implements OnInit {
   if (companyId) {
     this.InsuranceCompanyService.getById(companyId).subscribe({
       next: (data) => {
-        this.company = data;
+        this.company = data;        
       },
       error: (err) => {
         alert(err.message);

@@ -1,81 +1,211 @@
-.main-content {
-  background-color: #ffffff;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-  max-width: 720px;
+.product-card {
+  background-color: #f9fafb;
+  border: 1px solid #e2e8f0;
+  border-radius: 1.5rem;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  min-width: auto;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.product-card:hover {
+  background-color: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.product-card input[type="checkbox"] {
+  accent-color: #2563eb;
+  transform: scale(1.1);
+  margin: 0;
+}
+
+.product-category {
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+
+.custom-textarea {
   width: 100%;
-}
-
-/* Heading */
-h2 {
-  font-size: 1.75rem;
-  color: #1e3a8a;
-}
-
-/* Form structure */
-form {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  resize: vertical;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Form elements */
+.custom-textarea:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+  outline: none;
+}
+
+
+/* Flex grid responsif */
+.d-flex.flex-wrap.gap-3 {
+  row-gap: 1rem;
+}
+
+
+/* === Container utama === */
+.main-content {
+  background: #f9fafb;
+  padding: 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  max-width: 860px;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+}
+
+/* === Judul === */
+h2 {
+  font-size: 2rem;
+  color: #0f172a;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* === Form === */
+form {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+/* === Grup Form === */
 .form-group {
-  margin-bottom: 1.25rem;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 1.5rem;
 }
 
 label {
-  font-weight: 500;
-  color: #334155;
+  font-weight: 600;
+  color: #1e293b;
   margin-bottom: 0.4rem;
+  display: block;
 }
 
+/* === Input dan Select === */
 input[type="text"],
 input[type="date"],
 select {
-  padding: 0.6rem 0.75rem;
-  border: 1px solid #cbd5e1;
-  border-radius: 0.5rem;
-  font-size: 0.95rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.75rem;
+  background: #e2e8f0;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.05), inset -2px -2px 5px rgba(255, 255, 255, 0.5);
+  transition: all 0.2s ease;
 }
 
 input:focus,
 select:focus {
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
   outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+  background-color: #f8fafc;
 }
 
-/* Checkbox alignment */
+/* === Checkbox === */
 input[type="checkbox"] {
-  margin-right: 8px;
+  margin-right: 0.5rem;
+  accent-color: #2563eb;
+  transform: scale(1.2);
+  vertical-align: middle;
 }
 
-/* Button */
+/* === Tombol === */
 button {
   background-color: #2563eb;
   color: white;
   border: none;
-  padding: 0.7rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   font-size: 1rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   font-weight: 600;
-  transition: background-color 0.2s ease;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
 }
 
 button:hover {
   background-color: #1d4ed8;
+  transform: translateY(-1px);
 }
 
-/* Responsive layout */
+button:disabled {
+  background-color: #cbd5e1;
+  cursor: not-allowed;
+}
+
+/* === Tombol Kecil === */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+}
+
+/* === Tombol Outline === */
+.btn-outline-danger {
+  background-color: transparent;
+  color: #dc2626;
+  border: 1px solid #dc2626;
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc2626;
+  color: white;
+}
+
+.btn-outline-primary {
+  background-color: transparent;
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+
+.btn-outline-primary:hover {
+  background-color: #2563eb;
+  color: white;
+}
+
+/* === Kartu Risiko === */
+.risk-card {
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* === Animasi transisi umum === */
+input,
+select,
+button {
+  transition: all 0.25s ease-in-out;
+}
+
+/* === Responsiveness === */
 @media (max-width: 768px) {
   .main-content {
-    padding: 1.5rem;
-    border-radius: 0.75rem;
+    padding: 1.25rem;
+    border-radius: 1.25rem;
   }
 
   h2 {
     font-size: 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
   }
 }
