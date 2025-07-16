@@ -32,9 +32,7 @@ export class AuditCaseComponent implements OnInit {
     this.auditCaseService.getPaged(this.currentPage - 1, this.pageSize).subscribe(
       (response) => {
         this.auditCases = response.data;
-        this.totalPages = response.totalPages;    
-        console.log(this.auditCases);
-            
+        this.totalPages = response.totalPages;                
       },
       error => {
         console.error('Error fetching auditcase:', error);
