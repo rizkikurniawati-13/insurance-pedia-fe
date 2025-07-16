@@ -58,6 +58,7 @@ export class AuthService {
     }).subscribe(response => {
       if (response.valid && response.roles) {
         this.roles = response.roles;
+        localStorage.setItem('roles',JSON.stringify(this.roles));
       }
     });
   }

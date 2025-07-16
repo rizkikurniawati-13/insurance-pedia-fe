@@ -1,209 +1,208 @@
 <div class="d-flex" style="height: 100vh;">
   <!-- Sidebar -->
   <app-sidebar class="sidebar-full-height"></app-sidebar>
-  
+
 
   <div class="main-content flex-grow-1">
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Main Content -->
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
-          <h2 class="h4 text-primary fw-bold"><i class="fas fa-chart-line me-2"></i>Dashboard Statistik Industri
-            Asuransi</h2>
-          <div class="d-flex justify-content-end mb-3 align-items-center">
-            <label for="periodeSelect" class="me-2 fw-semibold">Periode:</label>
-            <select class="form-select w-auto" id="periodeSelect" [(ngModel)]="selectedPeriode"
-              (change)="fetchOverview()">
-              <option *ngFor="let p of periodes" [value]="p">
-                {{ formatPeriodeToMonthYear(p) }}
-              </option>
-            </select>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-3">
+            <h2 class="h4 fw-bold" style="color: #023047;"><i class="fas fa-chart-line me-2"></i>Dashboard Statistik Industri
+              Asuransi</h2>
+            <div class="d-flex justify-content-end mb-3 align-items-center">
+              <label for="periodeSelect" class="me-2 fw-semibold">Periode:</label>
+              <select class="form-select w-auto" id="periodeSelect" [(ngModel)]="selectedPeriode"
+                (change)="fetchOverview()">
+                <option *ngFor="let p of periodes" [value]="p">
+                  {{ formatPeriodeToMonthYear(p) }}
+                </option>
+              </select>
+            </div>
           </div>
 
-        </div>
+          <div class="card shadow-sm mb-4" *ngIf="roles.includes('ADMIN')">
+            <div class="card-body">
+              <h5 class="card-title mb-4" style="color: #219EBC;">
+                <i class="fas fa-upload me-2"></i>Upload Data
+              </h5>
 
-        <div class="card shadow-sm mb-4">
-          <div class="card-body">
-            <h5 class="card-title text-primary mb-4">
-              <i class="fas fa-upload me-2"></i>Upload Data Excel
-            </h5>
-
-            <form (ngSubmit)="upload()" class="row gy-3 align-items-end">
-              <!-- Periode -->
-              <div class="col-md-5">
-                <label for="periode" class="form-label fw-semibold">📅 Periode</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-light"><i class="fas fa-calendar-alt text-primary"></i></span>
-                  <input type="date" id="periode" [(ngModel)]="periode" name="periode" class="form-control"
-                    placeholder="Pilih tanggal periode" required />
+              <form (ngSubmit)="upload()" class="row gy-3 align-items-end">
+                <!-- Periode -->
+                <div class="col-md-5">
+                  <label for="periode" class="form-label fw-semibold">📅 Periode</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="fas fa-calendar-alt text-primary"></i></span>
+                    <input type="date" id="periode" [(ngModel)]="periode" name="periode" class="form-control"
+                      placeholder="Pilih tanggal periode" required />
+                  </div>
                 </div>
-              </div>
 
-              <!-- File -->
-              <div class="col-md-5">
-                <label for="file" class="form-label fw-semibold">📎 File Excel (.xlsx)</label>
-                <div class="input-group">
-                  <span class="input-group-text bg-light"><i class="fas fa-file-excel text-success"></i></span>
-                  <input type="file" id="file" (change)="onFileChange($event)" accept=".xlsx" class="form-control"
-                    required />
+                <!-- File -->
+                <div class="col-md-5">
+                  <label for="file" class="form-label fw-semibold">📎 File Excel (.xlsx)</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="fas fa-file-excel text-success"></i></span>
+                    <input type="file" id="file" (change)="onFileChange($event)" accept=".xlsx" class="form-control"
+                      required />
+                  </div>
                 </div>
-              </div>
 
-              <!-- Tombol Upload -->
-              <div class="col-md-2 d-grid">
-                <button type="submit" class="btn btn-primary btn-lg" [disabled]="!file || !periode">
-                  <i class="fa-solid fa-upload"></i>
-                </button>
-              </div>
-            </form>
+                <!-- Tombol Upload -->
+                <div class="col-md-2 d-grid">
+                  <button type="submit" class="btn btn-primary btn-lg" [disabled]="!file || !periode">
+                    <i class="fa-solid fa-upload"></i>
+                  </button>
+                </div>
+              </form>
 
-            <!-- Notifikasi -->
-            <div *ngIf="message" class="alert alert-success mt-4" role="alert">
-              ✅ {{ message }}
-            </div>
-            <div *ngIf="error" class="alert alert-danger mt-4" role="alert">
-              ❌ {{ error }}
-            </div>
-          </div>
-        </div>
-
-
-        <!-- Charts -->
-        <div class="row">
-          <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-              <div class="card-body" style="width: 570px; height: 500px;">
-                <h6 class="card-title text-primary">🏭 Jumlah Industri</h6>
-                <canvas baseChart [data]="chartJumlahIndustri" [options]="chartJumlahIndustriOptions"
-                  [type]="'bar'"></canvas>
+              <!-- Notifikasi -->
+              <div *ngIf="message" class="alert alert-success mt-4" role="alert">
+                ✅ {{ message }}
               </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-              <div class="card-body" style="width: 570px; height: 500px;">
-                <h6 class="card-title text-primary">💰 Aset vs Liabilitas</h6>
-                <canvas baseChart [data]="chartAsetLiabilitas" [options]="chartAsetLiabilitasOptions" [type]="'bar'"
-                  style="width: 570px; height: 500px;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-              <div class="card-body" style="width: 570px; height: 500px;">
-                <h6 class="card-title text-primary">📉 Premi vs Klaim</h6>
-                <canvas baseChart [data]="chartPremiKlaim" [options]="chartPremiKlaimOptions" [type]="'bar'"
-                  style="width: 570px; height: 500px;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4 mx-auto">
-            <div class="card shadow-sm">
-              <div class="card-body d-flex flex-column align-items-center justify-content-center"
-                style="height: 500px;">
-                <h6 class="card-title text-primary mb-3">🍰 Komposisi Industri</h6>
-                <canvas baseChart [data]="chartKomposisiKategori" [options]="chartKomposisiKategoriOptions"
-                  [type]="'pie'" style="max-width: 300px; max-height: 300px;">
-                </canvas>
+              <div *ngIf="error" class="alert alert-danger mt-4" role="alert">
+                ❌ {{ error }}
               </div>
             </div>
           </div>
 
-          <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-              <div class="card-body" style="width: 600px; height: 500px;">
-                <h6 class="card-title text-primary">📈 Tren Premi & Klaim</h6>
-                <canvas baseChart [data]="chartTrendPremiKlaim" [options]="chartTrendOptions" [type]="'line'" style="width: 600px; height: 400px;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6 mb-4">
-            <!-- Data Table -->
-            <div class="card shadow-sm mb-5 table-wrapper" *ngIf="groupedData.length > 0">
-              <div class="card-body">
-                <h5 class="card-title text-primary fw-bold mb-4">📋 Tabel Data Ringkasan</h5>
-                <div class="table-responsive">
-                  <table class="table table-bordered modern-table">
-                    <thead>
-                      <tr class="main-header">
-                        <th rowspan="2" (click)="setOrder('komponen')">
-                          Komponen
-                          <i [ngClass]="getSortIcon('komponen')"></i>
-                        </th>
-                        <th colspan="2" (click)="setOrder('jumlahIndustriKonv')">
-                          Jumlah Industri (Unit)
-                          <i [ngClass]="getSortIcon('jumlahIndustriKonv')"></i>
-                        </th>
-                        <th colspan="2" (click)="setOrder('asetKonv')">
-                          Aset (Miliar Rp)
-                          <i [ngClass]="getSortIcon('asetKonv')"></i>
-                        </th>
-                        <th colspan="2" (click)="setOrder('liabilitasKonv')">
-                          Liabilitas (Miliar Rp)
-                          <i [ngClass]="getSortIcon('liabilitasKonv')"></i>
-                        </th>
-                        <th colspan="2" (click)="setOrder('ekuitasKonv')">
-                          Ekuitas (Miliar Rp)
-                          <i [ngClass]="getSortIcon('ekuitasKonv')"></i>
-                        </th>
-                        <th colspan="2" (click)="setOrder('pinjamanKonv')">
-                          Pinjaman (Miliar Rp)
-                          <i [ngClass]="getSortIcon('pinjamanKonv')"></i>
-                        </th>
-                        <th colspan="2" (click)="setOrder('premiKonv')">
-                          Premi (Miliar Rp)
-                          <i [ngClass]="getSortIcon('premiKonv')"></i>
-                        </th>
-                        <th colspan="2" (click)="setOrder('klaimKonv')">
-                          Klaim (Miliar Rp)
-                          <i [ngClass]="getSortIcon('klaimKonv')"></i>
-                        </th>
-                      </tr>
-                      <tr class="sub-header">
-                        <th class="konv">Konvensional</th>
-                        <th class="syariah">Syariah</th>
-                        <th class="konv">Konvensional</th>
-                        <th class="syariah">Syariah</th>
-                        <th class="konv">Konvensional</th>
-                        <th class="syariah">Syariah</th>
-                        <th class="konv">Konvensional</th>
-                        <th class="syariah">Syariah</th>
-                        <th class="konv">Konvensional</th>
-                        <th class="syariah">Syariah</th>
-                        <th class="konv">Konvensional</th>
-                        <th class="syariah">Syariah</th>
-                        <th class="konv">Konvensional</th>
-                        <th class="syariah">Syariah</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let row of groupedData | orderBy:order:reverse">
-                        <td class="text-start fw-medium">{{ row.komponen }}</td>
-                        <td class="text-end">{{ row.jumlahIndustriKonv ?? '–' }}</td>
-                        <td class="text-end">{{ row.jumlahIndustriSyariah ?? '–' }}</td>
-                        <td class="text-end">{{ row.asetKonv | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.asetSyariah | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.liabilitasKonv | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.liabilitasSyariah | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.ekuitasKonv | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.ekuitasSyariah | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.pinjamanKonv | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.pinjamanSyariah | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.premiKonv | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.premiSyariah | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.klaimKonv | number:'1.0-0' }}</td>
-                        <td class="text-end">{{ row.klaimSyariah | number:'1.0-0' }}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+          <!-- Charts -->
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body" style="width: 570px; height: 500px;">
+                  <h6 class="card-title" style="color: #219EBC;">🏭 Jumlah Industri</h6>
+                  <canvas baseChart [data]="chartJumlahIndustri" [options]="chartJumlahIndustriOptions"
+                    [type]="'bar'"></canvas>
                 </div>
               </div>
             </div>
+            <div class="col-md-6 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body" style="width: 570px; height: 500px;">
+                  <h6 class="card-title" style="color: #219EBC;">💰 Aset vs Liabilitas</h6>
+                  <canvas baseChart [data]="chartAsetLiabilitas" [options]="chartAsetLiabilitasOptions" [type]="'bar'"
+                    style="width: 570px; height: 500px;"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body" style="width: 570px; height: 500px;">
+                  <h6 class="card-title" style="color: #219EBC;">📉 Premi vs Klaim</h6>
+                  <canvas baseChart [data]="chartPremiKlaim" [options]="chartPremiKlaimOptions" [type]="'bar'"
+                    style="width: 570px; height: 500px;"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4 mx-auto">
+              <div class="card shadow-sm">
+                <div class="card-body d-flex flex-column align-items-center justify-content-center"
+                  style="height: 500px;">
+                  <h6 class="card-title mb-3" style="color: #219EBC;">🍰 Komposisi Industri</h6>
+                  <canvas baseChart [data]="chartKomposisiKategori" [options]="chartKomposisiKategoriOptions"
+                    [type]="'pie'" style="max-width: 300px; max-height: 300px;">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+              <div class="card shadow-sm">
+                <div class="card-body" style="width: 600px; height: 500px;">
+                  <h6 class="card-title" style="color: #219EBC;">📈 Tren Premi & Klaim</h6>
+                  <canvas baseChart [data]="chartTrendPremiKlaim" [options]="chartTrendOptions" [type]="'line'"
+                    style="width: 600px; height: 400px;"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <!-- Data Table -->
+              <div class="card shadow-sm mb-5 table-wrapper" *ngIf="groupedData.length > 0">
+                <div class="card-body" style="height: 500px;">
+                  <h5 class="card-title" style="color: #219EBC;">📋 Tabel Data Ringkasan</h5>
+                  <div class="table-responsive">
+                    <table class="table table-bordered modern-table">
+                      <thead>
+                        <tr class="main-header">
+                          <th rowspan="2" (click)="setOrder('komponen')">
+                            Komponen
+                            <i [ngClass]="getSortIcon('komponen')"></i>
+                          </th>
+                          <th colspan="2" (click)="setOrder('jumlahIndustriKonv')">
+                            Jumlah Industri (Unit)
+                            <i [ngClass]="getSortIcon('jumlahIndustriKonv')"></i>
+                          </th>
+                          <th colspan="2" (click)="setOrder('asetKonv')">
+                            Aset (Miliar Rp)
+                            <i [ngClass]="getSortIcon('asetKonv')"></i>
+                          </th>
+                          <th colspan="2" (click)="setOrder('liabilitasKonv')">
+                            Liabilitas (Miliar Rp)
+                            <i [ngClass]="getSortIcon('liabilitasKonv')"></i>
+                          </th>
+                          <th colspan="2" (click)="setOrder('ekuitasKonv')">
+                            Ekuitas (Miliar Rp)
+                            <i [ngClass]="getSortIcon('ekuitasKonv')"></i>
+                          </th>
+                          <th colspan="2" (click)="setOrder('pinjamanKonv')">
+                            Pinjaman (Miliar Rp)
+                            <i [ngClass]="getSortIcon('pinjamanKonv')"></i>
+                          </th>
+                          <th colspan="2" (click)="setOrder('premiKonv')">
+                            Premi (Miliar Rp)
+                            <i [ngClass]="getSortIcon('premiKonv')"></i>
+                          </th>
+                          <th colspan="2" (click)="setOrder('klaimKonv')">
+                            Klaim (Miliar Rp)
+                            <i [ngClass]="getSortIcon('klaimKonv')"></i>
+                          </th>
+                        </tr>
+                        <tr class="sub-header">
+                          <th class="konv">Konvensional</th>
+                          <th class="syariah">Syariah</th>
+                          <th class="konv">Konvensional</th>
+                          <th class="syariah">Syariah</th>
+                          <th class="konv">Konvensional</th>
+                          <th class="syariah">Syariah</th>
+                          <th class="konv">Konvensional</th>
+                          <th class="syariah">Syariah</th>
+                          <th class="konv">Konvensional</th>
+                          <th class="syariah">Syariah</th>
+                          <th class="konv">Konvensional</th>
+                          <th class="syariah">Syariah</th>
+                          <th class="konv">Konvensional</th>
+                          <th class="syariah">Syariah</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let row of groupedData | orderBy:order:reverse">
+                          <td class="text-start fw-medium">{{ row.komponen }}</td>
+                          <td class="text-end">{{ row.jumlahIndustriKonv ?? '–' }}</td>
+                          <td class="text-end">{{ row.jumlahIndustriSyariah ?? '–' }}</td>
+                          <td class="text-end">{{ row.asetKonv | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.asetSyariah | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.liabilitasKonv | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.liabilitasSyariah | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.ekuitasKonv | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.ekuitasSyariah | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.pinjamanKonv | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.pinjamanSyariah | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.premiKonv | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.premiSyariah | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.klaimKonv | number:'1.0-0' }}</td>
+                          <td class="text-end">{{ row.klaimSyariah | number:'1.0-0' }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </main>
-    </div>
+        </main>
+      </div>
     </div>
   </div>
 </div>

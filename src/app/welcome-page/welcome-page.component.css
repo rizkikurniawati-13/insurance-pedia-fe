@@ -1,6 +1,6 @@
 .welcome-wrapper {
   min-height: calc(100vh - 56px); /* menyesuaikan jika ada navbar/sidebar */
-  background: linear-gradient(to bottom right, #e9f4ff, #ffffff);
+  background: linear-gradient(to bottom right, #e9f4ff, #f8f9fa);
   text-align: center;
 }
 

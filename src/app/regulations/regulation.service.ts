@@ -23,9 +23,10 @@ export class RegulationService {
 
   getRegulationPageable(page: number = 1, size: number = 10, search: string = ''): Observable<PageableRegulationResponse> {
       const backendPage = page - 1;
-      let url = `${this.baseUrl}/regulations/pageable?page=${backendPage}&size=${size}`;
+      let url = `${this.baseUrl}/regulations/pageable?page=${backendPage}&size=${size}`;      
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
+        console.log(url); 
       }
       return this.http.get<PageableRegulationResponse>(url, { headers: this.getHeaders() });
 

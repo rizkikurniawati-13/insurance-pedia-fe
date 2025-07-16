@@ -1,16 +1,16 @@
 <div class="d-flex bg-light" style="min-height: 100vh;">
   <!-- Sidebar -->
-  <app-sidebar class="bg-dark text-white" style="width: 250px; flex-shrink: 0; height: auto;"></app-sidebar>
+  <app-sidebar class="bg-light text-white" style="width: 250px; flex-shrink: 0; height: auto;"></app-sidebar>
 
   <!-- Main content -->
   <main class="flex-grow-1 py-4 px-3 px-lg-4">
     <!-- Header -->
     <div
       class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4 gap-3">
-      <h2 class="fw-bold text-primary mb-0">
-        <i class="fas fa-question-circle me-2 text-primary"></i>Frequently Asked Questions
+      <h2 class="fw-bold mb-0" style="color: #219EBC;">
+        <i class="fas fa-question-circle me-2" ></i>Frequently Asked Questions
       </h2>
-      <button (click)="gotoQuestion()" class="btn btn-primary shadow-sm">
+      <button (click)="gotoQuestion()" class="btn shadow-sm" style="background-color: #023047; color: white;">
         <i class="fas fa-plus-circle me-2"></i> Ajukan Pertanyaan
       </button>
     </div>
@@ -48,7 +48,7 @@
                   <p class="mb-1"><strong>{{ a.answeredBy }}:</strong></p>
                   <p class="mb-1" [innerHTML]="formatAnswer(a.answer)"></p>
                   <a *ngIf="a.fileUrl" [href]="apiUrl + a.fileUrl" target="_blank" rel="noopener noreferrer"
-                    class="text-decoration-none text-primary small">
+                    class="text-decoration-none small" style="color: #219EBC;">
                     <i class="fas fa-paperclip me-1"></i> Lihat Lampiran
                   </a>
                 </div>
@@ -65,7 +65,7 @@
 
             <!-- Tombol Jawab + Form -->
             <div class="mt-auto pt-3">
-              <button class="btn btn-sm btn-outline-primary mb-2" (click)="openAnswerForm(q)"
+              <button class="btn btn-sm mb-2" (click)="openAnswerForm(q)" style="background-color: #023047; color: white;"
                 [disabled]="q.answers?.length > 0">
                 <i class="fas fa-edit me-1"></i> Jawab
               </button>
@@ -97,13 +97,13 @@
     <nav *ngIf="totalPages > 1" class="mt-4">
       <ul class="pagination justify-content-center">
         <li class="page-item" [class.disabled]="currentPage === 1">
-          <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+          <button class="page-link" (click)="changePage(currentPage - 1)" style="background-color: #023047; color: white;">Previous</button>
         </li>
         <li class="page-item" *ngFor="let page of totalPagesArray" [class.active]="currentPage === page">
           <button class="page-link" (click)="changePage(page)">{{ page }}</button>
         </li>
         <li class="page-item" [class.disabled]="currentPage === totalPages">
-          <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+          <button class="page-link" (click)="changePage(currentPage + 1)" style="background-color: #023047; color: white;">Next</button>
         </li>
       </ul>
     </nav>

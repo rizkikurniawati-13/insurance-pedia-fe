@@ -20,56 +20,71 @@ registerLocaleData(localeId, 'id-ID');
 })
 export class RegulationsComponent implements OnInit {
   sidebarCollapsed = false;
-pagedRegulations: Regulation[] = [];
+  pagedRegulations: Regulation[] = [];
 
-searchText: string = '';
-currentPage: number = 1;
-pageSize: number = 5;
-totalPages: number = 1;
-totalItems: number = 0;
+  searchText: string = '';
+  currentPage: number = 1;
+  pageSize: number = 5;
+  totalPages: number = 1;
+  totalItems: number = 0;
 
-constructor(private router: Router, private regulationService: RegulationService) {}
+  constructor(private router: Router, private regulationService: RegulationService) { }
 
-ngOnInit(): void {
-  this.loadRegulation();
-}
+  ngOnInit(): void {
+    this.loadRegulation();
+  }
 
-onSidebarCollapsed(collapsed: boolean) {
-  this.sidebarCollapsed = collapsed;
-}
+  onSidebarCollapsed(collapsed: boolean) {
+    this.sidebarCollapsed = collapsed;
+  }
 
-loadRegulation() {
-  this.regulationService.getRegulationPageable(this.currentPage, this.pageSize, this.searchText).subscribe(
-    (response) => {
-      this.pagedRegulations = response.data;
-      this.totalPages = response.totalPages;
-      this.totalItems = response.totalItems;
-    },
-    error => {
-      console.error('Error fetching regulations', error);
+  loadRegulation() {
+    this.regulationService.getRegulationPageable(this.currentPage, this.pageSize, this.searchText).subscribe(
+      (response) => {
+        this.pagedRegulations = response.data;
+        this.totalPages = response.totalPages;
+        this.totalItems = response.totalItems;
+      },
+      error => {
+        console.error('Error fetching regulations', error);
+      }
+    );
+  }
+
+  onPageSizeChange() {
+    this.currentPage = 1;
+    this.loadRegulation();
+  }
+
+  changePage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.currentPage = page;
+    this.loadRegulation();
+  }
+
+  get totalPagesArray(): number[] {
+    const maxVisible = 10;
+    const half = Math.floor(maxVisible / 2);
+
+    if (this.totalPages <= maxVisible) {
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     }
-  );
-}
 
-onPageSizeChange() {
-  this.currentPage = 1;
-  this.loadRegulation();
-}
+    let start = Math.max(1, this.currentPage - half);
+    let end = Math.min(this.totalPages, start + maxVisible - 1);
 
-changePage(page: number) {
-  if (page < 1 || page > this.totalPages) return;
-  this.currentPage = page;
-  this.loadRegulation();
-}
+    if (end - start < maxVisible - 1) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
 
-get totalPagesArray(): number[] {
-  return Array.from({ length: this.totalPages }, (_, i) => i + 1);
-}
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }
 
-onSearchChange() {
-  this.currentPage = 1;
-  this.loadRegulation();
-}
+
+  onSearchChange() {
+    this.currentPage = 1;
+    this.loadRegulation();
+  }
 
   downloadFile(reg: Regulation): void {
     if (!reg.fileBase64 || !reg.fileName || !reg.fileType) {

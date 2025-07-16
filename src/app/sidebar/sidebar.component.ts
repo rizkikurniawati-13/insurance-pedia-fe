@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Route, RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
@@ -12,12 +12,18 @@ import { Router } from '@angular/router';
   styleUrl: './sidebar.component.css'
 
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   isSidebarOpen = false;
   isCollapsed = false;
   @Output() collapsedChange = new EventEmitter<boolean>();
+  roles: string[] = [];
 
   constructor(private router: Router) { }
+
+  ngOnInit(): void {
+    const storedRoles = localStorage.getItem('roles');
+    this.roles = storedRoles ? JSON.parse(storedRoles) : [];
+  }
 
   menus = [
     { label: 'Welcome', icon: 'fa-regular fa-face-smile-beam', link: '/welcome' },
@@ -29,7 +35,7 @@ export class SidebarComponent {
     { label: 'Audit Cases', icon: 'fa-solid fa-book-journal-whills', link: '/audit-case' },
     { label: 'Games', icon: 'fa-solid fa-gamepad', link: '/crossword' },
     { label: 'FAQ', icon: 'fa-solid fa-circle-question', link: '/faq-list' },
-    { label: 'User Management', icon: 'fa-solid fa-users', link: '/user-management' },
+    { label: 'User Management', icon: 'fa-solid fa-users', link: '/user-management', adminOnly: true },
   ];
 
   toggleSidebar() {

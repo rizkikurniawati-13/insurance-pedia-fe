@@ -32,11 +32,14 @@ export class DashboardComponent implements OnInit {
   reverse: boolean = false;
   periodes: string[] = [];
   selectedPeriode: string = '';
+  roles: string[] = [];
   
 
   constructor(private dashboardService: DashboardService) { }
 
   ngOnInit(): void {
+    const storedRoles = localStorage.getItem('roles');
+    this.roles = storedRoles ? JSON.parse(storedRoles) : [];
     this.createdBy = localStorage.getItem('userName') || '';
     this.periode = '';
     this.fetchOverview();

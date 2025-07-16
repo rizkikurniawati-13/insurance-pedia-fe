@@ -9,13 +9,15 @@
   </div>
 
   <ul class="nav flex-column px-2">
-    <li class="nav-item" *ngFor="let menu of menus">
-      <a [routerLink]="menu.link" routerLinkActive="active"
-         class="nav-link text-white d-flex align-items-center mb-2" (click)="closeSidebarOnMobile()">
-        <i [class]="menu.icon"></i>
-        <span class="ms-2" *ngIf="!isCollapsed">{{ menu.label }}</span>
-      </a>
-    </li>
+    <ng-container *ngFor="let menu of menus">
+      <li class="nav-item" *ngIf="!menu.adminOnly || roles.includes('ADMIN')">
+        <a [routerLink]="menu.link" routerLinkActive="active" class="nav-link text-white d-flex align-items-center mb-2"
+          (click)="closeSidebarOnMobile()">
+          <i [class]="menu.icon"></i>
+          <span class="ms-2" *ngIf="!isCollapsed">{{ menu.label }}</span>
+        </a>
+      </li>
+    </ng-container>
   </ul>
 
   <div class="p-3 border-top border-secondary text-center mt-auto">

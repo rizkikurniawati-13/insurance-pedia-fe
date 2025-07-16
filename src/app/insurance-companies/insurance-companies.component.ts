@@ -136,4 +136,17 @@ export class InsuranceCompaniesComponent implements OnInit {
   onGoForm() {
     this.router.navigate(['/insurance-companies-form']);
   }
+
+  getVisiblePages(): number[] {
+  const groupSize = 10;
+  const start = Math.floor((this.currentPage - 1) / groupSize) * groupSize + 1;
+  const end = Math.min(start + groupSize - 1, this.totalPages);
+
+  const pages: number[] = [];
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+  return pages;
+}
+
 }

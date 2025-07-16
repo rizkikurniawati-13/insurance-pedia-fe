@@ -8,8 +8,8 @@
           <!-- Sticky Header -->
           <div class="mb-3 sticky-top bg-white pb-3" style="z-index: 1;">
             <div class="d-flex justify-content-between align-items-center mb-3">
-              <h2 class="text-primary fw-bold mb-0"><i class="fa-solid fa-book me-2"></i>Glossarium</h2>
-              <button (click)="addGlossary()" class="btn btn-primary shadow-sm">
+              <h2 class="fw-bold mb-0" style="color: #219EBC;"><i class="fa-solid fa-book me-2"></i>Glossarium</h2>
+              <button (click)="addGlossary()" class="btn shadow-sm" style="background-color: #023047; color: white;">
                 <i class="fa-solid fa-plus"></i> Tambah Istilah
               </button>
             </div>
@@ -28,7 +28,7 @@
 
             <ul class="list-group">
               <li *ngFor="let item of filteredGlossary" class="list-group-item list-group-item-action">
-                <h6 class="mb-1 text-primary fw-semibold">{{ item.term }}</h6>
+                <h6 class="mb-1 fw-semibold" style="color: #219EBC;">{{ item.term }}</h6>
                 <p class="mb-0 text-muted">{{ item.definition }}</p>
               </li>
             </ul>

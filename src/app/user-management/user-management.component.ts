@@ -17,6 +17,7 @@ export class UserManagementComponent implements OnInit {
   searchControl = new FormControl('');
   roleFilter = new FormControl('ALL');
   availableRoles: string[] = ['ALL', 'ADMIN', 'AUDITOR'];
+  loginRoles: string = '';
 
   users: User[] = [];
   displayedUsers: User[] = [];
@@ -34,6 +35,7 @@ export class UserManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loginRoles = JSON.parse(localStorage.getItem('roles') || '[]');     
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]]

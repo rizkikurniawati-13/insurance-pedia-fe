@@ -1,5 +1,5 @@
 .card-title {
-  border-left: 4px solid #2563eb; /* biru profesional */
+  border-left: 4px solid #219EBC;
   padding-left: 12px;
   font-weight: 600;
   color: #1e3a8a;
@@ -14,7 +14,7 @@
 }
 
 h2.h4 {
-  color: #1e3a8a;
+  color: #219EBC;
   font-weight: 700;
 }
 
@@ -53,18 +53,18 @@ button.btn-primary:hover {
   background: linear-gradient(to right, #e0eafc, #f5f7fa);
   font-weight: 600;
   font-size: 0.8rem;
-  color: #333;
+  color: #333;  
 }
 
 .modern-table thead .sub-header th.konv {
-  background-color: #77a1e0;
-  color: #fff;
+  /* background-color: #77a1e0; */
+  color: #020202;
   text-align: center;
 }
 
 .modern-table thead .sub-header th.syariah {
-  background-color: #198754;
-  color: #fff;
+  /* background-color: #8ECAE6; */
+  color: #020202;
   text-align: center;
 }
 
@@ -95,7 +95,7 @@ button.btn-primary:hover {
   left: 0;
   width: 250px;
   height: 100vh;
-  background-color: #0d47a1;
+  background-color: #f8f9fa;
   overflow-y: auto;
   z-index: 1000;
 }

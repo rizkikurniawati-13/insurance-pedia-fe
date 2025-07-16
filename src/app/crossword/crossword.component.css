@@ -23,7 +23,7 @@ body {
 .tts-title {
   font-size: 1.9rem;
   font-weight: 700;
-  color: #0d6efd;
+  color: #219EBC;
   margin-bottom: 0.6rem;
 }
 
@@ -147,7 +147,7 @@ body {
 
 /* Button style */
 button {
-  background-color: #0d6efd;
+  background-color: #219EBC;
   border: none;
   padding: 8px 16px;
   color: #fff;
@@ -158,7 +158,7 @@ button {
 }
 
 button:hover {
-  background-color: #0b5ed7;
+  background-color: #219EBC;
 }
 
 /* Responsive */
