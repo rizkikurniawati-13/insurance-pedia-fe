@@ -8,12 +8,13 @@ import { ChartData, ChartOptions, ChartType } from 'chart.js';
 import { NgChartsModule } from 'ng2-charts';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { OrderModule } from 'ngx-order-pipe';
+import { DashboardBpuiComponent } from './dashboard-bpui/dashboard-bpui.component';
 
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgChartsModule, SidebarComponent, OrderModule],
+  imports: [CommonModule, FormsModule, NgChartsModule, SidebarComponent, OrderModule, DashboardBpuiComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
@@ -33,7 +34,8 @@ export class DashboardComponent implements OnInit {
   periodes: string[] = [];
   selectedPeriode: string = '';
   roles: string[] = [];
-  
+  selectedDataset: string = 'insurance';
+
 
   constructor(private dashboardService: DashboardService) { }
 
@@ -47,13 +49,25 @@ export class DashboardComponent implements OnInit {
     this.fetchPeriodes();
   }
 
-
-isMobile(): boolean {
-  return window.innerWidth < 768;
+  
+onDatasetChange() {
+  if (this.selectedDataset === 'insurance') {
+    // this.fetchOverview();
+    // this.loadInsuranceCharts();
+  } else if (this.selectedDataset === 'bpui') {
+    // this.fetchBpuiReports();
+    // this.loadBpuiCharts();
+  }
 }
 
 
-  
+
+  isMobile(): boolean {
+    return window.innerWidth < 768;
+  }
+
+
+
 
   setOrder(value: string): void {
     if (this.order === value) {
@@ -206,19 +220,19 @@ isMobile(): boolean {
         labels,
         datasets: [
           {
-            label: 'Aset - Konvensional',
+            label: 'Aset - \nKonvensional',
             data: asetKonv
           },
           {
-            label: 'Aset - Syariah',
+            label: 'Aset - \nSyariah',
             data: asetSyariah
           },
           {
-            label: 'Liabilitas - Konvensional',
+            label: 'Liabilitas - \nKonvensional',
             data: liabilitasKonv
           },
           {
-            label: 'Liabilitas - Syariah',
+            label: 'Liabilitas - \nSyariah',
             data: liabilitasSyariah
           }
         ]
@@ -327,7 +341,8 @@ isMobile(): boolean {
         text: 'Jumlah Industri per Kategori'
       },
       legend: {
-        position: 'top'
+        position: 'right',
+        align: 'center'
       }
     }
   };
@@ -379,7 +394,14 @@ isMobile(): boolean {
         text: 'Aset vs Liabilitas per Kategori'
       },
       legend: {
-        position: 'top'
+        // display : false,
+        labels: {
+          font: {
+            size: 10
+          }
+        },
+        position: 'top',
+        align: 'center'
       }
     }
   };

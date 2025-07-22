@@ -30,8 +30,6 @@ export class AuditCaseDetailComponent implements OnInit {
     if (caseId) {
       this.auditCaseService.getById(caseId).subscribe(
         data => {
-          console.log(data);
-          
           this.auditCase = data;         
         },
         error => {

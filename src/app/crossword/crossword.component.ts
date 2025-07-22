@@ -164,7 +164,6 @@ export class CrosswordComponent implements OnInit {
     nextCol < 0 || nextCol >= maxCol ||
     this.grid[nextRow][nextCol] === null
   ) {
-    console.log(`Invalid target cell at (${nextRow}, ${nextCol})`);
     return;
   }
 
@@ -178,7 +177,6 @@ export class CrosswordComponent implements OnInit {
   if (nextInput) {
     nextInput.nativeElement.focus();
   } else {
-    // console.log(`No input found at (${nextRow}, ${nextCol})`);
   }
 }
 

@@ -15,4 +15,5 @@ export interface AuditCase {
   findings: string;
   recommendations: string;
   followUp: string;
+  source: string;
 }

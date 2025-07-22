@@ -42,6 +42,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
 import { OrderModule } from 'ngx-order-pipe';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { DashboardBpuiComponent } from './dashboard/dashboard-bpui/dashboard-bpui.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -69,7 +72,8 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
     FaqAdminComponent,
     FaqListComponent,
     DashboardComponent,
-    WelcomePageComponent
+    WelcomePageComponent,
+    DashboardBpuiComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -84,7 +88,9 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
     MatButtonModule,
     NgxPaginationModule,
     NgChartsModule,
-    OrderModule
+    OrderModule,
+    MatCardModule,
+    MatFormFieldModule
   ],
   providers: [
     AuthGuard,

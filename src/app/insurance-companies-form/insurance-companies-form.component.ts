@@ -84,7 +84,6 @@ export class InsuranceCompaniesFormComponent implements OnInit {
       // ✨ NO NEED TO TOUCH risks here — if already in FormArray
 
       const payload = this.companyForm.value;
-      console.log(payload); // ✅ Pastikan risks[] muncul di sini
 
       this.InsuranceCompanyService.create(payload).subscribe({
         next: () => {

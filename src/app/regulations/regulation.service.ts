@@ -26,7 +26,6 @@ export class RegulationService {
       let url = `${this.baseUrl}/regulations/pageable?page=${backendPage}&size=${size}`;      
       if (search) {
         url += `&search=${encodeURIComponent(search)}`;
-        console.log(url); 
       }
       return this.http.get<PageableRegulationResponse>(url, { headers: this.getHeaders() });
 

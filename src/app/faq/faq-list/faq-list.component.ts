@@ -18,6 +18,7 @@ export class FaqListComponent implements OnInit {
   answers: { [questionId: string]: string } = {};
   userName = '';
   apiUrl = environment.apiUrl;
+  // apiUrl = 'http://103.151.24.7'
 
   // Tambahan untuk fitur "Jawab"
   selectedQuestion: any = null;

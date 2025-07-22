@@ -35,7 +35,6 @@ export class GlossaryFormComponent {
 
       this.glossariumService.create(data).subscribe({
         next: (res) => {
-          console.log('Sukses:', res);
           this.glossariumForm.reset();
         },
         error: (err) => {

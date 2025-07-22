@@ -29,7 +29,6 @@ export class PuzzleComponent implements OnInit {
     this.userAnswer = '';
     this.puzzleService.getRandomPuzzle(this.category, this.level).subscribe({
       next: data => {
-        console.log('Puzzle loaded:', data);
         this.puzzle = data;
       },
       error: err => {

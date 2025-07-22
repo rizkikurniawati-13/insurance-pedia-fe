@@ -31,10 +31,7 @@ import { Router } from '@angular/router';
 // }
 
 
-console.log('AuthInterceptor: File loaded');
-
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
-  console.log(`AuthInterceptor: Intercepting URL=${req.url}`);
   const authService = inject(AuthService);
   const router = inject(Router);
   const token = authService.getToken();
@@ -45,20 +42,16 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
     clonedReq = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${token}`)
     });
-    console.log('AuthInterceptor: Added Authorization header');
   } else {
-    console.log('AuthInterceptor: No token, skipping header');
   }
 
   return next(clonedReq).pipe(
     catchError(err => {
       console.error(`AuthInterceptor: Error URL=${req.url}, Status=${err.status}, Message=${err.message}`);
       if (err.status === 401) {
-        console.log('AuthInterceptor: 401 Unauthorized, redirecting to /login');
         authService.logout();
         router.navigate(['/login']);
       } else if (err.status === 403) {
-        console.log('AuthInterceptor: 403 Forbidden');
       }
       return throwError(() => err);
     })

@@ -26,6 +26,7 @@ import { FaqAdminComponent } from './faq/faq-admin/faq-admin.component';
 import { MfaComponent } from './mfa/mfa.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { DashboardBpuiComponent } from './dashboard/dashboard-bpui/dashboard-bpui.component';
 
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
@@ -52,6 +53,7 @@ export const routes: Routes = [
     { path: 'welcome', component: WelcomePageComponent, canActivate: [AuthGuard]},
     { path: 'mfa', component: MfaComponent },
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+    { path: 'dashboard-bpui', component: DashboardBpuiComponent, canActivate: [AuthGuard] },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
     { path: '**', redirectTo: '/login' }
 ];

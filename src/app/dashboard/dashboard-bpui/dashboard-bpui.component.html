@@ -1,0 +1,133 @@
+<!-- == Filter Section == -->
+<div class="filter-section">
+  <!-- Company Filter -->
+  <mat-form-field appearance="outline">
+    <mat-label>Company</mat-label>
+    <mat-select [(value)]="selectedCompanyId" (selectionChange)="onFilterChange()">
+      <mat-option [value]="''">Semua Perusahaan</mat-option>
+      <mat-option *ngFor="let company of availableCompanies" [value]="company.id">
+        {{ company.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Year Filter -->
+  <mat-form-field appearance="outline">
+    <mat-label>Year</mat-label>
+    <mat-select [(value)]="selectedYear" (selectionChange)="onFilterChange()">
+      <mat-option [value]="0">Semua Tahun</mat-option>
+      <mat-option *ngFor="let year of availableYears" [value]="year">
+        {{ year }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<!-- == Summary Cards == -->
+<div class="summary-container">
+  <mat-card class="summary-card net-profit">
+    <div class="label">Total Net Profit</div>
+    <div class="value">{{ getTotalNetProfit() | currency:'IDR' }}</div>
+  </mat-card>
+
+  <mat-card class="summary-card roa">
+    <div class="label">Average ROA</div>
+    <div class="value">{{ getAverage('roa') | number:'1.2-2' }}%</div>
+  </mat-card>
+
+  <mat-card class="summary-card roe">
+    <div class="label">Average ROE</div>
+    <div class="value">{{ getAverage('roe') | number:'1.2-2' }}%</div>
+  </mat-card>
+
+  <mat-card class="summary-card solvency">
+    <div class="label">Avg Solvency Ratio</div>
+    <div class="value">{{ getAverage('solvencyRatio') | number:'1.2-2' }}%</div>
+  </mat-card>
+</div>
+
+<!-- == Trend Charts == -->
+<div class="trend-charts-container">
+  <!-- Net Profit Chart -->
+  <div class="chart-box">
+    <h3>Trend: Net Profit, Net Premium, Claims Expense, & Total Asset</h3>
+    <canvas baseChart
+            [data]="netProfitChartData"
+            [options]="netProfitChartOptions"
+            [type]="'line'">
+    </canvas>
+  </div>
+
+  <!-- RBC Chart -->
+  <div class="chart-box">
+    <h3>Trend: RBC (%)</h3>
+    <canvas baseChart
+            [data]="rbcChartData"
+            [options]="rbcChartOptions"
+            [type]="'line'">
+    </canvas>
+  </div>
+
+  <div class="chart-box">
+    <h3>Trend: ROA, ROE, & Solvency Ratio</h3>
+    <canvas baseChart
+            [data]="financialRatioChartData"
+            [options]="financialRatioChartOptions"
+            [type]="'line'">
+    </canvas>
+  </div>
+
+  <div class="chart-box">
+  <h3>Trend: MMBR (dalam jutaan)</h3>
+  <canvas baseChart
+          [data]="mmbrChartData"
+          [options]="mmbrChartOptions"
+          [type]="'bar'">
+  </canvas>
+</div>
+
+<div class="chart-box">
+  <h3>Trend: Net Profit vs Underwriting Income vs Investment Income</h3>
+  <canvas baseChart
+          [data]="profitComponentChartData"
+          [options]="profitComponentChartOptions"
+          [type]="'line'">
+  </canvas>
+</div>
+
+<div class="chart-box">
+  <h3>Trend: Expense Ratio vs Operational Cost Ratio</h3>
+  <canvas baseChart
+          [data]="expenseChartData"
+          [options]="expenseChartOptions"
+          [type]="'line'">
+  </canvas>
+</div>
+
+<div class="chart-box">
+  <h3>Trend: Premium Growth (%)</h3>
+  <canvas baseChart
+          [data]="premiumGrowthChartData"
+          [options]="premiumGrowthChartOptions"
+          [type]="'line'">
+  </canvas>
+</div>
+
+<div class="chart-box">
+  <h3>Trend: Liquidity vs Solvency Ratio (%)</h3>
+  <canvas baseChart
+          [data]="liquiditySolvencyChartData"
+          [options]="liquiditySolvencyChartOptions"
+          [type]="'line'">
+  </canvas>
+</div>
+
+<div class="chart-box">
+  <h3>Trend: Net Profit Margin (%)</h3>
+  <canvas baseChart
+          [data]="netProfitMarginChartData"
+          [options]="netProfitMarginChartOptions"
+          [type]="'line'">
+  </canvas>
+</div>
+</div>
