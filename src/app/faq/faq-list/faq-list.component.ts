@@ -30,6 +30,7 @@ export class FaqListComponent implements OnInit {
   pageSize: number = 6;
   totalPages: number = 0;
   totalItems: number = 0;
+  isAnonymous: boolean = false;
 
 
   constructor(private faqService: FaqService,
@@ -72,7 +73,7 @@ export class FaqListComponent implements OnInit {
 
     formData.append('questionId', q);
     formData.append('answer', answer);
-    formData.append('answeredBy', this.userName); // dari JWT decoded
+    formData.append('answeredBy', this.isAnonymous ? 'Anonim' : (this.userName || '')); // dari JWT decoded
 
     if (file) {
       formData.append('file', file);

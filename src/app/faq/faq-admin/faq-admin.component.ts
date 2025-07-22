@@ -24,6 +24,7 @@ export class FaqAdminComponent {
   answers: { [id: string]: string } = {};
   answerers: { [id: string]: string } = {};
   files: { [id: string]: File | null } = {};
+  isAnonymous: boolean = false;
 
   constructor(private faqService: FaqService, private router: Router) { }
 
@@ -39,7 +40,7 @@ export class FaqAdminComponent {
   submitQuestion() {
   const data = {
     question: this.newQuestion,
-    createdBy: this.userName
+    createdBy: this.isAnonymous ? 'Anonim' : this.userName
   };
 
   this.faqService.submitQuestion(data).subscribe({
