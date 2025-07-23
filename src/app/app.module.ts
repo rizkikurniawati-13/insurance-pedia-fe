@@ -24,7 +24,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { UserRegisterComponent } from './user-register/user-register.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from './services/auth.interceptor';
+import { authInterceptor } from './services/auth.interceptor';
 import { AuthGuard } from './services/auth.guard';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { BusinessProcessComponent } from './business-process/business-process.component';
@@ -45,6 +45,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { DashboardBpuiComponent } from './dashboard/dashboard-bpui/dashboard-bpui.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MermaidRendererComponent } from './business-process/mermaid-renderer/mermaid-renderer.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FaqListComponent,
     DashboardComponent,
     WelcomePageComponent,
-    DashboardBpuiComponent
+    DashboardBpuiComponent,
+    MermaidRendererComponent
   ],
   imports: [
     BrowserAnimationsModule,

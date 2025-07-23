@@ -1,8 +1,29 @@
-<h2 mat-dialog-title>{{ data.title }}</h2>
-<mat-dialog-content>
-  <p><strong>Aktor:</strong> {{ data.actor }}</p>
-  <p>{{ data.description }}</p>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Tutup</button>
-</mat-dialog-actions>
+<div class="dialog-container">
+  <h2 class="dialog-title">{{ data.label }}</h2>
+
+  <div class="dialog-content">
+    <div class="info-item">
+      <label>Aktor:</label>
+      <span>{{ data.actor || '-' }}</span>
+    </div>
+
+    <div class="info-item">
+      <label>Deskripsi:</label>
+      <span>{{ data.description || '-' }}</span>
+    </div>
+
+    <div class="info-item" *ngIf="data.reference">
+      <label>Referensi:</label>
+      <span>{{ data.reference }}</span>
+    </div>
+
+    <div class="info-item" *ngIf="data.duration">
+      <label>Durasi:</label>
+      <span>{{ data.duration }}</span>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-flat-button color="primary" (click)="dialogRef.close()">Tutup</button>
+  </div>
+</div>

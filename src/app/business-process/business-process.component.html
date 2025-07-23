@@ -1,79 +1,88 @@
-<div class="d-flex flex-column flex-md-row vh-100 bg-light">
+<div class="d-flex" style="height: 100vh;">
   <app-sidebar style="width: 250px;"></app-sidebar>
 
-  <main class="flex-grow-1 p-3 p-md-4 overflow-auto bg-light">
-    <div class="container my-3 my-md-4">
-      <h1 class="mb-4 text-center fw-bold" style="color: #219EBC;">
-        <i class="fa-solid fa-sitemap me-2"></i> Insurance Business Process
-      </h1>
+  <div class="flex-grow-1 d-flex flex-column justify-content-center align-items-center px-3 py-4">
 
-      <!-- Wrapper Card -->
-      <div class="graph-wrapper card p-4 border-0 shadow-sm rounded-4 bg-white">
-
-        <!-- Loop Setiap Group Proses Bisnis -->
-        <div *ngFor="let graph of multipleGraphs" class="graph-card mb-5 p-4 bg-white shadow-sm rounded-4">
-          <h4 class="text-secondary fw-semibold mb-3">
-            <i class="fa-solid fa-diagram-project me-2 text-muted"></i>{{ graph.title }}
-          </h4>
-
-          <!-- ✅ ngx-graph Component -->
-          <ngx-graph [nodes]="graph.nodes" [links]="graph.links"
-            [nodeTemplates]="{ custom: nodeTemplate }" [showCustomNode]="true" [curve]="curve"
-            layout="dagre" class="chart-container" (select)="onNodeClick($event.node)">
-
-            <!-- ✅ Template Node -->
-            <ng-template #nodeTemplate let-node>
-              <ng-container *ngIf="node.data?.category === 'decision'; else processNode">
-                <svg:g class="node" (click)="onNodeClick(node)" ngx-tooltip [tooltipTitle]="node.label">
-                  <svg:polygon points="75,0 150,35 75,70 0,35" fill="#8ECAE6" stroke="#8ECAE6" stroke-width="1" />
-                  <svg:text text-anchor="middle" font-size="12" fill="#000" x="75" y="40">{{ node.label }}</svg:text>
-                </svg:g>
-              </ng-container>
-
-              <ng-template #processNode>
-                <svg:g class="node" (click)="onNodeClick(node)" ngx-tooltip [tooltipTitle]="node.label">
-                  <svg:rect [attr.width]="node.dimension.width" [attr.height]="node.dimension.height"
-                    rx="10" ry="10" fill="#8ECAE6" stroke="#8ECAE6" stroke-width="2" />
-                  <svg:text text-anchor="middle" font-size="12" fill="#000"
-                    [attr.x]="node.dimension.width / 2"
-                    [attr.y]="(node.dimension.height / 2 - 7)">
-                    <tspan *ngFor="let line of wrapText(node.label, 20); let i = index"
-                      [attr.x]="node.dimension.width / 2" [attr.dy]="i === 0 ? 0 : 15">
-                      {{ line }}
-                    </tspan>
-                  </svg:text>
-                  <svg:text [attr.x]="node.dimension.width / 2" [attr.y]="node.dimension.height - 10"
-                    text-anchor="middle" font-size="10" fill="#023047">
-                    👤 {{ node.data?.actor }}
-                  </svg:text>
-                </svg:g>
-              </ng-template>
-            </ng-template>
-
-            <!-- OPTIONAL: Custom Link -->
-            <ng-template #linkTemplate let-link>
-              <svg:g class="edge" pointer-events="none">
-                <svg:path class="line" [attr.id]="link.id" stroke-width="2" stroke="#6c757d" marker-end="url(#arrow)" />
-                <svg:text class="edge-label" text-anchor="middle">
-                  <textPath [attr.href]="'#' + link.id" startOffset="60%">
-                    {{ link.label }}
-                  </textPath>
-                </svg:text>
-              </svg:g>
-            </ng-template>
-
-            <!-- DEFINISI panah -->
-            <ng-template #defsTemplate>
-              <svg:marker id="arrow" viewBox="0 -5 10 10" refX="8" refY="0" markerWidth="4" markerHeight="4"
-                orient="auto">
-                <svg:path d="M0,-5L10,0L0,5" fill="#333" />
-              </svg:marker>
-            </ng-template>
-
-          </ngx-graph>
+    <!-- Step 1: Pilih Jenis Asuransi -->
+    <div *ngIf="!selectedInsuranceType" class="w-100 text-center">
+      <h4 class="mb-4 fw-semibold text-main-blue">Pilih Jenis Perusahaan Asuransi</h4>
+      <div class="row g-4 justify-content-center">
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngFor="let type of insuranceTypes">
+          <div class="card selectable text-center shadow-sm border-0 h-100"
+            (click)="selectInsuranceType(type)">
+            <div class="card-body d-flex align-items-center justify-content-center fw-semibold">
+              {{ type }}
+            </div>
+          </div>
         </div>
-
       </div>
     </div>
-  </main>
+
+    <!-- Step 1.5: Pilih Jenis Reasuransi -->
+    <div *ngIf="selectedInsuranceType === 'Reasuransi' && !selectedReinsuranceType" class="w-100 text-center mt-4">
+      <h4 class="mb-4 text-main-blue">Pilih Jenis Reasuransi</h4>
+      <div class="row g-4 justify-content-center">
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngFor="let sub of ['Treaty', 'Fakultatif']">
+          <div class="card selectable text-center shadow-sm border-0 h-100"
+            (click)="selectReinsuranceType(sub)">
+            <div class="card-body d-flex align-items-center justify-content-center fw-semibold">
+              {{ sub }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button class="btn btn-outline-secondary btn-sm px-4" (click)="backToInsuranceTypes()">
+          ⬅ Kembali ke Jenis Asuransi
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Pilih Tahapan Proses -->
+    <div *ngIf="(selectedInsuranceType && selectedInsuranceType !== 'Reasuransi' && !selectedPhase) || (selectedInsuranceType === 'Reasuransi' && selectedReinsuranceType && !selectedPhase)" class="w-100 mt-4 text-center">
+      <p class="text-muted">
+        Jenis Asuransi: <strong>{{ selectedInsuranceType }}</strong>
+        <span *ngIf="selectedReinsuranceType">| Tipe: <strong>{{ selectedReinsuranceType }}</strong></span>
+      </p>
+      <h4 class="mb-4 text-main-blue">Pilih Tahapan Proses</h4>
+      <div class="row g-4 justify-content-center">
+        <div class="col-6 col-sm-4 col-md-3 col-lg-2" *ngFor="let phase of processPhases">
+          <div class="card selectable text-center shadow-sm border-0 h-100"
+            (click)="selectPhase(phase)">
+            <div class="card-body d-flex align-items-center justify-content-center fw-semibold">
+              {{ phase }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button class="btn btn-outline-secondary btn-sm px-4" (click)="backToInsuranceTypes()">
+          ⬅ Kembali ke Jenis Asuransi
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 3: Mermaid Diagram -->
+    <div *ngIf="diagram && selectedPhase" class="w-100 mt-5">
+      <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap px-2">
+        <div class="mb-2">
+          <h5 class="mb-1 text-main-blue">Diagram Proses Bisnis</h5>
+          <p class="text-muted mb-0 small">
+            Jenis: <strong>{{ selectedInsuranceType }}</strong>
+            <span *ngIf="selectedReinsuranceType">| Tipe: <strong>{{ selectedReinsuranceType }}</strong></span>
+            | Tahapan: <strong>{{ selectedPhase }}</strong>
+          </p>
+        </div>
+        <button class="btn btn-outline-secondary btn-sm" (click)="backToPhases()">
+          ⬅ Kembali ke Tahapan
+        </button>
+      </div>
+
+      <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status"></div>
+      </div>
+
+      <app-mermaid-renderer [diagram]="diagram" [diagramData]="allNodes"></app-mermaid-renderer>
+    </div>
+  </div>
 </div>
