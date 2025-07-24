@@ -1,15 +1,16 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewEncapsulation } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { BusinessProcess } from '../business-process/business-process.service';
-import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-process-info-dialog',
-  standalone: true,
   templateUrl: './process-info-dialog.component.html',
-  imports : [CommonModule, MatDividerModule]
+  styleUrls: ['./process-info-dialog.component.css'],
+  standalone: true,
+  imports: [MatDividerModule, CommonModule],
+  encapsulation: ViewEncapsulation.None
 })
 export class ProcessInfoDialogComponent {
   constructor(

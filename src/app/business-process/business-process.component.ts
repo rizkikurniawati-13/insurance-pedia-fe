@@ -32,14 +32,16 @@ import { log } from 'mermaid/dist/logger.js';
 export class BusinessProcessComponent implements OnInit {
   insuranceTypes = ['Asuransi Jiwa', 'Asuransi Umum', 'Asuransi Wajib', 'Asuransi Sosial', 'Reasuransi'];
   phaseMapping: { [key: string]: string[] } = {
-    'Treaty': ['Akseptasi', 'Klaim'],
-    'Fakultatif': ['Akseptasi', 'Klaim'],
+    'Treaty': ['Akseptasi Treaty', 'Klaim Treaty'],
+    'Fakultatif': ['Akseptasi Fakultatif', 'Klaim Fakultatif'],
     'Asuransi Jiwa': ['Underwriting', 'Klaim', 'Subrogasi'],
     'Asuransi Umum': ['Underwriting', 'Klaim', 'Subrogasi'],
     'Asuransi Wajib': ['Pendaftaran & Kepesertaan', 'Klaim & Pembayaran Manfaat'],
     'Asuransi Sosial': ['Pendaftaran & Kepesertaan Otomatis', 'Klaim', 'Subrogasi'],
     'Reasuransi': ['Treaty', 'Fakultatif']
   };
+
+  zoomLevel = 1;
 
   selectedReinsuranceType: string | null = null;
   processPhases: string[] = [];
@@ -89,6 +91,7 @@ export class BusinessProcessComponent implements OnInit {
   selectReinsuranceType(type: string): void {
     this.selectedReinsuranceType = type;
     this.processPhases = this.phaseMapping[type] || [];
+    this.selectedPhase = null; 
   }
 
   selectPhase(phase: string) {
@@ -97,10 +100,9 @@ export class BusinessProcessComponent implements OnInit {
   }
 
   fetchProcessData(): void {
-    const insurance = this.selectedReinsuranceType || this.selectedInsuranceType;
+    const insurance = this.selectedInsuranceType || this.selectedReinsuranceType;
     if (!insurance || !this.selectedPhase) return;
     this.isLoading = true;
-
     this.businessService.getFilteredNodes(insurance, this.selectedPhase).subscribe(nodes => {
       this.allNodes = nodes;
       this.businessService.getFilteredLinks(insurance, this.selectedPhase!).subscribe(links => {
@@ -118,8 +120,8 @@ export class BusinessProcessComponent implements OnInit {
         }));
 
         this.diagram = this.generateMermaidDiagram(nodes, links);
-        console.log('[Mermaid Diagram]', this.diagram);
         this.isLoading = false;
+
       });
     });
   }
@@ -195,7 +197,6 @@ export class BusinessProcessComponent implements OnInit {
       diagram += cleanLabel
         ? `  ${sourceId} --|${cleanLabel}|--> ${targetId}\n`
         : `  ${sourceId} --> ${targetId}\n`;
-
     });
 
     return diagram;
@@ -213,6 +214,29 @@ export class BusinessProcessComponent implements OnInit {
       data: node
     });
   }
+
+  zoomIn() {
+  this.zoomLevel += 0.1;
+  this.applyZoom();
+}
+
+zoomOut() {
+  this.zoomLevel = Math.max(0.1, this.zoomLevel - 0.1);
+  this.applyZoom();
+}
+
+resetZoom() {
+  this.zoomLevel = 1;
+  this.applyZoom();
+}
+
+applyZoom() {
+  const diagramEl = document.querySelector('.mermaid');
+  if (diagramEl) {
+    (diagramEl as HTMLElement).style.transform = `scale(${this.zoomLevel})`;
+    (diagramEl as HTMLElement).style.transformOrigin = 'top left';
+  }
+}
 
 
 }

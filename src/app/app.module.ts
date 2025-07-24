@@ -46,6 +46,8 @@ import { DashboardBpuiComponent } from './dashboard/dashboard-bpui/dashboard-bpu
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MermaidRendererComponent } from './business-process/mermaid-renderer/mermaid-renderer.component';
+import { ProcessInfoDialogComponent } from './process-info-dialog/process-info-dialog.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,8 @@ import { MermaidRendererComponent } from './business-process/mermaid-renderer/me
     DashboardComponent,
     WelcomePageComponent,
     DashboardBpuiComponent,
-    MermaidRendererComponent
+    MermaidRendererComponent,
+    ProcessInfoDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -92,7 +95,11 @@ import { MermaidRendererComponent } from './business-process/mermaid-renderer/me
     NgChartsModule,
     OrderModule,
     MatCardModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDividerModule
+  ],
+  exports: [
+    MatDividerModule // ← jika ingin digunakan di module lain
   ],
   providers: [
     AuthGuard,

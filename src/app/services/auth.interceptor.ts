@@ -35,7 +35,6 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
   const authService = inject(AuthService);
   const router = inject(Router);
   const token = authService.getToken();
-  console.log(`AuthInterceptor: Token=${token ? token.substring(0, 20) + '...' : 'null'}`);
 
   let clonedReq = req;
   if (token) {

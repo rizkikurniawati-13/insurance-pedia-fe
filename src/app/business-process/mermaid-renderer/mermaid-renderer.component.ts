@@ -14,8 +14,12 @@ import { BusinessProcess } from '../business-process.service'; // Sesuaikan jika
       border-radius: 10px;
       padding: 1rem;
       overflow-x: auto;
+      min-height: 500px;
+      align-content: center;
     }
-  `]
+  `],
+  standalone: true,
+  imports : []
 })
 export class MermaidRendererComponent implements AfterViewInit, OnChanges {
   @Input() diagram: string = '';
@@ -66,8 +70,6 @@ export class MermaidRendererComponent implements AfterViewInit, OnChanges {
       const rawId = node.id?.replace('flowchart-', ''); // e.g., 'n1-1'
       const baseNodeId = rawId?.split('-')[0]; // hasil: 'n1'
 
-      console.log('[Klik Node]', node.id, '→', baseNodeId);
-
       // ✅ Gunakan ID pendek ('n1') langsung untuk pencocokan
       const foundProcess = this.diagramData.find((proc: BusinessProcess) => {
         // Cocokkan berdasarkan pemetaan uuidToShortId di parent
@@ -79,8 +81,8 @@ export class MermaidRendererComponent implements AfterViewInit, OnChanges {
 
       if (foundProcess) {
         this.dialog.open(ProcessInfoDialogComponent, {
-          width: '500px',
-          data: foundProcess
+          data: foundProcess,
+          panelClass: 'custom-dialog-panel'
         });
       } else {
         console.warn('❌ Node tidak dikenali:', baseNodeId);

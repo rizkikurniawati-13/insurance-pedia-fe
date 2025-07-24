@@ -12,7 +12,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class CrosswordComponent implements OnInit {
 
-  puzzleId = '2354839e-f34b-4ed9-96ab-547639b7e922'; // nanti bisa dari route
+  puzzleId = '1d96addb-5ece-4a86-8841-a002e22f10b9'; // nanti bisa dari route
   title = '';
   grid: any[][] = [];
   userGrid: (string | null)[][] = [];

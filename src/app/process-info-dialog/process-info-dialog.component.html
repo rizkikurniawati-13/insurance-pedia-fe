@@ -1,25 +1,27 @@
 <div class="dialog-container">
   <h2 class="dialog-title">{{ data.label }}</h2>
 
+  <mat-divider></mat-divider>
+
   <div class="dialog-content">
     <div class="info-item">
-      <label>Aktor:</label>
-      <span>{{ data.actor || '-' }}</span>
+      <label class="info-label">Aktor</label>
+      <span class="info-value">{{ data.actor || '-' }}</span>
     </div>
 
     <div class="info-item">
-      <label>Deskripsi:</label>
-      <span>{{ data.description || '-' }}</span>
+      <label class="info-label">Deskripsi</label>
+      <span class="info-value">{{ data.description || '-' }}</span>
     </div>
 
     <div class="info-item" *ngIf="data.reference">
-      <label>Referensi:</label>
-      <span>{{ data.reference }}</span>
+      <label class="info-label">Referensi</label>
+      <span class="info-value">{{ data.reference }}</span>
     </div>
 
     <div class="info-item" *ngIf="data.duration">
-      <label>Durasi:</label>
-      <span>{{ data.duration }}</span>
+      <label class="info-label">Durasi</label>
+      <span class="info-value">{{ data.duration }}</span>
     </div>
   </div>
 
