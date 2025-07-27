@@ -1,5 +1,15 @@
+<div class="col-md-8 col-12">
+  <h2 class="h4 fw-bold mb-1" style="color: #023047;">
+    <i class="fas fa-chart-line me-2"></i>Dashboard Keuangan BPUI
+  </h2>
+  <p class="text-muted mb-0 ms-1" style="font-size: 0.9rem;">
+    <i class="fas fa-book me-1 text-secondary"></i>
+    <small><em>Sumber data: Laporan Keuangan Entitas</em></small>
+  </p>
+</div>
+
 <!-- == Filter Section == -->
-<div class="filter-section">
+<div class="filter-section" style="padding-top: 30px;">
   <!-- Company Filter -->
   <mat-form-field appearance="outline">
     <mat-label>Company</mat-label>
@@ -51,83 +61,56 @@
   <!-- Net Profit Chart -->
   <div class="chart-box">
     <h3>Trend: Net Profit, Net Premium, Claims Expense, & Total Asset</h3>
-    <canvas baseChart
-            [data]="netProfitChartData"
-            [options]="netProfitChartOptions"
-            [type]="'line'">
+    <canvas baseChart [data]="netProfitChartData" [options]="netProfitChartOptions" [type]="'line'">
     </canvas>
   </div>
 
   <!-- RBC Chart -->
   <div class="chart-box">
     <h3>Trend: RBC (%)</h3>
-    <canvas baseChart
-            [data]="rbcChartData"
-            [options]="rbcChartOptions"
-            [type]="'line'">
+    <canvas baseChart [data]="rbcChartData" [options]="rbcChartOptions" [type]="'line'">
     </canvas>
   </div>
 
   <div class="chart-box">
     <h3>Trend: ROA, ROE, & Solvency Ratio</h3>
-    <canvas baseChart
-            [data]="financialRatioChartData"
-            [options]="financialRatioChartOptions"
-            [type]="'line'">
+    <canvas baseChart [data]="financialRatioChartData" [options]="financialRatioChartOptions" [type]="'line'">
     </canvas>
   </div>
 
   <div class="chart-box">
-  <h3>Trend: MMBR (dalam jutaan)</h3>
-  <canvas baseChart
-          [data]="mmbrChartData"
-          [options]="mmbrChartOptions"
-          [type]="'bar'">
-  </canvas>
-</div>
+    <h3>Trend: MMBR (dalam jutaan)</h3>
+    <canvas baseChart [data]="mmbrChartData" [options]="mmbrChartOptions" [type]="'bar'">
+    </canvas>
+  </div>
 
-<div class="chart-box">
-  <h3>Trend: Net Profit vs Underwriting Income vs Investment Income</h3>
-  <canvas baseChart
-          [data]="profitComponentChartData"
-          [options]="profitComponentChartOptions"
-          [type]="'line'">
-  </canvas>
-</div>
+  <div class="chart-box">
+    <h3>Trend: Net Profit vs Underwriting Income vs Investment Income</h3>
+    <canvas baseChart [data]="profitComponentChartData" [options]="profitComponentChartOptions" [type]="'line'">
+    </canvas>
+  </div>
 
-<div class="chart-box">
-  <h3>Trend: Expense Ratio vs Operational Cost Ratio</h3>
-  <canvas baseChart
-          [data]="expenseChartData"
-          [options]="expenseChartOptions"
-          [type]="'line'">
-  </canvas>
-</div>
+  <div class="chart-box">
+    <h3>Trend: Expense Ratio vs Operational Cost Ratio</h3>
+    <canvas baseChart [data]="expenseChartData" [options]="expenseChartOptions" [type]="'line'">
+    </canvas>
+  </div>
 
-<div class="chart-box">
-  <h3>Trend: Premium Growth (%)</h3>
-  <canvas baseChart
-          [data]="premiumGrowthChartData"
-          [options]="premiumGrowthChartOptions"
-          [type]="'line'">
-  </canvas>
-</div>
+  <div class="chart-box">
+    <h3>Trend: Premium Growth (%)</h3>
+    <canvas baseChart [data]="premiumGrowthChartData" [options]="premiumGrowthChartOptions" [type]="'line'">
+    </canvas>
+  </div>
 
-<div class="chart-box">
-  <h3>Trend: Liquidity vs Solvency Ratio (%)</h3>
-  <canvas baseChart
-          [data]="liquiditySolvencyChartData"
-          [options]="liquiditySolvencyChartOptions"
-          [type]="'line'">
-  </canvas>
-</div>
+  <div class="chart-box">
+    <h3>Trend: Liquidity vs Solvency Ratio (%)</h3>
+    <canvas baseChart [data]="liquiditySolvencyChartData" [options]="liquiditySolvencyChartOptions" [type]="'line'">
+    </canvas>
+  </div>
 
-<div class="chart-box">
-  <h3>Trend: Net Profit Margin (%)</h3>
-  <canvas baseChart
-          [data]="netProfitMarginChartData"
-          [options]="netProfitMarginChartOptions"
-          [type]="'line'">
-  </canvas>
-</div>
+  <div class="chart-box">
+    <h3>Trend: Net Profit Margin (%)</h3>
+    <canvas baseChart [data]="netProfitMarginChartData" [options]="netProfitMarginChartOptions" [type]="'line'">
+    </canvas>
+  </div>
 </div>
